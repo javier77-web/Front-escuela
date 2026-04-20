@@ -1,65 +1,56 @@
 import React from "react";
 import "../../styles/organisms/Footer.css";
 
+// datos de redes sociales
+const redes = [
+  { nombre: "instagram", url: "#", icono: "fab fa-instagram" },
+  { nombre: "youtube", url: "#", icono: "fab fa-youtube" },
+  { nombre: "facebook", url: "#", icono: "fab fa-facebook-f" },
+  {
+    nombre: "gmail",
+    url: "mailto:contacto@colegio.cl",
+    icono: "fas fa-envelope",
+  },
+];
+
+// datos de navegacion
+const navegacion = [
+  { nombre: "inicio", ruta: "/" },
+  { nombre: "nuestro colegio", ruta: "/colegio" },
+  { nombre: "noticias", ruta: "/noticias" },
+  { nombre: "contacto", ruta: "/contacto" },
+];
+
 function Footer() {
   return (
     <footer className="footer">
-      {/* CONTENIDO PRINCIPAL */}
-      <div className="footer-grid">
-        {/* LOGO */}
-        <div>
-          <h2 className="logo">Sistema Académico</h2>
-          <p>Gestión moderna de clases y estudiantes.</p>
-        </div>
+      {/* redes arriba */}
+      <div className="redes-superior">
+        <h4>redes sociales</h4>
 
-        {/* NAVEGACIÓN */}
-        <div>
-          <h4>Navegación</h4>
-          <a href="/">Inicio</a>
-          <a href="/cursos">Cursos</a>
-          <a href="/contacto">Contacto</a>
-        </div>
-
-        {/* INFORMACIÓN */}
-        <div>
-          <h4>Información</h4>
-          <a href="#">Sobre nosotros</a>
-          <a href="#">Privacidad</a>
-          <a href="#">Términos</a>
-        </div>
-
-        {/* CONTACTO */}
-        <div>
-          <h4>Contacto</h4>
-
-          {/* Ubicación */}
-          <a
-            href="https://www.google.com/maps?q=Santiago+Chile"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ubicacion"
-          >
-            📍 Santiago, Chile
-          </a>
-
-          {/* Input tipo newsletter */}
-          <div className="input-contacto">
-            <input type="email" placeholder="tu@email.com" />
-            <button>➤</button>
-          </div>
+        <div className="iconos-redes">
+          {redes.map((red) => (
+            <a key={red.nombre} href={red.url}>
+              <i className={red.icono}></i>
+            </a>
+          ))}
         </div>
       </div>
 
-      {/* PARTE INFERIOR */}
-      <div className="footer-bottom">
-        <div className="redes">
-          <a href="#">Instagram</a>
-          <a href="#">Facebook</a>
-          <a href="#">LinkedIn</a>
+      {/* contenedor central */}
+      <div className="footer-centro">
+        {/* links centrados abajo */}
+        <div className="footer-links">
+          {navegacion.map((item) => (
+            <a key={item.nombre} href={item.ruta}>
+              {item.nombre}
+            </a>
+          ))}
         </div>
-
-        <p>© 2026 Sistema Académico</p>
       </div>
+
+      {/* copy */}
+      <div className="footer-copy">© 2026 sistema academico</div>
     </footer>
   );
 }

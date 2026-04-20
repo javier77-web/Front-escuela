@@ -6,3 +6,90 @@ body, html, #root {
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.electric-line {
+  position: relative;
+  height: 4px;
+  width: 100%;
+  background-color: #000000f1; /* fondo más oscuro para resaltar rayos */
+  overflow: hidden;
+  border-radius: 2px;
+
+}
+
+/* rayos base */
+.ray {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 2px;
+  opacity: 0.9;
+}
+
+/* Rayo 1 - corto, celeste brillante */
+.ray1 {
+  width: 25px;
+  background-color: #0011f8;
+  filter: drop-shadow(0 0 6px #5b6768);
+  animation: moveRay1 1.5s linear infinite;
+}
+
+/* Rayo 2 - más largo, con azul profundo */
+.ray2 {
+  width: 60px;
+  background-color: #0047ff;
+  filter: drop-shadow(0 0 10px #0047ff);
+  animation: moveRay2 3s linear infinite;
+  opacity: 0.6;
+  animation-delay: 1s;
+}
+
+/* Rayo 3 - mediano, violeta brillante */
+.ray3 {
+  width: 40px;
+  background-color: #9d00ff;
+  filter: drop-shadow(0 0 8px #9d00ff);
+  animation: moveRay3 2s linear infinite;
+  opacity: 0.8;
+  animation-delay: 0.5s;
+}
+
+/* animaciones */
+@keyframes moveRay1 {
+  0% {
+    left: -30px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveRay2 {
+  0% {
+    left: -70px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveRay3 {
+  0% {
+    left: -40px;
+  }
+  100% {
+    left: 100%;
+  }
+}

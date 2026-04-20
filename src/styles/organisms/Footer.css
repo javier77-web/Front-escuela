@@ -1,74 +1,72 @@
 .footer {
   background: #0d0d0d;
   color: #ccc;
-  padding: 50px 30px;
+  padding: 40px 20px;
 }
 
-/* GRID */
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
+/* redes arriba */
+.redes-superior {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-/* TITULOS */
-.footer h4 {
+.redes-superior h4 {
   color: white;
   margin-bottom: 10px;
 }
 
-.logo {
-  color: white;
+/* iconos */
+.iconos-redes {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-/* LINKS */
-.footer a {
-  display: block;
+.iconos-redes i {
+  font-size: 22px;
+  transition: 0.3s;
+}
+
+/* colores */
+.fa-instagram { color: #e4405f; }
+.fa-youtube { color: #ff0000; }
+.fa-facebook-f { color: #1877f2; }
+.fa-envelope { color: #ccc; }
+
+/* hover */
+.iconos-redes i:hover {
+  transform: scale(1.2);
+}
+
+/* contenedor central */
+.footer-centro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* links centrados */
+.footer-links {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.footer-links a {
   text-decoration: none;
   color: #aaa;
-  margin-bottom: 8px;
+  transition: 0.3s;
 }
 
-.footer a:hover {
+.footer-links a:hover {
   color: white;
 }
 
-/* INPUT */
-.input-contacto {
-  display: flex;
-  margin-top: 10px;
-}
-
-.input-contacto input {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  outline: none;
-}
-
-.input-contacto button {
-  padding: 8px 12px;
-  background: white;
-  border: none;
-  cursor: pointer;
-}
-
-/* UBICACIÓN */
-.ubicacion {
-  display: block;
-  margin-bottom: 10px;
-}
-
-/* FOOTER BOTTOM */
-.footer-bottom {
-  border-top: 1px solid #222;
-  margin-top: 30px;
-  padding-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.redes a {
-  margin-right: 15px;
+/* copy */
+.footer-copy {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #888;
 }
