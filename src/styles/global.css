@@ -2,7 +2,7 @@ body, html, #root {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #000000; /* negro puro */
+  background-color: #ffffff; /* negro puro */
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

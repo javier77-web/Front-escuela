@@ -1,5 +1,10 @@
 Esta carpeta define la estructura visual de la aplicación.
 
+COMO UN ESQUELETO:
+Navbar
+contenido
+Footer
+
 Responsabilidades:
 - Organizar Navbar, Footer y contenido
 - Crear layout principal

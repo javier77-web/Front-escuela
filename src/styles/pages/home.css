@@ -1,0 +1,126 @@
+/* contenedor principal */
+.hero {
+  position: relative;
+  height: 100vh;
+  background: radial-gradient(circle at 20% 50%, #273823, #f8f8f8);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  overflow: hidden;
+}
+
+/* contenido */
+.hero-contenido {
+  z-index: 2;
+  max-width: 500px;
+  animation: fadeIn 1.2s ease;
+}
+
+/* titulo */
+.titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.titu2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.2px;
+    color: #000000;
+}
+
+/* subtitulo */
+.subtitulo {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+/* botones */
+.botones {
+  display: flex;
+  gap: 15px;
+}
+
+/* boton principal */
+.btn-principal {
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(135deg, #b64b4b, #99bb03);
+  color: black;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-principal:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #c9df05;
+}
+
+/* boton secundario */
+.btn-secundario {
+  padding: 10px 20px;
+  border: 1px solid #7ec40d;
+  background: transparent;
+  color: rgb(0, 0, 0);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.btn-secundario:hover {
+  border-color: #94e006;
+}
+
+/* forma diagonal */
+.hero-forma {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(135deg, #4b8a64, #afec15);
+
+  clip-path: polygon(
+    220% 0,     /* arriba */
+    100% 0, 
+    100% 100%, 
+    0% 110%     /* abajo */
+  );
+
+  animation: slideIn 1.5s ease;
+}
+
+/* glow efecto */
+.glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: #ffffff;
+  filter: blur(120px);
+  opacity: 0.2;
+  top: 20%;
+  left: 10%;
+}
+
+/* animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

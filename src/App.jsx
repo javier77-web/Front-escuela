@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayouts";
+import Home from "./pages/Home";
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
           path="/"
           element={
             <MainLayout>
-              <h1>Inicio</h1>
+              <Home />
             </MainLayout>
           }
         />

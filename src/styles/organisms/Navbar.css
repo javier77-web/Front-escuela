@@ -19,16 +19,16 @@
 
 /* LINKS */
 .navbar .nav-link {
-  color: #000000 !important;
+  color: #050505 !important;
   font-weight: 500;
   transition: 0.3s;
 }
 
 .navbar .nav-link:hover {
-  color: rgb(5, 182, 182) !important;
+  color: rgb(170, 241, 4) !important;
 }
 
-/* BOTÓN LOGIN */
+/* BOTN LOGIN */
 .navbar-login {
   position: absolute;
   right: 30px;
@@ -37,7 +37,7 @@
 .btn-login {
   padding: 6px 16px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #6a5cff, #8f7bff);
+  background: linear-gradient(135deg, #0f0f0f, #18171a);
   color: white;
   text-decoration: none;
   font-size: 14px;
