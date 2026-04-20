@@ -1,0 +1,58 @@
+/* navbar: fondo transparente, sin sombra inicial */
+.navbar {
+  background-color: transparent !important;
+  padding: 1rem 2rem !important;
+  transition: all 0.3s ease;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+/* CENTRAR MENÚ */
+.navbar-centro {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* LINKS */
+.navbar .nav-link {
+  color: #000000 !important;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar .nav-link:hover {
+  color: rgb(5, 182, 182) !important;
+}
+
+/* BOTÓN LOGIN */
+.navbar-login {
+  position: absolute;
+  right: 30px;
+}
+
+.btn-login {
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #6a5cff, #8f7bff);
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  opacity: 0.8;
+}
+
+/* TOGGLER */
+.navbar-toggler {
+  border: none !important;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1) !important;
+}

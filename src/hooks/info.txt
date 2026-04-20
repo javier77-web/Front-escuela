@@ -1,0 +1,9 @@
+Esta carpeta contiene custom hooks de React.
+
+Permite reutilizar lógica en diferentes componentes.
+
+Ejemplos:
+- useAuth
+- useCursos
+
+Ayuda a mantener el código limpio y organizado.

@@ -1,0 +1,16 @@
+Esta carpeta contiene toda la comunicación con el backend (API Gateway).
+
+Se utiliza Redux Toolkit Query (RTK Query) para:
+- Realizar peticiones HTTP
+- Manejar cache automáticamente
+- Simplificar el uso de fetch o axios
+
+Aquí se definen los endpoints:
+- cursos
+- usuarios
+- asistencia
+
+Ejemplo de archivos:
+- api.js (configuración base)
+- cursosApi.js
+- usuariosApi.js

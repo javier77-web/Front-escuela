@@ -1,0 +1,10 @@
+Esta carpeta maneja la navegación de la aplicación.
+
+Responsabilidades:
+- Definir rutas
+- Proteger rutas privadas
+- Redirigir usuarios no autenticados
+
+Ejemplo:
+- AppRoutes.jsx
+- PrivateRoute.jsx

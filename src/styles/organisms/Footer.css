@@ -1,0 +1,74 @@
+.footer {
+  background: #0d0d0d;
+  color: #ccc;
+  padding: 50px 30px;
+}
+
+/* GRID */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+/* TITULOS */
+.footer h4 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.logo {
+  color: white;
+}
+
+/* LINKS */
+.footer a {
+  display: block;
+  text-decoration: none;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+
+.footer a:hover {
+  color: white;
+}
+
+/* INPUT */
+.input-contacto {
+  display: flex;
+  margin-top: 10px;
+}
+
+.input-contacto input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  outline: none;
+}
+
+.input-contacto button {
+  padding: 8px 12px;
+  background: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* UBICACIÓN */
+.ubicacion {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* FOOTER BOTTOM */
+.footer-bottom {
+  border-top: 1px solid #222;
+  margin-top: 30px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.redes a {
+  margin-right: 15px;
+}
