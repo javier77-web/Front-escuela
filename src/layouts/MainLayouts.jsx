@@ -13,8 +13,8 @@ const MainLayout = ({ children }) => {
       {/* contenido principal */}
       <Content
         style={{
-          flex: 1, // 🔥 clave: ocupa todo el espacio disponible
-          padding: "20px",
+          flex: 1, // ocupa todo el espacio disponible
+          padding: 0,
         }}
       >
         {children}
