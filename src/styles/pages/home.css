@@ -1,15 +1,15 @@
 /* contenedor principal */
 .hero {
   position: relative;
-  height: 100vh;
+  min-height: 100vh; /* 🔥 mejor que height fijo */
+  width: 100%;       /* 🔥 asegura full width */
   background: radial-gradient(circle at 20% 50%, #273823, #f8f8f8);
-  color: white;
+  color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   padding: 0 60px;
   overflow: hidden;
 }
-
 /* contenido */
 .hero-contenido {
   z-index: 2;

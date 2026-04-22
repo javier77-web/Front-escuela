@@ -1,35 +1,62 @@
-body, html, #root {
+/* =========================================
+   RESET BÁSICO (MEJORA IMPORTANTE)
+   Evita espacios raros por defecto del navegador
+========================================= */
+* {
+  box-sizing: border-box;
+}
+
+/* =========================================
+   BASE DEL DOCUMENTO
+   (ANTES TENÍAS height:100% que causa problemas)
+========================================= */
+html, body, #root {
   margin: 0;
   padding: 0;
-  height: 100%;
-  background-color: #ffffff; /* negro puro */
-  color: white;
+  min-height: 100%; /* MEJOR que height:100% */
+}
+
+/* =========================================
+   ESTILO GLOBAL DEL BODY
+   (ARREGLADO: antes texto blanco sobre fondo blanco)
+========================================= */
+body {
+  background-color: #ffffff;
+  color: #111; /* MEJORA: mejor contraste */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* MEJORA: suaviza fuentes */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes gradientBackground {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* =========================================
+   LAYOUT ROOT (REEMPLAZA TU index.css #root)
+   ❌ QUITADO width fijo (causaba el "cuadrado")
+========================================= */
+#root {
+  min-height: 100vh; /* MEJORA: ocupa toda la pantalla */
+  width: 100%;       /* MEJORA: responsive real */
+  display: flex;
+  flex-direction: column;
 }
 
+/* =========================================
+   COMPONENTE: LÍNEA ELÉCTRICA
+   (lo dejé igual pero organizado)
+========================================= */
 .electric-line {
   position: relative;
   height: 4px;
   width: 100%;
-  background-color: #000000f1; /* fondo más oscuro para resaltar rayos */
+  background-color: #000000f1;
   overflow: hidden;
   border-radius: 2px;
-
 }
 
-/* rayos base */
+/* =========================================
+   RAYOS BASE
+========================================= */
 .ray {
   position: absolute;
   top: 0;
@@ -38,7 +65,9 @@ body, html, #root {
   opacity: 0.9;
 }
 
-/* Rayo 1 - corto, celeste brillante */
+/* =========================================
+   RAYO 1 - celeste corto
+========================================= */
 .ray1 {
   width: 25px;
   background-color: #0011f8;
@@ -46,7 +75,9 @@ body, html, #root {
   animation: moveRay1 1.5s linear infinite;
 }
 
-/* Rayo 2 - más largo, con azul profundo */
+/* =========================================
+   RAYO 2 - azul largo
+========================================= */
 .ray2 {
   width: 60px;
   background-color: #0047ff;
@@ -56,7 +87,9 @@ body, html, #root {
   animation-delay: 1s;
 }
 
-/* Rayo 3 - mediano, violeta brillante */
+/* =========================================
+   RAYO 3 - violeta
+========================================= */
 .ray3 {
   width: 40px;
   background-color: #9d00ff;
@@ -66,30 +99,20 @@ body, html, #root {
   animation-delay: 0.5s;
 }
 
-/* animaciones */
+/* =========================================
+   ANIMACIONES
+========================================= */
 @keyframes moveRay1 {
-  0% {
-    left: -30px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -30px; }
+  100% { left: 100%; }
 }
 
 @keyframes moveRay2 {
-  0% {
-    left: -70px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -70px; }
+  100% { left: 100%; }
 }
 
 @keyframes moveRay3 {
-  0% {
-    left: -40px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -40px; }
+  100% { left: 100%; }
 }

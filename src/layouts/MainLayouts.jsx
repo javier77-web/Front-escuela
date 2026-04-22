@@ -6,12 +6,19 @@ const { Content } = Layout;
 
 const MainLayout = ({ children }) => {
   return (
-    <Layout>
+    <Layout style={{display: "flex",flexDirection: "column",minHeight: "100vh"}}>
       {/* navbar arriba */}
       <Navbar />
 
-      {/* contenido */}
-      <Content style={{ padding: "20px", minHeight: "70vh" }}>{children}</Content>
+      {/* contenido principal */}
+      <Content
+        style={{
+          flex: 1, // 🔥 clave: ocupa todo el espacio disponible
+          padding: "20px",
+        }}
+      >
+        {children}
+      </Content>
 
       {/* linea electrica */}
       <div className="electric-line">
@@ -20,7 +27,7 @@ const MainLayout = ({ children }) => {
         <span className="ray ray3"></span>
       </div>
 
-      {/* footer*/}
+      {/* footer */}
       <Footer />
     </Layout>
   );
