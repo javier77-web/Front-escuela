@@ -1,0 +1,57 @@
+.nuestro-colegio {
+  padding: 100px 60px;
+  background: linear-gradient(to bottom, #f8f8f8, #e9f1e7);
+  text-align: center;
+}
+
+.contenedor-colegio {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titulo-seccion {
+  font-size: 2.5rem;
+  color: #273823;
+  margin-bottom: 15px;
+}
+
+.descripcion-seccion {
+  color: #555;
+  margin-bottom: 50px;
+}
+
+.contenedor-tarjetas {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.tarjeta {
+  background: white;
+  padding: 25px;
+  width: 260px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-8px);
+}
+
+.boton-ver-mas {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: 1px solid #7ec40d;
+  background: transparent;
+  color: #273823;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.boton-ver-mas:hover {
+  background: #273823;
+  color: white;
+}
