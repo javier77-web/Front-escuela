@@ -7,3 +7,5 @@ Ejemplos:
 - useCursos
 
 Ayuda a mantener el código limpio y organizado.
+
+api clima: https://openweathermap.org/api

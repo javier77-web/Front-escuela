@@ -1,0 +1,27 @@
+.seccion-noticias {
+  padding: 100px 60px;
+  background: #ffffff;
+}
+
+.contenedor-noticias {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info-tiempo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.lista-noticias {
+  display: flex;
+  gap: 20px;
+}
+
+.noticia {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+}
