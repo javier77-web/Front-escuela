@@ -1,0 +1,81 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
+// Función base privada — adjunta el JWT de Firebase en cada request
+const authFetch = async (endpoint, options = {}) => {
+    const { auth } = await import('../firebaseConfig/config');
+    
+    const idToken = await auth.currentUser?.getIdToken();
+    if (!idToken) throw new Error('No hay sesión activa');
+
+    const response = await fetch(`${API_URL}${endpoint}`, {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+            ...options.headers,
+        },
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `Error ${response.status}`);
+    }
+
+    return response.json();
+};
+
+// Sincroniza el usuario de Firebase con la BD del backend
+// Se llama una sola vez después del register
+export const syncUserWithBackend = async (firebaseUser) => {
+    const idToken = await firebaseUser.getIdToken();
+    const response = await fetch(`${API_URL}/auth/sync`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            displayName: firebaseUser.displayName ?? null,
+        }),
+    });
+
+    if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || 'Error al sincronizar usuario con el backend');
+    }
+
+    return response.json();
+};
+
+// Helpers GET y POST para usar en cualquier página
+//Son funciones que envuelven authFetch para no tener que repetir configuración en cada llamada. 
+// Sin ellos, cada vez que quisieras pedir datos tendrías que escribir:
+/**
+ *
+Antes de de los helpers:
+authFetch('/gestion-academica/cursos', { method: 'GET' })
+authFetch('/gestion-academica/cursos', { method: 'POST', body: JSON.stringify(data) })
+
+Después de los helpers:
+apiGet('/gestion-academica/cursos')
+apiPost('/gestion-academica/cursos', data)
+ */
+export const apiGet = (endpoint) =>
+    authFetch(endpoint, { method: 'GET' });
+
+export const apiPost = (endpoint, body) =>
+    authFetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(body),
+    });
+
+export const apiPut = (endpoint, body) =>
+    authFetch(endpoint, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+    });
+
+export const apiDelete = (endpoint) =>
+    authFetch(endpoint, { method: 'DELETE' });
