@@ -1,0 +1,75 @@
+/* contenedor principal centrado */
+.login-container {
+  min-height: 100vh;
+  padding-top: 100px; /* para que no choque con navbar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* fondo similar a tu hero */
+  background: radial-gradient(circle at 20% 50%, #273823, #f8f8f8);
+}
+
+/* tarjeta del login */
+.login-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px); /* efecto glass */
+  padding: 40px;
+  border-radius: 15px;
+  width: 320px;
+  text-align: center;
+
+  /* sombra suave */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+
+  /* animacion entrada */
+  animation: fadeInUp 0.8s ease;
+}
+
+/* titulo */
+.login-titulo {
+  margin-bottom: 20px;
+  color: #000;
+}
+
+/* inputs */
+.login-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* boton */
+.login-card button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #b64b4b, #99bb03);
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* hover boton */
+.login-card button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #c9df05;
+}
+
+/* animacion */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

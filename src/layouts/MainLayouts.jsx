@@ -2,6 +2,7 @@ import { Layout } from "antd";
 import Navbar from "../components/organisms/Navbar";
 import Footer from "../components/organisms/Footer";
 
+
 const { Content } = Layout;
 
 const MainLayout = ({ children }) => {
