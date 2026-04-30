@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayouts";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
         <Route
           path="/login"
           element={<MainLayout><Login /></MainLayout>}
+        />
+        <Route
+          path="/register"
+          element={<MainLayout><Register /></MainLayout>}
         />
 
         <Route

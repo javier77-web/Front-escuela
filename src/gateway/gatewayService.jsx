@@ -26,9 +26,9 @@ const authFetch = async (endpoint, options = {}) => {
 
 // Sincroniza el usuario de Firebase con la BD del backend
 // Se llama una sola vez después del register
-export const syncUserWithBackend = async (firebaseUser) => {
+export const syncUserWithBackend = async (firebaseUser, nombre, apellido) => {
     const idToken = await firebaseUser.getIdToken();
-    const response = await fetch(`${API_URL}/auth/sync`, {
+    const response = await fetch(`${API_URL}/api/usuarios/auth/sync`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -36,8 +36,8 @@ export const syncUserWithBackend = async (firebaseUser) => {
         },
         body: JSON.stringify({
             uid: firebaseUser.uid,
-            email: firebaseUser.email,
-            displayName: firebaseUser.displayName ?? null,
+            nombre: nombre,
+            apellido: apellido,
         }),
     });
 
@@ -61,6 +61,10 @@ authFetch('/gestion-academica/cursos', { method: 'POST', body: JSON.stringify(da
 Después de los helpers:
 apiGet('/gestion-academica/cursos')
 apiPost('/gestion-academica/cursos', data)
+ */
+
+/**
+
  */
 export const apiGet = (endpoint) =>
     authFetch(endpoint, { method: 'GET' });

@@ -5,7 +5,9 @@ import {
     signOut, //cerrar sesion
     onAuthStateChanged } from 'firebase/auth'; //funciones especificas de firebase, salen en la documentación que envié
 import {auth} from '../firebaseConfig/config';
-import { syncUserWithBackend } from '../gateway/gatewayService';
+//import { syncUserWithBackend } from '../gateway/gatewayService';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 //se crea el espacio para compartir datos, yo lo entiendo como el contexto del user
 const AuthContext = createContext();
@@ -34,8 +36,22 @@ export function AuthProvider({children}){
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const firebaseUser = userCredential.user;
         
+        //prueba en localhost (sincronización de front y el gateway)
+        const idToken = await firebaseUser.getIdToken();
+        const res = await fetch(`${API_URL}/test/token`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${idToken}`,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const data = await res.json();
+        console.log('Gateway respondió:', data);
+        // Si ves esto en consola, el front llegó al gateway correctamente
+
         // Sincroniza con el backend para crear el perfil en PostgreSQL
-        await syncUserWithBackend(firebaseUser);
+        //await syncUserWithBackend(firebaseUser, nombre, apellido);
 
         setAuthLoading(false);
         return { ok: true, user: firebaseUser };

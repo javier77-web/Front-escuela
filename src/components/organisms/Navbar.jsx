@@ -33,6 +33,11 @@ function NavBar() {
               Iniciar sesión
             </Link>
           </div>
+          <div>
+            <Link to="/register" className="btn-login">
+              Registrarse
+            </Link>
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

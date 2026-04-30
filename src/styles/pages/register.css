@@ -1,0 +1,12 @@
+/* Hereda todo de login.css — solo agrega lo específico del register, de momento sólo el error */
+@import "./login.css";
+
+/* mensaje de error */
+.register-error {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+}
