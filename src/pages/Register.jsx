@@ -3,6 +3,8 @@ import { useAuth } from "../hooks/useAuth";
 //import { useNavigate } from "react-router-dom"; #De momento no nos llevará a ningún lado
 import "../styles/pages/register.css";
 
+//ESTO ES DE PRUEBA, DESPUÉS TENDREMOS QUE CAMBIARLO:
+const ROLES = ["Estudiante", "Profesor", "Director", "Administrativo", "Apoderado"];
 
 function Register(){
     const [email, setEmail] = useState("");
@@ -10,6 +12,7 @@ function Register(){
     const [confirmPassword, setConfirmPassword] = useState("");
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
+    const [rol, setRol] = useState("");
 
     const [ error, setError] = useState("");
     const { register, authLoading } = useAuth();
@@ -29,10 +32,15 @@ function Register(){
             return;
         }
 
-        const res = await register(email, password, nombre, apellido);
+        if (!rol) {
+            setError("Debes seleccionar un rol");
+            return;
+        }
+
+        const res = await register(email, password, nombre, apellido, rol);
 
         if (res.ok){
-            console.log("registro correcto");
+            console.log("registro correcto | Rol: " + rol);
             //navigate("/perfil"); //Acá le arreglas la ruta cuando termines el perfil
         } else {
             setError(res.message);
@@ -82,6 +90,17 @@ function Register(){
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
+
+                    <select
+                        value={rol}
+                        onChange={(e) => setRol(e.target.value)}
+                        required
+                    >
+                        <option value="" disabled>seleccionar rol</option>
+                        {ROLES.map((r) => (
+                            <option key={r} value={r}>{r}</option>
+                        ))}
+                    </select>
 
                     <button disabled={authLoading}>
                         {authLoading ? "cargando..." : "registrarse"}
