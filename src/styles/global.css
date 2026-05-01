@@ -1,25 +1,14 @@
-/* =========================================
-   RESET BÁSICO (MEJORA IMPORTANTE)
-   Evita espacios raros por defecto del navegador
-========================================= */
+/* RESET BÁSICO (MEJORA IMPORTANTE) Evita espacios raros por defecto del navegador*/
 * {
   box-sizing: border-box;
 }
 
-/* =========================================
-   BASE DEL DOCUMENTO
-   (ANTES TENÍAS height:100% que causa problemas)
-========================================= */
+/*BASE DEL DOCUMENTO (ANTES height:100% que causa problemas) */
 html, body, #root {
   margin: 0;
   padding: 0;
   min-height: 100%; /* MEJOR que height:100% */
 }
-
-/* =========================================
-   ESTILO GLOBAL DEL BODY
-   (ARREGLADO: antes texto blanco sobre fondo blanco)
-========================================= */
 body {
   background-color: #ffffff;
   color: #111; /* MEJORA: mejor contraste */
@@ -30,10 +19,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* =========================================
-   LAYOUT ROOT (REEMPLAZA TU index.css #root)
-   ❌ QUITADO width fijo (causaba el "cuadrado")
-========================================= */
+/* LAYOUT ROOT (REEMPLAZA TU index.css #root)*/
 #root {
   min-height: 100vh; /* MEJORA: ocupa toda la pantalla */
   width: 100%;       /* MEJORA: responsive real */
@@ -41,10 +27,7 @@ body {
   flex-direction: column;
 }
 
-/* =========================================
-   COMPONENTE: LÍNEA ELÉCTRICA
-   (lo dejé igual pero organizado)
-========================================= */
+/*COMPONENTE: */
 .electric-line {
   position: relative;
   height: 4px;
@@ -54,9 +37,7 @@ body {
   border-radius: 2px;
 }
 
-/* =========================================
-   RAYOS BASE
-========================================= */
+/* RAYOS BASE*/
 .ray {
   position: absolute;
   top: 0;
@@ -65,9 +46,7 @@ body {
   opacity: 0.9;
 }
 
-/* =========================================
-   RAYO 1 - celeste corto
-========================================= */
+/* RAYO 1*/
 .ray1 {
   width: 25px;
   background-color: #0011f8;
@@ -75,9 +54,7 @@ body {
   animation: moveRay1 1.5s linear infinite;
 }
 
-/* =========================================
-   RAYO 2 - azul largo
-========================================= */
+/*RAYO 2 - azul largo*/
 .ray2 {
   width: 60px;
   background-color: #0047ff;
@@ -87,9 +64,7 @@ body {
   animation-delay: 1s;
 }
 
-/* =========================================
-   RAYO 3 - violeta
-========================================= */
+/*RAYO 3 - violeta*/
 .ray3 {
   width: 40px;
   background-color: #9d00ff;
@@ -99,9 +74,7 @@ body {
   animation-delay: 0.5s;
 }
 
-/* =========================================
-   ANIMACIONES
-========================================= */
+/* ANIMACIONES */
 @keyframes moveRay1 {
   0% { left: -30px; }
   100% { left: 100%; }

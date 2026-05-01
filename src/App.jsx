@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayouts";
 import Home from "./pages/Home";
+import NuestroColegio from "./pages/NuestroColegio";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
@@ -13,6 +14,15 @@ function App() {
           element={
             <MainLayout>
               <Home />
+            </MainLayout>
+          }
+        />
+
+         <Route
+          path="/nuestroColegio"
+          element={
+            <MainLayout>
+              <NuestroColegio />
             </MainLayout>
           }
         />

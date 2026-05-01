@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-//import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom"; #De momento no nos llevará a ningún lado
 import "../styles/pages/register.css";
 
 
