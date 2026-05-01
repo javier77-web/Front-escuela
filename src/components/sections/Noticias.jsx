@@ -1,22 +1,13 @@
 // src/components/sections/Noticias.jsx
 import React from "react";
-import useHora from "../../hooks/useHora";
 import "../../styles/sections/noticias.css";
 
 function Noticias() {
-  const hora = useHora();
 
   return (
     <section className="seccion-noticias">
       <div className="contenedor-noticias">
         <h2 className="titulo-seccion">Noticias del día</h2>
-
-        {/* info en tiempo real */}
-        <div className="info-tiempo">
-          <div className="hora">🕒 {hora}</div>
-
-          
-        </div>
 
         {/* noticias */}
         <div className="lista-noticias">
