@@ -23,7 +23,7 @@ function NavBar() {
             <Nav.Link as={Link} to="/">
               Inicio
             </Nav.Link>
-            <Nav.Link as={Link} to="/colegio">
+            <Nav.Link as={Link} to="/NuestroColegio">
               Nuestro Colegio
             </Nav.Link>
             <Nav.Link as={Link} to="/noticias">
