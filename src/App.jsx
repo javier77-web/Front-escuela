@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayouts";
 import Home from "./pages/Home";
 import NuestroColegio from "./pages/NuestroColegio";
 import Noticias from "./pages/noticias";
+import Contacto from "./pages/Contacto";
 import Login from "./pages/Login";
 
 function App() {
@@ -40,7 +41,7 @@ function App() {
           path="/contacto"
           element={
             <MainLayout>
-              <h1>Contacto</h1>
+              <Contacto />
             </MainLayout>
           }
         />
