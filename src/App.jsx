@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayouts";
 import Home from "./pages/Home";
 import NuestroColegio from "./pages/NuestroColegio";
+import Noticias from "./pages/noticias";
 import Login from "./pages/Login";
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
           path="/noticias"
           element={
             <MainLayout>
-              <h1>Noticias</h1>
+              <Noticias />
             </MainLayout>
           }
         />
