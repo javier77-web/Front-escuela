@@ -57,3 +57,13 @@
   filter: invert(1) !important;
 }
 
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.usuario-nombre {
+  font-size: 0.9rem;
+  color: #273823;
+}

@@ -11,6 +11,9 @@ function Login() {
   // funciones de auth
   const { login, authLoading } = useAuth();
 
+  // hook para redireccionar
+  const navegar = useNavigate();
+
   // funcion login
   const manejarLogin = async (e) => {
     e.preventDefault();
@@ -19,6 +22,8 @@ function Login() {
 
     if (res.ok) {
       console.log("login correcto");
+      
+      navegar("/"); // redirige al home
     } else {
       alert(res.message);
     }
