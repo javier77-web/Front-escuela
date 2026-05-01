@@ -22,7 +22,7 @@ function NavBar() {
           {/* CENTRADO */}
           <Nav className="navbar-centro">
             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
-            <Nav.Link as={Link} to="/colegio">Nuestro Colegio</Nav.Link>
+            <Nav.Link as={Link} to="/nuestroColegio">Nuestro Colegio</Nav.Link>
             <Nav.Link as={Link} to="/noticias">Noticias</Nav.Link>
             <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
           </Nav>
