@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/pages/nuestroColegio.css";
-import img from "../assets/nuestroColegio/nuestroColegio.webp";
+import img from "../assets/nuestroColegio/nuestrocolegio.webp";
 
 function NuestroColegio() {
   return (
