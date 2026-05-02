@@ -11,6 +11,7 @@ Aquí se definen los endpoints:
 - asistencia
 
 Ejemplo de archivos:
+api/ (cursosService.js)
 - api.js (configuración base)
 - cursosApi.js
 - usuariosApi.js

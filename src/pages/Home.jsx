@@ -17,10 +17,9 @@ function Home() {
             comunidad
           </p>
 
-          <div className="botones">
-            <button className="btn-principal">comenzar</button>
-            <button className="btn-secundario">ver mas</button>
-          </div>
+          <a href="#nuestro-colegio" className="boton-comenzar">
+            Comenzar
+          </a>
         </div>
 
         {/* forma diagonal */}

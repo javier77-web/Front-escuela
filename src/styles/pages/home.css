@@ -43,36 +43,25 @@
   gap: 15px;
 }
 
-/* boton principal */
-.btn-principal {
-  padding: 10px 20px;
-  border: none;
+/* boton comenzar (reemplaza al button) */
+.boton-comenzar {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 20px;
   background: linear-gradient(135deg, #b64b4b, #99bb03);
   color: black;
-  border-radius: 20px;
-  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none; /* 👈 quita el subrayado */
   transition: 0.3s;
 }
 
-.btn-principal:hover {
+.boton-comenzar:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px #c9df05;
 }
-
-/* boton secundario */
-.btn-secundario {
-  padding: 10px 20px;
-  border: 1px solid #7ec40d;
-  background: transparent;
-  color: rgb(0, 0, 0);
-  border-radius: 20px;
-  cursor: pointer;
+html {
+  scroll-behavior: smooth;
 }
-
-.btn-secundario:hover {
-  border-color: #94e006;
-}
-
 /* forma diagonal */
 .hero-forma {
   position: absolute;

@@ -7,7 +7,7 @@ function NuestroColegioPreview() {
   const navegar = useNavigate();
 
   return (
-    <section className="nuestro-colegio">
+    <section id="nuestro-colegio" className="nuestro-colegio">
       <div className="contenedor-colegio">
         <h2 className="titulo-seccion">Nuestro Colegio</h2>
 
@@ -35,7 +35,7 @@ function NuestroColegioPreview() {
 
         <button
           className="boton-ver-mas"
-          onClick={() => navegar("/nuestro-colegio")}
+          onClick={() => navegar("/nuestroColegio")}
         >
           Ver más
         </button>
