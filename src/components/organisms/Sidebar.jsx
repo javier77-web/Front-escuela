@@ -38,7 +38,8 @@ function Sidebar({ rol }) {
         {/* links exclusivos del admin */}
         {rol === "admin" && (
           <>
-            <NavLink to="/admin/usuarios">usuarios</NavLink>
+            <NavLink to="/admin/alumnos">alumnos</NavLink>
+            <NavLink to="/admin/profesores">profesores</NavLink>
             <NavLink to="/admin/reportes">reportes</NavLink>
           </>
         )}

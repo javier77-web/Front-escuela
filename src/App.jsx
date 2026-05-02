@@ -11,6 +11,9 @@ import Cursos from "./pages/alumno/Cursos";
 import Notas from "./pages/alumno/Notas";
 import Asistencia from "./pages/alumno/Asistencia";
 import Anotaciones from "./pages/alumno/Anotaciones";
+import PanelAdmin from "./pages/panel/Paneladmin";
+import GestionUsuarios from "./pages/admin/GestionUsuarios";
+import Reportes from "./pages/admin/Reportes";
 
 function App() {
   return (
@@ -67,12 +70,22 @@ function App() {
               <PanelAlumno />
           }
         />
-
         // rutas del panel alumno 
         <Route path="/alumno/cursos" element={<Cursos />} />
         <Route path="/alumno/notas" element={<Notas />} />
         <Route path="/alumno/asistencia" element={<Asistencia />} />
         <Route path="/alumno/anotaciones" element={<Anotaciones />} />
+        
+        <Route
+          path="panel/admin"
+          element={
+              <PanelAdmin/>
+          }
+        />
+        // rutas del admin
+        <Route path="/admin/alumnos" element={<GestionUsuarios tipoUsuario="alumno" />} />
+        <Route path="/admin/profesores" element={<GestionUsuarios tipoUsuario="profesor" />} />
+        <Route path="/admin/reportes" element={<Reportes />} />
       </Routes>
     </BrowserRouter>
   );

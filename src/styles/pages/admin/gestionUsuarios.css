@@ -1,0 +1,223 @@
+/* contenedor de la pagina */
+.panel-contenido {
+  flex: 1;
+  padding: 40px;
+  background: #f4f6f0;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* encabezado con titulo y boton */
+.gestion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.gestion-header h1 {
+  color: #273823;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* boton crear */
+.btn-crear {
+  background: #273823;
+  color: #afec15;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-crear:hover {
+  opacity: 0.85;
+}
+
+/* tabla */
+.tabla-wrapper {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.tabla-admin {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-admin th {
+  background: #273823;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.tabla-admin td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.tabla-admin tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-admin tr:hover td {
+  background: #f9fdf5;
+}
+
+/* botones de accion en la tabla */
+.btn-edit,
+.btn-delete {
+  margin-right: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.btn-edit {
+  background: #afec15;
+  color: #273823;
+}
+
+.btn-delete {
+  background: #ff4d4d;
+  color: white;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+  opacity: 0.8;
+}
+
+/* fondo oscuro del modal */
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+/* caja del modal */
+.modal-caja {
+  background: white;
+  border-radius: 20px;
+  padding: 36px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-titulo {
+  color: #273823;
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 24px 0;
+  text-transform: capitalize;
+}
+
+/* formulario del modal */
+.modal-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-formulario label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.modal-formulario input {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.modal-formulario input:focus {
+  border-color: #4b8a64;
+}
+
+/* input deshabilitado para el rol */
+.input-deshabilitado {
+  background: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* botones del modal */
+.modal-botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn-cancelar {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #666;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cancelar:hover {
+  background: #f5f5f5;
+}
+
+/* pantalla de contrasena generada */
+.modal-contrasena {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  color: #444;
+}
+
+.contrasena-valor {
+  background: #273823;
+  color: #afec15;
+  font-size: 1.4rem;
+  font-weight: 800;
+  padding: 14px;
+  border-radius: 12px;
+  letter-spacing: 3px;
+}
+
+.contrasena-aviso {
+  color: #999;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* mensaje de error bajo el input */
+.error {
+  color: #c0392b;
+  font-size: 0.78rem;
+  margin-top: -4px;
+}
