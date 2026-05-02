@@ -40,9 +40,12 @@ function NavBar() {
               <div className="navbar-user">
 
                 {/* boton panel */}
-                <Link to="/panel" className="btn-login">
+                <Link to="/panel/alumno" className="btn-login">
                   mi panel
                 </Link>
+                {/*
+                <Link to="/panel/{rol}" className="btn-login">
+                */}
 
                 {/* logout */}
                 <button onClick={logout} className="btn-login">

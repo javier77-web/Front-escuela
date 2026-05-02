@@ -9,7 +9,6 @@ import { syncUserWithBackend } from '../gateway/gatewayService';
 
 //se crea el espacio para compartir datos, yo lo entiendo como el contexto del user
 const AuthContext = createContext();
-
 //Acá establezco el proveedor de los estados de la auth
 export function AuthProvider({children}){
     const [user, setUser] = useState(null);

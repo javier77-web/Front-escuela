@@ -1,0 +1,117 @@
+/* contenedor principal */
+.notas-container {
+  background: #f4f6f0;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+/* encabezado */
+.notas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.notas-titulo {
+  color: #273823;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.notas-subtitulo {
+  color: #666;
+  margin-top: 6px;
+}
+
+/* card promedio general */
+.notas-promedio-general {
+  background: #273823;
+  border-radius: 20px;
+  padding: 16px 28px;
+  text-align: center;
+}
+
+.promedio-label {
+  color: #afec15;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.promedio-valor {
+  color: white;
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+/* tabla */
+.notas-tabla-wrapper {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.notas-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* cabecera tabla */
+.notas-tabla-head tr {
+  background: #273823;
+  color: white;
+}
+
+.notas-tabla-head th {
+  padding: 16px 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.notas-tabla-head th:first-child {
+  text-align: left;
+}
+
+/* filas */
+.notas-tabla-row {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.notas-tabla-row:hover {
+  background: #f9fdf5;
+}
+
+.notas-tabla-row td {
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.notas-asignatura {
+  font-weight: 600;
+  color: #273823;
+  text-align: left !important;
+}
+
+/* colores de notas */
+.nota-alta { color: #4b8a64; font-weight: 700; }
+.nota-media { color: #f0a500; font-weight: 700; }
+.nota-baja { color: #c0392b; font-weight: 700; }
+
+/* badge promedio */
+.nota-badge {
+  border-radius: 20px;
+  padding: 4px 14px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.nota-alta { color: #01ec0d; font-weight: 600; }
+.nota-media { color: #c2a85a; font-weight: 600; }
+.nota-baja { color: #b06a6a; font-weight: 600; }

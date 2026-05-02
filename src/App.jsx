@@ -5,6 +5,12 @@ import NuestroColegio from "./pages/NuestroColegio";
 import Noticias from "./pages/noticias";
 import Contacto from "./pages/Contacto";
 import Login from "./pages/Login";
+import Panel from "./pages/panel/Panel";
+import PanelAlumno from "./pages/panel/PanelAlumno";
+import Cursos from "./pages/alumno/Cursos";
+import Notas from "./pages/alumno/Notas";
+import Asistencia from "./pages/alumno/Asistencia";
+import Anotaciones from "./pages/alumno/Anotaciones";
 
 function App() {
   return (
@@ -19,7 +25,7 @@ function App() {
           }
         />
 
-         <Route
+        <Route
           path="/nuestroColegio"
           element={
             <MainLayout>
@@ -48,17 +54,25 @@ function App() {
 
         <Route
           path="/login"
-          element={<MainLayout><Login /></MainLayout>}
-        />
-
-        <Route
-          path="/panel"
           element={
             <MainLayout>
-              <h1>Panel</h1>
+              <Login />
             </MainLayout>
           }
         />
+
+        <Route
+          path="panel/alumno"
+          element={
+              <PanelAlumno />
+          }
+        />
+
+        // rutas del panel alumno 
+        <Route path="/alumno/cursos" element={<Cursos />} />
+        <Route path="/alumno/notas" element={<Notas />} />
+        <Route path="/alumno/asistencia" element={<Asistencia />} />
+        <Route path="/alumno/anotaciones" element={<Anotaciones />} />
       </Routes>
     </BrowserRouter>
   );
