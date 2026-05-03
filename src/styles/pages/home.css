@@ -37,28 +37,6 @@
   margin-bottom: 30px;
 }
 
-/* botones */
-.botones {
-  display: flex;
-  gap: 15px;
-}
-
-/* boton comenzar (reemplaza al button) */
-.boton-comenzar {
-  display: inline-block;
-  padding: 12px 26px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #b64b4b, #99bb03);
-  color: black;
-  font-weight: 600;
-  text-decoration: none; /* 👈 quita el subrayado */
-  transition: 0.3s;
-}
-
-.boton-comenzar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px #c9df05;
-}
 html {
   scroll-behavior: smooth;
 }

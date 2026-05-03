@@ -1,6 +1,8 @@
 import React from "react";
 import "../styles/pages/nuestroColegio.css";
 import img from "../assets/nuestroColegio/nuestrocolegio.webp";
+import Titulo from "../components/atoms/Titulo";
+import Boton from "../components/atoms/Boton";
 
 function NuestroColegio() {
   return (
@@ -9,7 +11,7 @@ function NuestroColegio() {
       <section className="colegio-hero">
         {/* bloque de texto */}
         <div className="colegio-texto">
-          <h1>Colegio Bernardo O’higgins</h1>
+          <Titulo level={1}>Colegio Bernardo O'higgins</Titulo>
 
           <p>
             institucion educativa enfocada en la excelencia academica, la
@@ -17,8 +19,8 @@ function NuestroColegio() {
             enfrentar los desafios del futuro.
           </p>
 
-          {/* boton decorativo */}
-          <button className="btn-colegio">conocer mas</button>
+          {/* boton atms */}
+          <Boton variant="primary" className="btn-colegio">conocer mas</Boton>
 
           <div className="colegio-caracteristicas">
             <div className="card">

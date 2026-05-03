@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/login.css";
+import Input from "../components/atoms/Input";
+import Boton from "../components/atoms/Boton";
+import Spinner from "../components/atoms/Spinner";
 
 function Login() {
   // estados para inputs
@@ -22,7 +25,7 @@ function Login() {
 
     if (res.ok) {
       console.log("login correcto");
-      
+
       navegar("/"); // redirige al home
     } else {
       alert(res.message);
@@ -35,23 +38,29 @@ function Login() {
         <h2 className="login-titulo">iniciar sesion</h2>
 
         <form onSubmit={manejarLogin}>
-          <input
+          <Input
             type="email"
+            name="email"
             placeholder="correo"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
 
-          <input
+          <Input
             type="password"
+            name="password"
             placeholder="contraseña"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
 
-          <button disabled={authLoading}>
-            {authLoading ? "cargando..." : "ingresar"}
-          </button>
+          {authLoading ? (
+            <Spinner texto="ingresando..." />
+          ) : (
+            <Boton type="submit" variant="primary">
+              ingresar
+            </Boton>
+          )}
         </form>
       </div>
     </div>

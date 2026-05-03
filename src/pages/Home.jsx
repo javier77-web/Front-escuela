@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/pages/home.css";
 import Acerca from "../components/sections/NuestroColegioPreview";
 import Noticias from "../components/sections/Noticias";
+import Boton from "../components/atoms/Boton";
 
 function Home() {
   return (
@@ -11,15 +12,17 @@ function Home() {
         <div className="hero-contenido">
           <h2 className="titu2">Colegio</h2>
           <h1 className="titulo"> Bernardo O’Higgins</h1>
-
           <p className="subtitulo">
             excelencia académica, formación integral y compromiso con la
             comunidad
           </p>
-
-          <a href="#nuestro-colegio" className="boton-comenzar">
+          
+          <Boton
+            onClick={() => (window.location.href = "#nuestro-colegio")}
+            variant="primary"
+          >
             Comenzar
-          </a>
+          </Boton>
         </div>
 
         {/* forma diagonal */}
