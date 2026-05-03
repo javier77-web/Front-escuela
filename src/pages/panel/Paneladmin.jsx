@@ -2,6 +2,8 @@ import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/panel/panelAdmin.css";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
 
 // panel principal del administrador
 function PanelAdmin() {
@@ -13,11 +15,10 @@ function PanelAdmin() {
       <Sidebar rol="admin" />
 
       <div className="panel-contenido">
-        {/* saludo admin */}
-        <h1>panel de control: {user?.displayName || "administrador"}</h1>
-        <p>gestión general del establecimiento</p>
+        <Titulo>panel de control: {user?.displayName || "administrador"}</Titulo>
 
-        {/* cards resumen para el admin */}
+        <Texto>gestión general del establecimiento</Texto>
+
         <div className="panel-cards">
           <div className="panel-card admin">
             <h3>total alumnos</h3>

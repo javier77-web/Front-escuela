@@ -1,0 +1,37 @@
+.texto-atom {
+  margin: 0;
+}
+
+/* tamaños */
+.texto-atom.sm {
+  font-size: 0.8rem;
+}
+
+.texto-atom.md {
+  font-size: 0.95rem;
+}
+
+.texto-atom.lg {
+  font-size: 1.1rem;
+}
+
+/* colores */
+.texto-atom.default {
+  color: #555;
+}
+
+.texto-atom.muted {
+  color: #888;
+}
+
+.texto-atom.primary {
+  color: #273823;
+}
+
+.texto-atom.success {
+  color: #4b8a64;
+}
+
+.texto-atom.danger {
+  color: #c0392b;
+}
