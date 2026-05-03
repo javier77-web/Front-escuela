@@ -1,0 +1,21 @@
+.btn-atom {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-atom.primary {
+  background: #273823;
+  color: #afec15;
+}
+
+.btn-atom.secondary {
+  background: white;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.btn-atom:hover { opacity: 0.85; }

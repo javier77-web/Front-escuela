@@ -1,0 +1,7 @@
+.input-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.input-label { font-size: 0.8rem; font-weight: 700; color: #555; text-transform: uppercase; }
+.input-atom { padding: 10px 14px; border: 1px solid #ddd; border-radius: 10px; font-size: 0.95rem; }
+.input-atom:focus { border-color: #4b8a64; outline: none; }
+.input-disabled { background: #f0f0f0; color: #999; cursor: not-allowed; }
+.error-text { color: #c0392b; font-size: 0.78rem; }
+.input-error-border { border-color: #c0392b; }

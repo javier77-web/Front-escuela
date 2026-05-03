@@ -1,0 +1,26 @@
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px;
+}
+
+.spinner-circulo {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #e0e0e0;
+  border-top-color: #273823;
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-texto {
+  color: #888;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,10 @@
+.titulo-atom {
+  color: #273823;
+  margin: 0;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.titulo-atom.level-1 { font-size: 2rem; }
+.titulo-atom.level-2 { font-size: 1.5rem; }
+.titulo-atom.level-3 { font-size: 1.2rem; }
