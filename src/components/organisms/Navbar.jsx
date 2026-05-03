@@ -38,7 +38,6 @@ function NavBar() {
           <div className="navbar-login">
             {user ? (
               <div className="navbar-user">
-
                 {/* boton panel */}
                 <Link to="/panel/alumno" className="btn-login">
                   mi panel
