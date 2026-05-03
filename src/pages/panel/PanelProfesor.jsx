@@ -2,6 +2,8 @@ import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/panel/panelProfesor.css";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
 
 // panel principal del profesor
 function PanelProfesor() {
@@ -13,22 +15,24 @@ function PanelProfesor() {
       <Sidebar rol="profesor" />
 
       <div className="panel-contenido">
-        <h1>bienvenido profesor, {user?.email}</h1>
+        {/* saludo */}
+        <Titulo level={1} className="saludo">bienvenido profesor, {user?.email}</Titulo>
 
+        {/* cards */}
         <div className="panel-cards">
           <div className="panel-card">
-            <h3>cursos</h3>
-            <p>3 asignados</p>
+            <Titulo level={3}>cursos</Titulo>
+            <Texto>3 asignados</Texto>
           </div>
 
           <div className="panel-card">
-            <h3>estudiantes</h3>
-            <p>120</p>
+            <Titulo level={3}>estudiantes</Titulo>
+            <Texto>120</Texto>
           </div>
 
           <div className="panel-card">
-            <h3>clases hoy</h3>
-            <p>4</p>
+            <Titulo level={3}>clases hoy</Titulo>
+            <Texto>4</Texto>
           </div>
         </div>
       </div>

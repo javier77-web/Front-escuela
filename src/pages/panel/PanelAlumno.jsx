@@ -2,6 +2,8 @@ import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/panel/panelAlumno.css";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
 
 // panel principal del alumno, muestra resumen general
 function PanelAlumno() {
@@ -15,27 +17,26 @@ function PanelAlumno() {
 
       {/* contenido principal del panel */}
       <div className="panel-contenido">
-        {/* saludo con nombre del alumno */}
-        <h1>bienvenido, {user?.displayName || user?.email} 👋</h1>
+        {/* atoms */}
+        <Titulo level={1}>
+          bienvenido, {user?.displayName || user?.email}
+        </Titulo>
 
-        {/* cards de resumen — datos estaticos por ahora, despues se conectan a la api */}
+        {/* cards */}
         <div className="panel-cards">
-          {/* total de cursos inscritos */}
           <div className="panel-card">
-            <h3>cursos</h3>
-            <p>5 inscritos</p>
+            <Titulo level={3}>cursos</Titulo>
+            <Texto>5 inscritos</Texto>
           </div>
 
-          {/* promedio general del alumno */}
           <div className="panel-card">
-            <h3>promedio</h3>
-            <p>6.2</p>
+            <Titulo level={3}>promedio</Titulo>
+            <Texto>6.2</Texto>
           </div>
 
-          {/* porcentaje de asistencia */}
           <div className="panel-card">
-            <h3>asistencia</h3>
-            <p>89%</p>
+            <Titulo level={3}>asistencia</Titulo>
+            <Texto>89%</Texto>
           </div>
         </div>
       </div>
