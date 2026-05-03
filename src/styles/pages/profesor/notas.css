@@ -1,0 +1,100 @@
+/* contenedor principal */
+.notas-profesor-container {
+  background: #f4f6f0;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+/* titulo */
+.notas-profesor-container h1 {
+  color: #273823;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+/* wrapper tabla */
+.tabla-wrapper {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* tabla */
+.tabla-notas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* encabezado */
+.tabla-notas thead {
+  background: #273823;
+  color: white;
+}
+
+.tabla-notas th {
+  padding: 16px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.tabla-notas th:first-child {
+  text-align: left;
+}
+
+/* filas */
+.tabla-notas td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-notas td:first-child {
+  text-align: left;
+  font-weight: 600;
+  color: #273823;
+}
+
+/* hover */
+.tabla-notas tbody tr:hover {
+  background: #f9fdf5;
+}
+
+/* inputs */
+.tabla-notas input {
+  width: 60px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+  transition: 0.2s;
+}
+
+/* focus */
+.tabla-notas input:focus {
+  outline: none;
+  border-color: #4b8a64;
+  box-shadow: 0 0 5px rgba(75, 138, 100, 0.5);
+}
+
+/* promedio */
+.promedio {
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 12px;
+  color: white;
+}
+
+/* colores */
+.promedio.alto {
+  background: #4b8a64;
+}
+
+.promedio.medio {
+  background: #f0a500;
+}
+
+.promedio.bajo {
+  background: #c0392b;
+}

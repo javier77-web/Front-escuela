@@ -14,6 +14,13 @@ import Anotaciones from "./pages/alumno/Anotaciones";
 import PanelAdmin from "./pages/panel/Paneladmin";
 import GestionUsuarios from "./pages/admin/GestionUsuarios";
 import Reportes from "./pages/admin/Reportes";
+import PanelProfesor from "./pages/panel/PanelProfesor";
+import NotasProfesor from "./pages/profesor/Notas";
+import AsistenciaProfesor from "./pages/profesor/Asistencia";
+import CursosProfesor from "./pages/profesor/Cursos";
+import AsignaturaDetalle from "./pages/profesor/AsignaturaDetalle";
+import AnotacionesProfesor from "./pages/profesor/Anotaciones";
+import EvaluacionesProfesor from "./pages/profesor/Evaluaciones";
 
 function App() {
   return (
@@ -86,6 +93,20 @@ function App() {
         <Route path="/admin/alumnos" element={<GestionUsuarios tipoUsuario="alumno" />} />
         <Route path="/admin/profesores" element={<GestionUsuarios tipoUsuario="profesor" />} />
         <Route path="/admin/reportes" element={<Reportes />} />
+
+        <Route
+          path="panel/profesor"
+          element={
+              <PanelProfesor/>
+          }
+        />
+        // rutas del profesor
+        <Route path="/profesor/cursos" element={<CursosProfesor />} />
+        <Route path="/profesor/asignatura/:id" element={<AsignaturaDetalle />} />
+        <Route path="/profesor/:id/asistencia" element={<AsistenciaProfesor />} />
+        <Route path="/profesor/:id/notas" element={<NotasProfesor />} />
+        <Route path="/profesor/:id/anotaciones" element={<AnotacionesProfesor />} />
+        <Route path="/profesor/:id/evaluaciones" element={<EvaluacionesProfesor />} />
       </Routes>
     </BrowserRouter>
   );

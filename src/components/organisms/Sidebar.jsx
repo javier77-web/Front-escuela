@@ -43,6 +43,12 @@ function Sidebar({ rol }) {
             <NavLink to="/admin/reportes">reportes</NavLink>
           </>
         )}
+
+        {rol === "profesor" && (
+          <>
+            <NavLink to="/profesor/cursos">cursos</NavLink>
+          </>
+        )}
       </nav>
 
       <button className="sidebar-logout" onClick={handleLogout}>

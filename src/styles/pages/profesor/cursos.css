@@ -1,0 +1,73 @@
+/* CONTENEDOR SOLO DE ESTA PAGINA */
+.cursos-profesor-container {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* TITULO */
+.cursos-profesor-container h1 {
+  color: #273823;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+/* GRID */
+.cursos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.curso-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  transition: 0.2s;
+}
+
+.curso-card:hover {
+  transform: translateY(-5px);
+}
+
+/* TEXTO */
+.curso-card h3 {
+  margin: 0;
+  color: #273823;
+}
+
+.curso-card p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* BOTON */
+.curso-card button {
+  margin-top: 10px;
+
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #4b8a64, #afec15);
+  cursor: pointer;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.curso-card button:hover {
+  transform: scale(1.05);
+}

@@ -1,0 +1,116 @@
+/* CONTENEDOR PRINCIPAL SOLO DE ESTA PAGINA */
+.anotaciones-profesor-container {
+  max-width: 800px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* TITULO */
+.anotaciones-profesor-container h1 {
+  color: #273823;
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* FORM */
+.form-anotacion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* INPUTS */
+.form-anotacion select,
+.form-anotacion textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+/* FOCUS */
+.form-anotacion select:focus,
+.form-anotacion textarea:focus {
+  outline: none;
+  border-color: #4b8a64;
+  box-shadow: 0 0 5px rgba(75, 138, 100, 0.4);
+}
+
+/* TEXTAREA */
+.form-anotacion textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+/* BOTON */
+.form-anotacion button {
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #4b8a64, #afec15);
+  cursor: pointer;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.form-anotacion button:hover {
+  transform: scale(1.05);
+}
+
+/* LISTA */
+.lista-anotaciones {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* COLORES */
+.card.positiva {
+  border-left: 5px solid #4b8a64;
+}
+
+.card.negativa {
+  border-left: 5px solid #c0392b;
+}
+
+/* TEXTO */
+.card h3 {
+  margin: 0;
+  color: #273823;
+}
+
+.card p {
+  margin: 0;
+  color: #555;
+}
+
+.card span {
+  font-size: 0.8rem;
+  color: #999;
+}
