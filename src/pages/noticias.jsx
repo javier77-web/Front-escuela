@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/pages/noticias.css";
 import img from "../assets/noticias/noti.webp";
+import Titulo from "../components/atoms/Titulo";
 
 function Noticias() {
   return (
@@ -8,7 +9,9 @@ function Noticias() {
 
       {/* header */}
       <div className="noticias-header">
-        <h1>noticias del dia</h1>
+        <Titulo level={1} className="titulo-noticias">
+          noticias del dia
+        </Titulo>
 
         {/* esto despues lo conectas */}
         <div className="info-tiempo">

@@ -2,6 +2,9 @@ import React from "react";
 import useFormulario from "../hooks/useFormulario";
 import { validarContacto } from "../hooks/validaciones/validarContacto";
 import "../styles/pages/contacto.css";
+import Input from "../components/atoms/Input";
+import Boton from "../components/atoms/Boton";
+import Titulo from "../components/atoms/Titulo";
 
 function Contacto() {
   const { valores, errores, manejarCambio, manejarSubmit } = useFormulario(
@@ -16,36 +19,38 @@ function Contacto() {
   return (
     <div className="contacto-container">
       {/* titulo */}
-      <h1 className="contacto-titulo">contacto</h1>
+      <Titulo level={1}>contacto</Titulo>
 
       <div className="contacto-contenido">
         {/* formulario */}
         <form className="contacto-form" onSubmit={manejarSubmit(enviar)}>
-          <input
+          <Input
             name="nombre"
             placeholder="nombre"
             value={valores.nombre}
             onChange={manejarCambio}
+            error={errores.nombre}
           />
-          {errores.nombre && <p className="error">{errores.nombre}</p>}
 
-          <input
+          <Input
             name="correo"
             placeholder="correo"
             value={valores.correo}
             onChange={manejarCambio}
+            error={errores.correo}
           />
-          {errores.correo && <p className="error">{errores.correo}</p>}
 
-          <textarea
+          <Input
             name="mensaje"
             placeholder="mensaje"
             value={valores.mensaje}
             onChange={manejarCambio}
+            error={errores.mensaje}
           />
-          {errores.mensaje && <p className="error">{errores.mensaje}</p>}
 
-          <button>enviar</button>
+          <Boton type="submit" variant="primary">
+            enviar
+          </Boton>
         </form>
 
         {/* info lateral */}

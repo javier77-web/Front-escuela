@@ -30,11 +30,6 @@
 .btn-colegio {
   margin: 20px auto 0 auto; /* 🔥 centra horizontal */
   display: block;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  background: linear-gradient(135deg, #4b8a64, #afec15);
-  cursor: pointer;
   transition: 0.3s;;
 }
 

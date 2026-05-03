@@ -7,6 +7,7 @@
   transition: 0.2s;
 }
 
+/* variantes */
 .btn-atom.primary {
   background: #273823;
   color: #afec15;
@@ -18,4 +19,11 @@
   color: #666;
 }
 
-.btn-atom:hover { opacity: 0.85; }
+.btn-atom:hover {
+  opacity: 0.85;
+}
+
+.btn-atom:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
