@@ -1,6 +1,9 @@
 import React from "react";
 import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/admin/reportes.css";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Badge from "../../components/atoms/Badge";
 
 // pagina de reportes del administrador
 function Reportes() {
@@ -58,13 +61,14 @@ function Reportes() {
       {/* contenido principal */}
       <div className="panel-contenido">
         <div className="reportes-encabezado">
-          <h1 className="reportes-titulo">reportes generales</h1>
-          <p className="reportes-subtitulo">
+          <Titulo level={1}>reportes generales</Titulo>
+
+          <Texto color="muted">
             resumen visual del estado actual del sistema
-          </p>
+          </Texto>
         </div>
 
-        {/* grilla de tarjetas */}
+        {/* GRILLA */}
         <div className="reportes-grilla">
           {resumenGeneral.map((reporte) => (
             <div
@@ -72,12 +76,16 @@ function Reportes() {
               className={`reporte-tarjeta ${reporte.color}`}
             >
               <div className="reporte-superior">
-                <span className="reporte-icono">{reporte.icono}</span>
-                <span className="reporte-etiqueta">{reporte.titulo}</span>
+                <Badge texto={reporte.titulo} tipo={reporte.color} />
               </div>
 
-              <h2 className="reporte-valor">{reporte.valor}</h2>
-              <p className="reporte-descripcion">{reporte.descripcion}</p>
+              <Titulo level={2} className="reporte-valor">
+                {reporte.valor}
+              </Titulo>
+
+              <Texto size="sm" color="muted">
+                {reporte.descripcion}
+              </Texto>
             </div>
           ))}
         </div>
