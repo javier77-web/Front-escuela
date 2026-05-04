@@ -42,7 +42,7 @@
 }
 
 .promedio-valor {
-  color: white;
+  color: rgb(158, 38, 38);
   margin: 0;
   font-size: 2.2rem;
   font-weight: 800;
@@ -62,27 +62,34 @@
 }
 
 /* cabecera tabla */
-.notas-tabla-head tr {
+.notas-tabla thead tr {
   background: #273823;
   color: white;
 }
 
-.notas-tabla-head th {
+.notas-tabla th {
   padding: 16px 20px;
   text-align: center;
   font-weight: 600;
 }
 
-.notas-tabla-head th:first-child {
+.notas-tabla th:first-child {
   text-align: left;
 }
-
 /* filas */
-.notas-tabla-row {
+.notas-tabla tbody tr {
   border-bottom: 1px solid #f0f0f0;
   transition: background 0.2s;
 }
 
+.notas-tabla tbody tr:hover {
+  background: #f9fdf5;
+}
+
+.notas-tabla td {
+  padding: 16px 20px;
+  text-align: center;
+}
 .notas-tabla-row:hover {
   background: #f9fdf5;
 }
@@ -98,10 +105,6 @@
   text-align: left !important;
 }
 
-/* colores de notas */
-.nota-alta { color: #4b8a64; font-weight: 700; }
-.nota-media { color: #f0a500; font-weight: 700; }
-.nota-baja { color: #c0392b; font-weight: 700; }
 
 /* badge promedio */
 .nota-badge {
@@ -112,6 +115,21 @@
   font-size: 0.9rem;
 }
 
-.nota-alta { color: #01ec0d; font-weight: 600; }
-.nota-media { color: #c2a85a; font-weight: 600; }
-.nota-baja { color: #b06a6a; font-weight: 600; }
+/* estilos para badge de notas */
+.badge-atom.success {
+  background: #4b8a64;
+  color: white;
+  font-weight: 700;
+}
+
+.badge-atom.warning {
+  background: #f0a500;
+  color: white;
+  font-weight: 700;
+}
+
+.badge-atom.danger {
+  background: #c0392b;
+  color: white;
+  font-weight: 700;
+}

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/admin/gestionUsuarios.css";
 import useFormulario from "../../hooks/useFormulario";
 import { validarContacto } from "../../hooks/validaciones/validarContacto";
+// layout
+import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
@@ -74,10 +75,8 @@ function GestionUsuarios({ tipoUsuario }) {
   };
 
   return (
-    <div className="panel-container">
-      <Sidebar rol="admin" />
-
-      <div className="panel-contenido">
+    <PanelLayout rol="admin">
+      <div className="gestion-container">
         {/* HEADER */}
         <div className="gestion-header">
           <Titulo level={1}>gestión de {tipoUsuario}s</Titulo>
@@ -114,76 +113,76 @@ function GestionUsuarios({ tipoUsuario }) {
             </tbody>
           </table>
         </div>
-      </div>
 
-      {/* MODAL */}
-      {modalAbierto && (
-        <div className="modal-fondo" onClick={cerrarModal}>
-          <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
-            <Titulo level={2}>nuevo {tipoUsuario}</Titulo>
+        {/* MODAL */}
+        {modalAbierto && (
+          <div className="modal-fondo" onClick={cerrarModal}>
+            <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
+              <Titulo level={2}>nuevo {tipoUsuario}</Titulo>
 
-            {contrasenaGenerada ? (
-              <div className="modal-contrasena">
-                <Texto>usuario creado exitosamente</Texto>
-                <Texto size="sm">contraseña temporal:</Texto>
+              {contrasenaGenerada ? (
+                <div className="modal-contrasena">
+                  <Texto>usuario creado exitosamente</Texto>
 
-                <Texto className="contrasena-valor">{contrasenaGenerada}</Texto>
+                  <Texto size="sm">contraseña temporal:</Texto>
 
-                <Texto size="sm" color="muted">
-                  copia esta contraseña y entrégasela al usuario
-                </Texto>
+                  <Texto className="contrasena-valor">
+                    {contrasenaGenerada}
+                  </Texto>
 
-                <Boton onClick={cerrarModal}>cerrar</Boton>
-              </div>
-            ) : (
-              <form onSubmit={manejarEnvio} className="modal-formulario">
-                <Input
-                  label="nombre"
-                  name="nombre"
-                  value={valores.nombre}
-                  onChange={manejarCambio}
-                  placeholder="nombre del usuario"
-                  error={errores.nombre}
-                />
+                  <Texto size="sm" color="muted">
+                    copia esta contraseña y entrégasela al usuario
+                  </Texto>
 
-                <Input
-                  label="apellido"
-                  name="apellido"
-                  value={valores.apellido}
-                  onChange={manejarCambio}
-                  placeholder="apellido del usuario"
-                  error={errores.apellido}
-                />
-
-                <Input
-                  label="email"
-                  name="email"
-                  type="email"
-                  value={valores.email}
-                  onChange={manejarCambio}
-                  placeholder="correo@colegio.cl"
-                  error={errores.email}
-                />
-
-                <Input label="rol" name="rol" value={valores.rol} disabled />
-
-                <div className="modal-botones">
-                  <Boton
-                    type="button"
-                    variant="secondary"
-                    onClick={cerrarModal}
-                  >
-                    cancelar
-                  </Boton>
-
-                  <Boton type="submit">crear usuario</Boton>
+                  <Boton onClick={cerrarModal}>cerrar</Boton>
                 </div>
-              </form>
-            )}
+              ) : (
+                <form onSubmit={manejarEnvio} className="modal-formulario">
+                  <Input
+                    label="nombre"
+                    name="nombre"
+                    value={valores.nombre}
+                    onChange={manejarCambio}
+                    error={errores.nombre}
+                  />
+
+                  <Input
+                    label="apellido"
+                    name="apellido"
+                    value={valores.apellido}
+                    onChange={manejarCambio}
+                    error={errores.apellido}
+                  />
+
+                  <Input
+                    label="email"
+                    name="email"
+                    type="email"
+                    value={valores.email}
+                    onChange={manejarCambio}
+                    error={errores.email}
+                  />
+
+                  <Input label="rol" name="rol" value={valores.rol} disabled />
+
+                  <div className="modal-botones">
+                    <Boton
+                      type="button"
+                      variant="secondary"
+                      onClick={cerrarModal}
+                    >
+                      cancelar
+                    </Boton>
+
+                    <Boton type="submit">crear usuario</Boton>
+                  </div>
+                </form>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </PanelLayout>
   );
 }
 

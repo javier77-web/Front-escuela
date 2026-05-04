@@ -1,5 +1,6 @@
 import React from "react";
-import Sidebar from "../../components/organisms/Sidebar";
+// layout
+import PanelLayout from "../../layouts/PanelLayout";
 import "../../styles/pages/admin/reportes.css";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
@@ -54,12 +55,9 @@ function Reportes() {
   ];
 
   return (
-    <div className="panel-container">
-      {/* sidebar del administrador */}
-      <Sidebar rol="admin" />
-
-      {/* contenido principal */}
-      <div className="panel-contenido">
+    <PanelLayout rol="admin">
+      <div className="reportes-container">
+        {/* HEADER */}
         <div className="reportes-encabezado">
           <Titulo level={1}>reportes generales</Titulo>
 
@@ -76,7 +74,7 @@ function Reportes() {
               className={`reporte-tarjeta ${reporte.color}`}
             >
               <div className="reporte-superior">
-                <Badge texto={reporte.titulo} tipo={reporte.color} />
+                <Badge texto={reporte.titulo} tipo="secondary" />
               </div>
 
               <Titulo level={2} className="reporte-valor">
@@ -90,7 +88,7 @@ function Reportes() {
           ))}
         </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 

@@ -1,10 +1,13 @@
 import React from "react";
 import "../../styles/pages/alumno/cursos.css";
-import Sidebar from "../../components/organisms/Sidebar";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Badge from "../../components/atoms/Badge";
+// layout
+import PanelLayout from "../../layouts/PanelLayout";
 
 // pagina de cursos del alumno — muestra los cursos inscritos del semestre
 function Cursos() {
-  // datos estaticos — despues se reemplazan con la api
   const cursos = [
     {
       id: 1,
@@ -44,37 +47,36 @@ function Cursos() {
   ];
 
   return (
-    <div className="panel-container">
-      {/* sidebar con navegacion */}
-      <Sidebar rol="alumno" />
-      <div className="panel-contenido">
-        <div className="cursos-container">
-          {/* encabezado de la pagina */}
-          <div className="cursos-header">
-            <h1 className="cursos-titulo">mis cursos</h1>
-            <p className="cursos-subtitulo">
-              tienes {cursos.length} ramos este semestre
-            </p>
-          </div>
+    <PanelLayout rol="alumno">
+      <div className="cursos-container">
+        {/* HEADER */}
+        <div className="cursos-header">
+          <Titulo level={1}>Mis cursos</Titulo>
 
-          {/* grilla de cards de cursos */}
-          <div className="cursos-grid">
-            {cursos.map((curso) => (
-              <div key={curso.id} className="curso-card">
-                {/* nombre y creditos */}
-                <div className="curso-card-header">
-                  <h3 className="curso-nombre">{curso.nombre}</h3>
-                </div>
+          <Texto color="muted">
+            tienes {cursos.length} ramos este semestre
+          </Texto>
+        </div>
 
-                {/* info del curso */}
-                <p className="curso-profesor"> {curso.profesor}</p>
-                <p className="curso-horario">{curso.horario}</p>
+        {/* GRID */}
+        <div className="cursos-grid">
+          {cursos.map((curso) => (
+            <div key={curso.id} className="curso-card">
+              <div className="curso-card-header">
+                <Titulo level={3}>{curso.nombre}</Titulo>
               </div>
-            ))}
-          </div>
+
+              {/* INFO */}
+              <Texto>{curso.profesor}</Texto>
+
+              <Texto size="sm" color="muted">
+                {curso.horario}
+              </Texto>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 

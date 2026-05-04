@@ -6,5 +6,5 @@
 }
 
 .titulo-atom.level-1 { margin-bottom: 20px; }
-.titulo-atom.level-2 { font-size: 1.5rem; }
+.titulo-atom.level-2 { font-size: 1.5rem; color: rgb(0, 0, 0); }
 .titulo-atom.level-3 {  font-size: 1.2rem; color: #2bbb0b; }

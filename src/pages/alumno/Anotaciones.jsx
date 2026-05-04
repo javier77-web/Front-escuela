@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import "../../styles/pages/alumno/anotaciones.css";
-import Sidebar from "../../components/organisms/Sidebar";
+// layout
+import PanelLayout from "../../layouts/PanelLayout";
+// atoms
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Badge from "../../components/atoms/Badge";
+import Boton from "../../components/atoms/Boton";
 
 // pagina de anotaciones del alumno — muestra historial con filtros
 function Anotaciones() {
@@ -59,64 +65,72 @@ function Anotaciones() {
   const positivas = anotaciones.filter((a) => a.tipo === "positiva").length;
   const negativas = anotaciones.filter((a) => a.tipo === "negativa").length;
 
+  const getTipoBadge = (tipo) => (tipo === "positiva" ? "success" : "danger");
+
   return (
-    <div className="panel-container">
-      {/* sidebar con navegacion */}
-      <Sidebar rol="alumno" />
-      <div className="panel-contenido">
-        <div className="anotaciones-container">
-          {/* encabezado */}
-          <div className="anotaciones-header">
-            <h1 className="anotaciones-titulo">anotaciones</h1>
-            <p className="anotaciones-subtitulo">
-              historial de anotaciones del semestre
-            </p>
+    <PanelLayout rol="alumno">
+      <div className="anotaciones-container">
+        {/* HEADER */}
+        <div className="anotaciones-header">
+          <Titulo level={1}>Anotaciones</Titulo>
+          <Texto color="muted">historial de anotaciones del semestre</Texto>
+        </div>
+
+        {/* RESUMEN */}
+        <div className="anotaciones-resumen">
+          <div className="resumen-card positiva">
+            <Titulo level={2}>{positivas}</Titulo>
+            <Texto size="sm">positivas</Texto>
           </div>
 
-          {/* resumen positivas y negativas */}
-          <div className="anotaciones-resumen">
-            <div className="resumen-card positiva">
-              <p className="resumen-numero">{positivas}</p>
-              <p className="resumen-label">positivas</p>
-            </div>
-            <div className="resumen-card negativa">
-              <p className="resumen-numero">{negativas}</p>
-              <p className="resumen-label"> negativas</p>
-            </div>
-          </div>
-
-          {/* botones de filtro */}
-          <div className="anotaciones-filtros">
-            {["todas", "positiva", "negativa"].map((f) => (
-              <button
-                key={f}
-                onClick={() => setFiltro(f)}
-                className={`filtro-btn ${filtro === f ? "filtro-activo" : ""}`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
-
-          {/* lista de anotaciones */}
-          <div className="anotaciones-lista">
-            {filtradas.map((a) => (
-              <div key={a.id} className={`anotacion-card ${a.tipo}`}>
-                <div className="anotacion-info">
-                  <div className="anotacion-top">
-                    <span>{a.tipo === "positiva"}</span>
-                    <span className="anotacion-asignatura">{a.asignatura}</span>
-                    <span className="anotacion-profesor">• {a.profesor}</span>
-                  </div>
-                  <p className="anotacion-descripcion">{a.descripcion}</p>
-                </div>
-                <span className="anotacion-fecha">{a.fecha}</span>
-              </div>
-            ))}
+          <div className="resumen-card negativa">
+            <Titulo level={2}>{negativas}</Titulo>
+            <Texto size="sm">negativas</Texto>
           </div>
         </div>
+
+        {/* FILTROS */}
+        <div className="anotaciones-filtros">
+          {["todas", "positiva", "negativa"].map((f) => (
+            <Boton
+              key={f}
+              onClick={() => setFiltro(f)}
+              variant={filtro === f ? "primary" : "secondary"}
+            >
+              {f}
+            </Boton>
+          ))}
+        </div>
+
+        {/* LISTA */}
+        <div className="anotaciones-lista">
+          {filtradas.map((a) => (
+            <div key={a.id} className={`anotacion-card ${a.tipo}`}>
+              <div className="anotacion-info">
+                {/* TOP */}
+                <div className="anotacion-top">
+                  <Badge texto={a.tipo} tipo={getTipoBadge(a.tipo)} />
+
+                  <Texto>{a.asignatura}</Texto>
+
+                  <Texto size="sm" color="muted">
+                    • {a.profesor}
+                  </Texto>
+                </div>
+
+                {/* DESCRIPCIÓN */}
+                <Texto>{a.descripcion}</Texto>
+              </div>
+
+              {/* FECHA */}
+              <Texto size="sm" color="muted">
+                {a.fecha}
+              </Texto>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 

@@ -1,0 +1,16 @@
+.panel-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* sidebar ocupa su espacio normal */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+}
+
+/* contenido se adapta */
+.panel-content {
+  flex: 1;
+  padding: 20px;
+}
