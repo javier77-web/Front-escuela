@@ -3,6 +3,10 @@ import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/admin/gestionUsuarios.css";
 import useFormulario from "../../hooks/useFormulario";
 import { validarContacto } from "../../hooks/validaciones/validarContacto";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Boton from "../../components/atoms/Boton";
+import Input from "../../components/atoms/Input";
 
 // genera una contraseña temporal automatica para el nuevo usuario
 function generarContrasena() {
@@ -74,16 +78,16 @@ function GestionUsuarios({ tipoUsuario }) {
       <Sidebar rol="admin" />
 
       <div className="panel-contenido">
+        {/* HEADER */}
         <div className="gestion-header">
-          <h1>gestión de {tipoUsuario}s</h1>
+          <Titulo level={1}>gestión de {tipoUsuario}s</Titulo>
 
-          {/* boton que abre el modal */}
-          <button className="btn-crear" onClick={() => setModalAbierto(true)}>
+          <Boton onClick={() => setModalAbierto(true)}>
             nuevo {tipoUsuario}
-          </button>
+          </Boton>
         </div>
 
-        {/* tabla de usuarios */}
+        {/* TABLA */}
         <div className="tabla-wrapper">
           <table className="tabla-admin">
             <thead>
@@ -94,6 +98,7 @@ function GestionUsuarios({ tipoUsuario }) {
                 <th>acciones</th>
               </tr>
             </thead>
+
             <tbody>
               {filtrados.map((usuario) => (
                 <tr key={usuario.id}>
@@ -101,8 +106,8 @@ function GestionUsuarios({ tipoUsuario }) {
                   <td>{usuario.apellido}</td>
                   <td>{usuario.email}</td>
                   <td>
-                    <button className="btn-edit">editar</button>
-                    <button className="btn-delete">borrar</button>
+                    <Boton variant="secondary">editar</Boton>
+                    <Boton variant="danger">borrar</Boton>
                   </td>
                 </tr>
               ))}
@@ -111,86 +116,67 @@ function GestionUsuarios({ tipoUsuario }) {
         </div>
       </div>
 
-      {/* modal para crear nuevo usuario */}
+      {/* MODAL */}
       {modalAbierto && (
         <div className="modal-fondo" onClick={cerrarModal}>
           <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
-            <h2 className="modal-titulo">nuevo {tipoUsuario}</h2>
+            <Titulo level={2}>nuevo {tipoUsuario}</Titulo>
 
-            {/* si ya se creo el usuario mostramos la contrasena */}
             {contrasenaGenerada ? (
               <div className="modal-contrasena">
-                <p>usuario creado exitosamente</p>
-                <p>contraseña temporal:</p>
-                <span className="contrasena-valor">{contrasenaGenerada}</span>
-                <p className="contrasena-aviso">
-                  copia esta contraseña y entrégasela al usuario. no se
-                  mostrará de nuevo.
-                </p>
-                <button className="btn-crear" onClick={cerrarModal}>
-                  cerrar
-                </button>
+                <Texto>usuario creado exitosamente</Texto>
+                <Texto size="sm">contraseña temporal:</Texto>
+
+                <Texto className="contrasena-valor">{contrasenaGenerada}</Texto>
+
+                <Texto size="sm" color="muted">
+                  copia esta contraseña y entrégasela al usuario
+                </Texto>
+
+                <Boton onClick={cerrarModal}>cerrar</Boton>
               </div>
             ) : (
-              // formulario con hook useFormulario
               <form onSubmit={manejarEnvio} className="modal-formulario">
-                <label>nombre</label>
-                <input
-                  type="text"
+                <Input
+                  label="nombre"
                   name="nombre"
                   value={valores.nombre}
                   onChange={manejarCambio}
                   placeholder="nombre del usuario"
+                  error={errores.nombre}
                 />
-                {errores.nombre && (
-                  <span className="error">{errores.nombre}</span>
-                )}
 
-                <label>apellido</label>
-                <input
-                  type="text"
+                <Input
+                  label="apellido"
                   name="apellido"
                   value={valores.apellido}
                   onChange={manejarCambio}
                   placeholder="apellido del usuario"
+                  error={errores.apellido}
                 />
-                {errores.apellido && (
-                  <span className="error">{errores.apellido}</span>
-                )}
 
-                <label>email</label>
-                <input
-                  type="email"
+                <Input
+                  label="email"
                   name="email"
+                  type="email"
                   value={valores.email}
                   onChange={manejarCambio}
                   placeholder="correo@colegio.cl"
+                  error={errores.email}
                 />
-                {errores.email && (
-                  <span className="error">{errores.email}</span>
-                )}
 
-                {/* rol fijo segun la pagina donde estamos */}
-                <label>rol</label>
-                <input
-                  type="text"
-                  name="rol"
-                  value={valores.rol}
-                  disabled
-                  className="input-deshabilitado"
-                />
+                <Input label="rol" name="rol" value={valores.rol} disabled />
 
                 <div className="modal-botones">
-                  <button
+                  <Boton
                     type="button"
-                    className="btn-cancelar"
+                    variant="secondary"
                     onClick={cerrarModal}
                   >
                     cancelar
-                  </button>
-                  <button type="submit" className="btn-crear">
-                    crear usuario
-                  </button>
+                  </Boton>
+
+                  <Boton type="submit">crear usuario</Boton>
                 </div>
               </form>
             )}
