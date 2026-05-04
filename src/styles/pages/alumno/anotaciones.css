@@ -1,28 +1,16 @@
-/* contenedor principal */
+/* CONTENEDOR */
 .anotaciones-container {
   background: #f4f6f0;
-  min-height: 100vh;
+  min-height: 100%;
   padding: 40px;
 }
 
-/* encabezado */
+/* HEADER */
 .anotaciones-header {
   margin-bottom: 24px;
 }
 
-.anotaciones-titulo {
-  color: #273823;
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0;
-}
-
-.anotaciones-subtitulo {
-  color: #666;
-  margin-top: 6px;
-}
-
-/* resumen */
+/* RESUMEN */
 .anotaciones-resumen {
   display: flex;
   gap: 16px;
@@ -32,64 +20,35 @@
 .resumen-card {
   flex: 1;
   border-radius: 14px;
-  padding: 16px 24px;
+  padding: 20px;
   text-align: center;
 }
 
-.resumen-card.positiva { background: #e8f5e9; }
-.resumen-card.negativa { background: #fdecea; }
-
-.resumen-numero {
-  font-weight: 800;
-  font-size: 1.8rem;
-  margin: 0;
+.resumen-card.positiva {
+  background: #e8f5e9;
+  color: #4b8a64;
 }
 
-.resumen-card.positiva .resumen-numero { color: #4b8a64; }
-.resumen-card.negativa .resumen-numero { color: #c0392b; }
-
-.resumen-label {
-  margin: 0;
-  font-size: 0.85rem;
+.resumen-card.negativa {
+  background: #fdecea;
+  color: #c0392b;
 }
 
-.resumen-card.positiva .resumen-label { color: #4b8a64; }
-.resumen-card.negativa .resumen-label { color: #c0392b; }
-
-/* filtros */
+/* FILTROS */
 .anotaciones-filtros {
   display: flex;
   gap: 10px;
   margin-bottom: 24px;
 }
 
-.filtro-btn {
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.85rem;
-  background: white;
-  color: #666;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.2s;
-}
-
-/* filtro seleccionado */
-.filtro-activo {
-  background: #273823;
-  color: #afec15;
-}
-
-/* lista */
+/* LISTA */
 .anotaciones-lista {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-/* card individual */
+/* CARD */
 .anotacion-card {
   background: white;
   border-radius: 16px;
@@ -98,12 +57,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: 0.2s;
 }
 
-.anotacion-card.positiva { border-left: 5px solid #4b8a64; }
-.anotacion-card.negativa { border-left: 5px solid #c0392b; }
+.anotacion-card:hover {
+  transform: translateY(-2px);
+}
 
-/* info */
+/* BORDE SEGÚN TIPO */
+.anotacion-card.positiva {
+  border-left: 5px solid #4b8a64;
+}
+
+.anotacion-card.negativa {
+  border-left: 5px solid #c0392b;
+}
+
+/* INFO */
 .anotacion-top {
   display: flex;
   align-items: center;
@@ -111,22 +81,7 @@
   margin-bottom: 6px;
 }
 
-.anotacion-asignatura {
-  font-weight: 700;
-  color: #273823;
-}
-
-.anotacion-profesor {
-  color: #999;
-  font-size: 0.8rem;
-}
-
-.anotacion-descripcion {
-  margin: 0;
-  color: #555;
-  font-size: 0.9rem;
-}
-
+/* FECHA */
 .anotacion-fecha {
   color: #aaa;
   font-size: 0.8rem;
