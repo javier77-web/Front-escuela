@@ -11,15 +11,16 @@ import Badge from "../../components/atoms/Badge";
 function AnotacionesProfesor() {
   const { id } = useParams();
 
-  // alumnos simulados
   const alumnos = ["juan", "maria", "pedro"];
 
   const [anotaciones, setAnotaciones] = useState([]);
 
+  // 🆕 fecha incluida en el form
   const [form, setForm] = useState({
     alumno: "",
     tipo: "positiva",
     descripcion: "",
+    fecha: new Date().toISOString().split("T")[0],
   });
 
   const handleChange = (e) => {
@@ -33,14 +34,15 @@ function AnotacionesProfesor() {
       ...anotaciones,
       {
         ...form,
-        fecha: new Date().toISOString().split("T")[0],
       },
     ]);
 
+    // reset pero mantiene fecha actual
     setForm({
       alumno: "",
       tipo: "positiva",
       descripcion: "",
+      fecha: form.fecha,
     });
   };
 
@@ -64,6 +66,15 @@ function AnotacionesProfesor() {
             <option value="positiva">positiva</option>
             <option value="negativa">negativa</option>
           </select>
+
+          {/* FECHA */}
+          <input
+            type="date"
+            name="fecha"
+            value={form.fecha}
+            onChange={handleChange}
+            className="input-fecha"
+          />
 
           <Input
             as="textarea"
