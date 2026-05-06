@@ -6,7 +6,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth"; //funciones especificas de firebase, salen en la documentación que envié
 import { auth } from "../firebaseConfig/config";
-//import { syncUserWithBackend } from '../gateway/gatewayService';
+import { syncUserWithBackend } from "../gateway/gatewayService";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 //se crea el espacio para compartir datos, yo lo entiendo como el contexto del user
@@ -28,33 +29,14 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const register = async (email, password) => {
+  const register = async (email, password, nombre, apellido, idRol) => {
     setAuthLoading(true);
     try {
       //Se utiliza el metodo auth de firebase y se crea el user y sus credenciales
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
-
-      //prueba en localhost (sincronización de front y el gateway)
-      const idToken = await firebaseUser.getIdToken();
-      const res = await fetch(`${API_URL}/test/token`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await res.json();
-      console.log("Gateway respondió:", data);
-      // Si ves esto en consola, el front llegó al gateway correctamente
-
       // Sincroniza con el backend para crear el perfil en PostgreSQL
-       //await syncUserWithBackend(firebaseUser, nombre, apellido);
+      await syncUserWithBackend(firebaseUser, nombre, apellido, idRol);
 
       setAuthLoading(false);
       return { ok: true, user: firebaseUser };
@@ -106,7 +88,7 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     login,
-    register,
+    register, //Panel registro user del admin
     logout,
     authLoading,
     isAuthenticated: !!user, //los !! convierten el user a boolean, sirve para manejar auth
