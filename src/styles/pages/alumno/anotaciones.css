@@ -54,17 +54,12 @@
   border-radius: 16px;
   padding: 20px 24px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: 0.2s;
 }
 
-.anotacion-card:hover {
-  transform: translateY(-2px);
-}
-
-/* BORDE SEGÚN TIPO */
 .anotacion-card.positiva {
   border-left: 5px solid #4b8a64;
 }
@@ -73,7 +68,7 @@
   border-left: 5px solid #c0392b;
 }
 
-/* INFO */
+/* TOP */
 .anotacion-top {
   display: flex;
   align-items: center;
@@ -83,8 +78,5 @@
 
 /* FECHA */
 .anotacion-fecha {
-  color: #aaa;
-  font-size: 0.8rem;
   white-space: nowrap;
-  margin-left: 20px;
 }
