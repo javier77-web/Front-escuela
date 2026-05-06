@@ -8,7 +8,7 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
 import Badge from "../../components/atoms/Badge";
-import useAsistencia from "../../hooks/useAsistencia";
+import useAsistencia from "../../hooks/profesor/useAsistencia";
 
 function AsistenciaProfesor() {
   const { id } = useParams();
