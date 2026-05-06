@@ -11,19 +11,6 @@ import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
 import useUsuarios from "../../hooks/admin/useUsuarios";
 
-// genera una contraseña temporal automatica para el nuevo usuario
-function generarContrasena() {
-  const caracteres =
-    "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#";
-  let contrasena = "";
-  for (let i = 0; i < 10; i++) {
-    contrasena += caracteres.charAt(
-      Math.floor(Math.random() * caracteres.length),
-    );
-  }
-  return contrasena;
-}
-
 function GestionUsuarios({ tipoUsuario }) {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [contrasenaGenerada, setContrasenaGenerada] = useState("");
@@ -41,17 +28,15 @@ function GestionUsuarios({ tipoUsuario }) {
   // filtrados
   const filtrados = usuarios.filter((u) => u.rol === tipoUsuario);
 
-  // enviar form
-  const manejarEnvio = manejarSubmit(() => {
-    const contrasenaTemporal = generarContrasena();
-
-    crearUsuario({
-      ...valores,
-      password: contrasenaTemporal,
-    });
-
-    setContrasenaGenerada(contrasenaTemporal);
-    resetForm();
+  // enviar formulario: crea usuario en Firebase + PostgreSQL, muestra contraseña temporal en modal
+  const manejarEnvio = manejarSubmit(async () => {
+    try {
+      const resultado = await crearUsuario({ ...valores });
+      setContrasenaGenerada(resultado.contrasena);
+      resetForm();
+    } catch (error) {
+      alert(`error al crear usuario: ${error.message}`);
+    }
   });
 
   const cerrarModal = () => {

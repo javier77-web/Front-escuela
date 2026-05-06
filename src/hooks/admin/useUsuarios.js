@@ -1,40 +1,68 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import {
+  useObtenerUsuariosQuery,
+  useEliminarUsuarioMutation,
+} from "../../store/api/usuariosApi";
+
+// genera contraseña temporal
+function generarContrasena() {
+  const caracteres =
+    "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#";
+  let contrasena = "";
+  for (let i = 0; i < 10; i++) {
+    contrasena += caracteres.charAt(
+      Math.floor(Math.random() * caracteres.length),
+    );
+  }
+  return contrasena;
+}
 
 function useUsuarios(tipoUsuario) {
-  const [usuarios, setUsuarios] = useState([]);
+  // funcion register del AuthContext — crea en Firebase + PostgreSQL
+  const { register } = useContext(AuthContext);
 
-  // simula carga inicial (luego será fetch)
-  useEffect(() => {
-    const data = [
-      {
-        id: 1,
-        nombre: "Juan",
-        apellido: "Pérez",
-        email: "juan@colegio.cl",
-        rol: "alumno",
-      },
-      {
-        id: 2,
-        nombre: "Profe",
-        apellido: "Silva",
-        email: "silva@colegio.cl",
-        rol: "profesor",
-      },
-    ];
+  // RTK Query — obtiene usuarios filtrados por rol
+  const {
+    data: usuarios = [],
+    isLoading,
+    isError,
+  } = useObtenerUsuariosQuery(tipoUsuario);
 
-    setUsuarios(data);
-  }, []);
+  // RTK Query — eliminar usuario
+  const [eliminarUsuarioMutation] = useEliminarUsuarioMutation();
 
-  const crearUsuario = (nuevoUsuario) => {
-    setUsuarios((prev) => [...prev, { id: Date.now(), ...nuevoUsuario }]);
+  // crea usuario: Firebase Auth + PostgreSQL via register()
+  const crearUsuario = async ({ nombre, apellido, email, rol }) => {
+    const contrasenaTemporal = generarContrasena();
+
+    // idRol: 1 = alumno, 2 = profesor (ajusta segun tu BD)
+    const idRol = rol === "alumno" ? 1 : 2;
+
+    const resultado = await register(
+      email,
+      contrasenaTemporal,
+      nombre,
+      apellido,
+      idRol,
+    );
+
+    if (!resultado.ok) {
+      throw new Error(resultado.message);
+    }
+
+    return { ok: true, contrasena: contrasenaTemporal };
   };
 
-  const eliminarUsuario = (id) => {
-    setUsuarios((prev) => prev.filter((u) => u.id !== id));
+  // elimina usuario por id
+  const eliminarUsuario = async (id) => {
+    await eliminarUsuarioMutation(id);
   };
 
   return {
     usuarios,
+    isLoading,
+    isError,
     crearUsuario,
     eliminarUsuario,
   };
