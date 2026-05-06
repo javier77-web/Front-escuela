@@ -5,7 +5,7 @@
   padding: 40px;
 }
 
-/* encabezado */
+/* HEADER */
 .asistencia-header {
   display: flex;
   justify-content: space-between;
@@ -13,49 +13,14 @@
   margin-bottom: 32px;
 }
 
-.asistencia-titulo {
-  color: #273823;
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0;
-}
-
-.asistencia-subtitulo {
-  color: #666;
-  margin-top: 6px;
-}
-
-/* card global */
-.asistencia-global {
-  background: #273823;
-  border-radius: 20px;
-  padding: 16px 28px;
-  text-align: center;
-}
-
-.global-label {
-  color: #afec15;
-  margin: 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.global-valor {
-  color: white;
-  margin: 0;
-  font-size: 2.2rem;
-  font-weight: 800;
-}
-
-/* lista */
+/* LISTA */
 .asistencia-lista {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* card individual */
+/* CARD */
 .asistencia-card {
   background: white;
   border-radius: 16px;
@@ -63,49 +28,45 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-/* borde izquierdo segun estado */
-.asistencia-alta { border-left: 5px solid #4b8a64; }
-.asistencia-media { border-left: 5px solid #f0a500; }
-.asistencia-baja { border-left: 5px solid #c0392b; }
-
-/* header de la card */
+/* HEADER CARD */
 .asistencia-card-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* izquierda | centro | derecha */
   align-items: center;
-  margin-bottom: 12px;
 }
 
+/* IZQUIERDA */
 .asistencia-nombre {
-  margin: 0;
+  text-align: left;
   color: #273823;
-  font-weight: 700;
 }
 
+/* CENTRO */
 .asistencia-detalle {
   display: flex;
+  justify-content: center;
   gap: 16px;
-  align-items: center;
 }
 
-.presentes { color: #4b8a64; font-size: 0.85rem; }
-.ausentes { color: #c0392b; font-size: 0.85rem; }
-
-/* badge porcentaje */
-.asistencia-badge {
-  border-radius: 20px;
-  padding: 4px 14px;
-  color: white;
-  font-weight: 700;
+.presentes {
+  color: #4b8a64;
   font-size: 0.9rem;
 }
 
-.asistencia-badge.asistencia-alta { background: #4b8a64; }
-.asistencia-badge.asistencia-media { background: #f0a500; }
-.asistencia-badge.asistencia-baja { background: #c0392b; }
+.ausentes {
+  color: #c0392b;
+  font-size: 0.9rem;
+}
 
-/* barra de progreso */
+/* DERECHA */
+.asistencia-card-header .badge-atom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* BARRA */
 .barra-fondo {
+  margin-top: 12px;
   background: #f0f0f0;
   border-radius: 10px;
   height: 10px;
@@ -118,6 +79,14 @@
   transition: width 0.6s ease;
 }
 
-.barra-progreso.asistencia-alta { background: #4b8a64; }
-.barra-progreso.asistencia-media { background: #f0a500; }
-.barra-progreso.asistencia-baja { background: #c0392b; }
+.barra-progreso.asistencia-success {
+  background: #4b8a64;
+}
+
+.barra-progreso.asistencia-warning {
+  background: #f0a500;
+}
+
+.barra-progreso.asistencia-danger {
+  background: #c0392b;
+}
