@@ -7,45 +7,12 @@ import Texto from "../../components/atoms/Texto";
 import Input from "../../components/atoms/Input";
 import Boton from "../../components/atoms/Boton";
 import Badge from "../../components/atoms/Badge";
+import useEvaluacionesProfesor from "../../hooks/profesor/useEvaluaciones";
 
 function EvaluacionesProfesor() {
   const { id } = useParams();
 
-  const [evaluaciones, setEvaluaciones] = useState([]);
-
-  const [form, setForm] = useState({
-    titulo: "",
-    tipo: "prueba",
-    fecha: "",
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const agregarEvaluacion = () => {
-    if (!form.titulo || !form.fecha) return;
-
-    setEvaluaciones([
-      ...evaluaciones,
-      {
-        ...form,
-        id: Date.now(),
-      },
-    ]);
-
-    setForm({
-      titulo: "",
-      tipo: "prueba",
-      fecha: "",
-    });
-  };
-
-  const getTipoBadge = (tipo) => {
-    if (tipo === "prueba") return "danger";
-    if (tipo === "control") return "warning";
-    return "success";
-  };
+  const { evaluaciones, form, handleChange, agregarEvaluacion, getTipoBadge } = useEvaluacionesProfesor();
 
   return (
     <PanelLayout rol="profesor">
