@@ -1,3 +1,4 @@
+//GatewayService
 const API_URL = import.meta.env.VITE_API_URL;
 
 // Función base privada — adjunta el JWT de Firebase en cada request
@@ -26,9 +27,10 @@ const authFetch = async (endpoint, options = {}) => {
 
 // Sincroniza el usuario de Firebase con la BD del backend
 // Se llama una sola vez después del register
-export const syncUserWithBackend = async (firebaseUser) => {
+export const syncUserWithBackend = async (firebaseUser, nombre, apellido, idRol) => {
     const idToken = await firebaseUser.getIdToken();
-    const response = await fetch(`${API_URL}/auth/sync`, {
+
+    const response = await fetch(`${API_URL}/api/usuarios/usuarios`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -36,14 +38,15 @@ export const syncUserWithBackend = async (firebaseUser) => {
         },
         body: JSON.stringify({
             uid: firebaseUser.uid,
-            email: firebaseUser.email,
-            displayName: firebaseUser.displayName ?? null,
+            nombre: nombre,
+            apellido: apellido,
+            idRol: idRol
         }),
     });
 
     if (!response.ok) {
         const err = await response.json().catch(() => ({}));
-        throw new Error(err.message || 'Error al sincronizar usuario con el backend');
+        throw new Error(err.message || 'Error al crear usuario con el backend');
     }
 
     return response.json();
