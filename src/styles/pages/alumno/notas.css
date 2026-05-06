@@ -1,54 +1,47 @@
-/* contenedor principal */
+/* CONTENEDOR PRINCIPAL */
 .notas-container {
-  background: #f4f6f0;
   min-height: 100vh;
   padding: 40px;
+  background: #f4f6f0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
-/* encabezado */
+/* HEADER */
 .notas-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
 }
 
-.notas-titulo {
-  color: #273823;
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0;
-}
-
-.notas-subtitulo {
-  color: #666;
-  margin-top: 6px;
-}
-
-/* card promedio general */
+/* PROMEDIO GENERAL */
 .notas-promedio-general {
-  background: #273823;
+  background: #f7f7f7;
   border-radius: 20px;
   padding: 16px 28px;
+  min-width: 140px;
+  margin-left: auto;
   text-align: center;
 }
 
-.promedio-label {
+/* IMPORTANTE: ahora usas atoms, así que estilizamos el contenido interno */
+.notas-promedio-general span {
+  display: block;
   color: #afec15;
-  margin: 0;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.promedio-valor {
-  color: rgb(158, 38, 38);
+.notas-promedio-general h2 {
+  color: white; /* 👈 antes estaba rojo raro */
   margin: 0;
   font-size: 2.2rem;
   font-weight: 800;
 }
 
-/* tabla */
+/* TABLA WRAPPER */
 .notas-tabla-wrapper {
   background: white;
   border-radius: 20px;
@@ -56,12 +49,13 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* TABLA */
 .notas-tabla {
   width: 100%;
   border-collapse: collapse;
 }
 
-/* cabecera tabla */
+/* HEADER TABLA */
 .notas-tabla thead tr {
   background: #273823;
   color: white;
@@ -76,7 +70,8 @@
 .notas-tabla th:first-child {
   text-align: left;
 }
-/* filas */
+
+/* FILAS */
 .notas-tabla tbody tr {
   border-bottom: 1px solid #f0f0f0;
   transition: background 0.2s;
@@ -86,36 +81,20 @@
   background: #f9fdf5;
 }
 
+/* CELDAS */
 .notas-tabla td {
   padding: 16px 20px;
   text-align: center;
 }
-.notas-tabla-row:hover {
-  background: #f9fdf5;
-}
 
-.notas-tabla-row td {
-  padding: 16px 20px;
-  text-align: center;
-}
-
+/* ASIGNATURA */
 .notas-asignatura {
   font-weight: 600;
   color: #273823;
   text-align: left !important;
 }
 
-
-/* badge promedio */
-.nota-badge {
-  border-radius: 20px;
-  padding: 4px 14px;
-  color: white;
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
-/* estilos para badge de notas */
+/* BADGE (usa tu atom) */
 .badge-atom.success {
   background: #4b8a64;
   color: white;

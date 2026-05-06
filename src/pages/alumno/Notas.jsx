@@ -5,40 +5,10 @@ import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
 
 import PanelLayout from "../../layouts/PanelLayout";
+import useNotasAlumno from "../../hooks/alumno/useNotasAlumno";
 
-// pagina de notas del alumno — muestra evaluaciones por asignatura
 function Notas() {
-  const notas = [
-    {
-      asignatura: "Matemáticas",
-      nota1: 6.5,
-      nota2: 5.8,
-      nota3: 7.0,
-      promedio: 6.4,
-    },
-    {
-      asignatura: "Lenguaje",
-      nota1: 5.5,
-      nota2: 6.2,
-      nota3: 6.8,
-      promedio: 6.2,
-    },
-    {
-      asignatura: "Historia",
-      nota1: 7.0,
-      nota2: 6.5,
-      nota3: 6.9,
-      promedio: 6.8,
-    },
-    {
-      asignatura: "Ciencias",
-      nota1: 4.5,
-      nota2: 5.0,
-      nota3: 5.5,
-      promedio: 5.0,
-    },
-    { asignatura: "Inglés", nota1: 6.8, nota2: 7.0, nota3: 6.5, promedio: 6.8 },
-  ];
+  const { notas, promedioGeneral, loading } = useNotasAlumno();
 
   const getTipo = (nota) => {
     if (nota >= 6.0) return "success";
@@ -46,9 +16,13 @@ function Notas() {
     return "danger";
   };
 
-  const promedioGeneral = (
-    notas.reduce((acc, n) => acc + n.promedio, 0) / notas.length
-  ).toFixed(1);
+  if (loading) {
+    return (
+      <PanelLayout rol="alumno">
+        <Texto>cargando notas...</Texto>
+      </PanelLayout>
+    );
+  }
 
   return (
     <PanelLayout rol="alumno">
@@ -60,7 +34,6 @@ function Notas() {
             <Texto color="muted">resumen de evaluaciones del semestre</Texto>
           </div>
 
-          {/* PROMEDIO */}
           <div className="notas-promedio-general">
             <Texto size="sm">promedio general</Texto>
             <Titulo level={2}>{promedioGeneral}</Titulo>
