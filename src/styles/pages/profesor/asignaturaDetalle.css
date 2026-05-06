@@ -1,4 +1,4 @@
-/* CONTENEDOR SOLO DE ESTA PAGINA */
+/* CONTENEDOR */
 .asignatura-detalle-container {
   max-width: 900px;
   margin: 0 auto;
@@ -8,13 +8,6 @@
   gap: 30px;
 }
 
-/* titulo */
-.titulo {
-  color: #273823;
-  font-size: 2rem;
-  font-weight: 800;
-}
-
 /* acciones */
 .acciones-curso {
   display: flex;
@@ -22,29 +15,21 @@
   flex-wrap: wrap;
 }
 
-/* botones */
+/* adaptar BOTON atom */
 .acciones-curso button {
   flex: 1;
   min-width: 200px;
 
   padding: 20px;
-  border: none;
   border-radius: 20px;
 
-  background: white;
-  color: #273823;
   font-weight: 700;
   font-size: 1rem;
 
-  cursor: pointer;
-
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   transition: all 0.2s;
 }
 
 /* hover */
 .acciones-curso button:hover {
   transform: translateY(-5px);
-  background: linear-gradient(135deg, #4b8a64, #afec15);
-  color: white;
 }

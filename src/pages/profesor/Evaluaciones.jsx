@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/profesor/evaluaciones.css";
+import PanelLayout from "../../layouts/PanelLayout";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Input from "../../components/atoms/Input";
+import Boton from "../../components/atoms/Boton";
+import Badge from "../../components/atoms/Badge";
 
 function EvaluacionesProfesor() {
-  const { id } = useParams(); // id de asignatura
+  const { id } = useParams();
 
   const [evaluaciones, setEvaluaciones] = useState([]);
 
@@ -36,52 +41,71 @@ function EvaluacionesProfesor() {
     });
   };
 
+  const getTipoBadge = (tipo) => {
+    if (tipo === "prueba") return "danger";
+    if (tipo === "control") return "warning";
+    return "success";
+  };
+
   return (
-    <div className="panel-container">
-      <Sidebar rol="profesor" />
+    <PanelLayout rol="profesor">
+      <div className="evaluaciones-container">
+        {/* HEADER */}
+        <div className="evaluaciones-header">
+          <Titulo level={1}>evaluaciones asignatura {id}</Titulo>
+          <Texto color="muted">
+            crea y gestiona las evaluaciones del curso
+          </Texto>
+        </div>
 
-      <div className="panel-contenido">
-        <div className="evaluaciones-container">
-          <h1>evaluaciones asignatura {id}</h1>
+        {/* FORM */}
+        <div className="form-evaluacion">
+          <Input
+            name="titulo"
+            placeholder="titulo (ej: prueba 1)"
+            value={form.titulo}
+            onChange={handleChange}
+          />
 
-          {/* FORM */}
-          <div className="form-evaluacion">
-            <input
-              name="titulo"
-              placeholder="titulo (ej: prueba 1)"
-              value={form.titulo}
-              onChange={handleChange}
-            />
+          <select
+            name="tipo"
+            value={form.tipo}
+            onChange={handleChange}
+            className="select"
+          >
+            <option value="prueba">prueba</option>
+            <option value="control">control</option>
+            <option value="trabajo">trabajo</option>
+          </select>
 
-            <select name="tipo" value={form.tipo} onChange={handleChange}>
-              <option value="prueba">prueba</option>
-              <option value="control">control</option>
-              <option value="trabajo">trabajo</option>
-            </select>
+          <Input
+            type="date"
+            name="fecha"
+            value={form.fecha}
+            onChange={handleChange}
+          />
 
-            <input
-              type="date"
-              name="fecha"
-              value={form.fecha}
-              onChange={handleChange}
-            />
+          <Boton onClick={agregarEvaluacion}>crear evaluación</Boton>
+        </div>
 
-            <button onClick={agregarEvaluacion}>crear evaluacion</button>
-          </div>
+        {/* LISTA */}
+        <div className="lista-evaluaciones">
+          {evaluaciones.map((e) => (
+            <div key={e.id} className="card-evaluacion">
+              <div className="card-header">
+                <Titulo level={3}>{e.titulo}</Titulo>
 
-          {/* LISTA */}
-          <div className="lista-evaluaciones">
-            {evaluaciones.map((e) => (
-              <div key={e.id} className="card-evaluacion">
-                <h3>{e.titulo}</h3>
-                <p>{e.tipo}</p>
-                <span>{e.fecha}</span>
+                <Badge texto={e.tipo} tipo={getTipoBadge(e.tipo)} />
               </div>
-            ))}
-          </div>
+
+              <Texto size="sm" color="muted">
+                fecha: {e.fecha}
+              </Texto>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 

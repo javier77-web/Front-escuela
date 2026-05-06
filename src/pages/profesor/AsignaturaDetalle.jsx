@@ -1,7 +1,9 @@
 import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/profesor/asignaturaDetalle.css";
+import PanelLayout from "../../layouts/PanelLayout";
+import Titulo from "../../components/atoms/Titulo";
+import Boton from "../../components/atoms/Boton";
 
 function AsignaturaDetalle() {
   const { id } = useParams();
@@ -11,38 +13,31 @@ function AsignaturaDetalle() {
   const asignatura = location.state;
 
   return (
-    <div className="panel-container">
-      <Sidebar rol="profesor" />
+    <PanelLayout rol="profesor">
+      <div className="asignatura-detalle-container">
+        <Titulo level={1}>
+          {asignatura
+            ? `${asignatura.nombre} - ${asignatura.curso}`
+            : `asignatura ${id}`}
+        </Titulo>
 
-      <div className="panel-contenido">
-        {/* 👇 CONTENEDOR PROPIO DE ESTA PAGINA */}
-        <div className="asignatura-detalle-container">
-          <h1 className="titulo">
-            {asignatura
-              ? `${asignatura.nombre} - ${asignatura.curso}`
-              : `asignatura ${id}`}
-          </h1>
+        <div className="acciones-curso">
+          <Boton onClick={() => navigate(`/profesor/${id}/asistencia`)}>
+            asistencia
+          </Boton>
 
-          <div className="acciones-curso">
-            <button onClick={() => navigate(`/profesor/${id}/asistencia`)}>
-              asistencia
-            </button>
+          <Boton onClick={() => navigate(`/profesor/${id}/notas`)}>notas</Boton>
 
-            <button onClick={() => navigate(`/profesor/${id}/notas`)}>
-              notas
-            </button>
+          <Boton onClick={() => navigate(`/profesor/${id}/anotaciones`)}>
+            anotaciones
+          </Boton>
 
-            <button onClick={() => navigate(`/profesor/${id}/anotaciones`)}>
-              anotaciones
-            </button>
-
-            <button onClick={() => navigate(`/profesor/${id}/evaluaciones`)}>
-              evaluaciones
-            </button>
-          </div>
+          <Boton onClick={() => navigate(`/profesor/${id}/evaluaciones`)}>
+            evaluaciones
+          </Boton>
         </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 

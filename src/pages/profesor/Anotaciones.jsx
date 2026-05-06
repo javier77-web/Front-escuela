@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/profesor/anotaciones.css";
+import PanelLayout from "../../layouts/PanelLayout";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Boton from "../../components/atoms/Boton";
+import Input from "../../components/atoms/Input";
+import Badge from "../../components/atoms/Badge";
 
 function AnotacionesProfesor() {
   const { id } = useParams();
 
-  // lista de alumnos (simulada por curso)
+  // alumnos simulados
   const alumnos = ["juan", "maria", "pedro"];
 
   const [anotaciones, setAnotaciones] = useState([]);
@@ -32,7 +37,6 @@ function AnotacionesProfesor() {
       },
     ]);
 
-    // limpiar form
     setForm({
       alumno: "",
       tipo: "positiva",
@@ -41,53 +45,60 @@ function AnotacionesProfesor() {
   };
 
   return (
-    <div className="panel-container">
-      <Sidebar rol="profesor" />
+    <PanelLayout rol="profesor">
+      <div className="anotaciones-profesor-container">
+        <Titulo level={1}>anotaciones curso {id}</Titulo>
 
-      <div className="panel-contenido">
-        {/* 👇 contenedor propio */}
-        <div className="anotaciones-profesor-container">
-          <h1>anotaciones curso {id}</h1>
-
-          {/* FORMULARIO */}
-          <div className="form-anotacion">
-            <select name="alumno" value={form.alumno} onChange={handleChange}>
-              <option value="">seleccionar alumno</option>
-              {alumnos.map((a, i) => (
-                <option key={i} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-
-            <select name="tipo" value={form.tipo} onChange={handleChange}>
-              <option value="positiva">positiva</option>
-              <option value="negativa">negativa</option>
-            </select>
-
-            <textarea
-              name="descripcion"
-              placeholder="descripcion"
-              value={form.descripcion}
-              onChange={handleChange}
-            />
-
-            <button onClick={agregarAnotacion}>guardar anotacion</button>
-          </div>
-
-          {/* LISTA */}
-          <div className="lista-anotaciones">
-            {anotaciones.map((a, i) => (
-              <div key={i} className={`card ${a.tipo}`}>
-                <h3>{a.alumno}</h3>
-                <p>{a.descripcion}</p>
-                <span>{a.fecha}</span>
-              </div>
+        {/* FORM */}
+        <div className="form-anotacion">
+          <select name="alumno" value={form.alumno} onChange={handleChange}>
+            <option value="">seleccionar alumno</option>
+            {alumnos.map((a, i) => (
+              <option key={i} value={a}>
+                {a}
+              </option>
             ))}
-          </div>
+          </select>
+
+          <select name="tipo" value={form.tipo} onChange={handleChange}>
+            <option value="positiva">positiva</option>
+            <option value="negativa">negativa</option>
+          </select>
+
+          <Input
+            as="textarea"
+            name="descripcion"
+            placeholder="descripcion"
+            value={form.descripcion}
+            onChange={handleChange}
+          />
+
+          <Boton onClick={agregarAnotacion}>guardar anotacion</Boton>
+        </div>
+
+        {/* LISTA */}
+        <div className="lista-anotaciones">
+          {anotaciones.map((a, i) => (
+            <div key={i} className={`card ${a.tipo}`}>
+              <div className="card-top">
+                <Badge
+                  texto={a.tipo}
+                  tipo={a.tipo === "positiva" ? "success" : "danger"}
+                />
+
+                <Texto>{a.alumno}</Texto>
+              </div>
+
+              <Texto>{a.descripcion}</Texto>
+
+              <Texto size="sm" color="muted">
+                {a.fecha}
+              </Texto>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 
