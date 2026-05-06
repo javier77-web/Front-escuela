@@ -6,31 +6,13 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
 import Input from "../../components/atoms/Input";
+import useNotasProfesor from "../../hooks/profesor/useNotas";
 
 function NotasProfesor() {
   const { id } = useParams();
 
-  const [alumnos, setAlumnos] = useState([
-    { nombre: "juan", notas: [6.5, 5.8, 7.0] },
-    { nombre: "maria", notas: [5.5, 6.2, 6.8] },
-    { nombre: "pedro", notas: [7.0, 6.5, 6.9] },
-  ]);
-
-  const actualizarNota = (i, j, valor) => {
-    const nuevos = [...alumnos];
-    nuevos[i].notas[j] = parseFloat(valor) || 0;
-    setAlumnos(nuevos);
-  };
-
-  // devuelve NUMBER (buena práctica)
-  const calcularPromedio = (notas) =>
-    notas.reduce((acc, n) => acc + n, 0) / notas.length || 0;
-
-  const getTipo = (promedio) => {
-    if (promedio >= 6) return "success";
-    if (promedio >= 4) return "warning";
-    return "danger";
-  };
+  const { alumnos, actualizarNota, calcularPromedio, getTipo } =
+    useNotasProfesor();
 
   return (
     <PanelLayout rol="profesor">
@@ -38,7 +20,6 @@ function NotasProfesor() {
         {/* HEADER */}
         <div className="notas-header">
           <Titulo level={1}>notas curso {id}</Titulo>
-
           <Texto color="muted">edita las calificaciones de los alumnos</Texto>
         </div>
 
