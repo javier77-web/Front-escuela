@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "../../styles/pages/admin/gestionUsuarios.css";
 import useFormulario from "../../hooks/useFormulario";
 import { validarContacto } from "../../hooks/validaciones/validarContacto";
+
 // layout
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
+import useUsuarios from "../../hooks/admin/useUsuarios";
 
 // genera una contraseña temporal automatica para el nuevo usuario
 function generarContrasena() {
@@ -22,53 +24,36 @@ function generarContrasena() {
   return contrasena;
 }
 
-// pagina para que el admin cree y vea usuarios
 function GestionUsuarios({ tipoUsuario }) {
-  // controla si el modal esta abierto o cerrado
   const [modalAbierto, setModalAbierto] = useState(false);
-
-  // guarda la contrasena generada para mostrarla al admin
   const [contrasenaGenerada, setContrasenaGenerada] = useState("");
 
-  // hook reutilizable de formulario con validaciones
-  const { valores, errores, manejarCambio, manejarSubmit } = useFormulario(
-    { nombre: "", apellido: "", email: "", rol: tipoUsuario },
-    validarContacto,
-  );
+  // HOOK DE USUARIOS (reemplaza useState local)
+  const { usuarios, crearUsuario, eliminarUsuario } = useUsuarios(tipoUsuario);
 
-  // datos de prueba — reemplazar con llamada al api gateway cuando este listo
-  const [usuarios, setUsuarios] = useState([
-    {
-      id: 1,
-      nombre: "Juan",
-      apellido: "Pérez",
-      email: "juan@colegio.cl",
-      rol: "alumno",
-    },
-    {
-      id: 2,
-      nombre: "Profe",
-      apellido: "Silva",
-      email: "silva@colegio.cl",
-      rol: "profesor",
-    },
-  ]);
+  // formulario
+  const { valores, errores, manejarCambio, manejarSubmit, resetForm } =
+    useFormulario(
+      { nombre: "", apellido: "", email: "", rol: tipoUsuario },
+      validarContacto,
+    );
 
-  // filtramos segun el tipo de usuario que se esta gestionando
+  // filtrados
   const filtrados = usuarios.filter((u) => u.rol === tipoUsuario);
 
-  // maneja el envio del formulario validado
+  // enviar form
   const manejarEnvio = manejarSubmit(() => {
     const contrasenaTemporal = generarContrasena();
 
-    // simulacion local mientras no hay api
-    setUsuarios([...usuarios, { id: usuarios.length + 1, ...valores }]);
+    crearUsuario({
+      ...valores,
+      password: contrasenaTemporal,
+    });
 
-    // mostramos la contrasena al admin
     setContrasenaGenerada(contrasenaTemporal);
+    resetForm();
   });
 
-  // cierra el modal y limpia todo
   const cerrarModal = () => {
     setModalAbierto(false);
     setContrasenaGenerada("");
@@ -106,7 +91,13 @@ function GestionUsuarios({ tipoUsuario }) {
                   <td>{usuario.email}</td>
                   <td>
                     <Boton variant="secondary">editar</Boton>
-                    <Boton variant="danger">borrar</Boton>
+
+                    <Boton
+                      variant="danger"
+                      onClick={() => eliminarUsuario(usuario.id)}
+                    >
+                      borrar
+                    </Boton>
                   </td>
                 </tr>
               ))}
