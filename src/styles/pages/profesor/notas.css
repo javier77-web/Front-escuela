@@ -1,16 +1,17 @@
-/* CONTENEDOR */
 .notas-profesor-container {
-  background: #f4f6f0;
-  min-height: 100%;
-  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 /* HEADER */
 .notas-header {
-  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-/* TABLA WRAPPER */
+/* TABLA */
 .tabla-wrapper {
   background: white;
   border-radius: 20px;
@@ -18,13 +19,11 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* TABLA */
 .tabla-notas {
   width: 100%;
   border-collapse: collapse;
 }
 
-/* HEADER TABLA */
 .tabla-notas thead {
   background: #273823;
   color: white;
@@ -40,7 +39,6 @@
   text-align: left;
 }
 
-/* FILAS */
 .tabla-notas td {
   padding: 14px;
   text-align: center;
@@ -49,17 +47,8 @@
 
 .tabla-notas td:first-child {
   text-align: left;
-  font-weight: 600;
-  color: #273823;
 }
 
-/* HOVER */
 .tabla-notas tbody tr:hover {
   background: #f9fdf5;
-}
-
-/* INPUTS */
-.tabla-notas input {
-  width: 70px;
-  text-align: center;
 }
