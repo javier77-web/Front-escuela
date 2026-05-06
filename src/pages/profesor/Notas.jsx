@@ -1,58 +1,73 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "../../components/organisms/Sidebar";
 import "../../styles/pages/profesor/notas.css";
+import PanelLayout from "../../layouts/PanelLayout";
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Badge from "../../components/atoms/Badge";
+import Input from "../../components/atoms/Input";
 
 function NotasProfesor() {
   const { id } = useParams();
 
-  // datos simulados
   const [alumnos, setAlumnos] = useState([
     { nombre: "juan", notas: [6.5, 5.8, 7.0] },
     { nombre: "maria", notas: [5.5, 6.2, 6.8] },
     { nombre: "pedro", notas: [7.0, 6.5, 6.9] },
   ]);
 
-  // actualizar nota
   const actualizarNota = (i, j, valor) => {
     const nuevos = [...alumnos];
     nuevos[i].notas[j] = parseFloat(valor) || 0;
     setAlumnos(nuevos);
   };
 
-  // promedio
-  const calcularPromedio = (notas) => {
-    return (notas.reduce((acc, n) => acc + n, 0) / notas.length).toFixed(1);
+  // devuelve NUMBER (buena práctica)
+  const calcularPromedio = (notas) =>
+    notas.reduce((acc, n) => acc + n, 0) / notas.length || 0;
+
+  const getTipo = (promedio) => {
+    if (promedio >= 6) return "success";
+    if (promedio >= 4) return "warning";
+    return "danger";
   };
 
   return (
-    <div className="panel-container">
-      <Sidebar rol="profesor" />
+    <PanelLayout rol="profesor">
+      <div className="notas-profesor-container">
+        {/* HEADER */}
+        <div className="notas-header">
+          <Titulo level={1}>notas curso {id}</Titulo>
 
-      <div className="panel-contenido">
-        <div className="notas-profesor-container">
-          <h1>notas curso {id}</h1>
+          <Texto color="muted">edita las calificaciones de los alumnos</Texto>
+        </div>
 
-          <div className="tabla-wrapper">
-            <table className="tabla-notas">
-              <thead>
-                <tr>
-                  <th>alumno</th>
-                  <th>nota 1</th>
-                  <th>nota 2</th>
-                  <th>nota 3</th>
-                  <th>promedio</th>
-                </tr>
-              </thead>
+        {/* TABLA */}
+        <div className="tabla-wrapper">
+          <table className="tabla-notas">
+            <thead>
+              <tr>
+                <th>alumno</th>
+                <th>nota 1</th>
+                <th>nota 2</th>
+                <th>nota 3</th>
+                <th>promedio</th>
+              </tr>
+            </thead>
 
-              <tbody>
-                {alumnos.map((alumno, i) => (
+            <tbody>
+              {alumnos.map((alumno, i) => {
+                const promedio = calcularPromedio(alumno.notas);
+
+                return (
                   <tr key={i}>
-                    <td>{alumno.nombre}</td>
+                    <td>
+                      <Texto>{alumno.nombre}</Texto>
+                    </td>
 
                     {alumno.notas.map((nota, j) => (
                       <td key={j}>
-                        <input
+                        <Input
                           type="number"
                           value={nota}
                           step="0.1"
@@ -61,28 +76,20 @@ function NotasProfesor() {
                       </td>
                     ))}
 
-                    {/* promedio con color */}
                     <td>
-                      <span
-                        className={`promedio ${
-                          calcularPromedio(alumno.notas) >= 6
-                            ? "alto"
-                            : calcularPromedio(alumno.notas) >= 4
-                              ? "medio"
-                              : "bajo"
-                        }`}
-                      >
-                        {calcularPromedio(alumno.notas)}
-                      </span>
+                      <Badge
+                        texto={promedio.toFixed(1)}
+                        tipo={getTipo(promedio)}
+                      />
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 

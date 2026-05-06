@@ -1,11 +1,14 @@
-/* CONTENEDOR SOLO DE ESTA PAGINA */
+/* CONTENEDOR */
 .asistencia-profesor-container {
   max-width: 900px;
   margin: 0 auto;
+  padding: 40px;
 
   display: flex;
   flex-direction: column;
   gap: 25px;
+
+  min-height: 100%;
 }
 
 /* HEADER */
@@ -19,7 +22,7 @@
 .asistencia-global {
   background: #273823;
   color: white;
-  padding: 12px 20px;
+  padding: 14px 22px;
   border-radius: 15px;
   text-align: center;
 }
@@ -44,27 +47,17 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
 
-/* NOMBRE */
-.nombre {
-  font-weight: 600;
-  color: #273823;
+/* INFO */
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* BOTONES */
-.acciones button {
-  margin-left: 10px;
-  padding: 6px 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: #ddd;
-  transition: 0.2s;
-}
-
-/* ACTIVO */
-.acciones .activo {
-  background: #4b8a64;
-  color: white;
+/* ACCIONES */
+.acciones {
+  display: flex;
+  gap: 10px;
 }
 
 /* FOOTER */
@@ -74,20 +67,9 @@
   gap: 15px;
 }
 
-/* BOTON */
-.btn-guardar {
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-
-  background: linear-gradient(135deg, #4b8a64, #afec15);
-  cursor: pointer;
-
-  font-weight: 600;
-}
-
-/* MENSAJE */
-.mensaje-ok {
-  color: #4b8a64;
-  font-weight: 600;
+.input-fecha {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
 }

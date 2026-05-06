@@ -1,104 +1,155 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../../styles/pages/profesor/asistencia.css";
-import Sidebar from "../../components/organisms/Sidebar";
+import PanelLayout from "../../layouts/PanelLayout";
 
 // pagina de asistencia del profesor — puede marcar asistencia
+import Titulo from "../../components/atoms/Titulo";
+import Texto from "../../components/atoms/Texto";
+import Boton from "../../components/atoms/Boton";
+import Badge from "../../components/atoms/Badge";
+
 function AsistenciaProfesor() {
   const { id } = useParams();
 
-  // simulacion de alumnos por curso
+  // datos base (simulación backend)
   const data = {
     1: [
-      { id: 1, nombre: "juan perez", estado: "presente" },
-      { id: 2, nombre: "maria lopez", estado: "ausente" },
+      { id: 1, nombre: "juan perez" },
+      { id: 2, nombre: "maria lopez" },
     ],
     2: [
-      { id: 3, nombre: "pedro gomez", estado: "presente" },
-      { id: 4, nombre: "ana torres", estado: "presente" },
+      { id: 3, nombre: "pedro gomez" },
+      { id: 4, nombre: "ana torres" },
     ],
   };
 
-  const [lista, setLista] = useState(data[id] || []);
+  // estado por fecha (simula backend/cache)
+  const [asistenciasPorFecha, setAsistenciasPorFecha] = useState({});
+
+  // fecha seleccionable
+  const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
+
+  // lista actual (depende de la fecha)
+  const [lista, setLista] = useState([]);
   const [guardado, setGuardado] = useState(false);
 
-  // cambiar estado (mejor usando id)
+  // cargar datos cuando cambia fecha
+  useEffect(() => {
+    if (asistenciasPorFecha[fecha]) {
+      setLista(asistenciasPorFecha[fecha]);
+    } else {
+      // si no hay datos → crear lista inicial
+      const base = (data[id] || []).map((a) => ({
+        ...a,
+        estado: "presente",
+      }));
+      setLista(base);
+    }
+
+    setGuardado(false);
+  }, [fecha, id]);
+
+  // cambiar estado
   const cambiarEstado = (alumnoId, nuevoEstado) => {
     const nuevaLista = lista.map((a) =>
       a.id === alumnoId ? { ...a, estado: nuevoEstado } : a,
     );
     setLista(nuevaLista);
-    setGuardado(false); // cambia algo → ya no está guardado
+    setGuardado(false);
   };
 
-  // calcular porcentaje
+  // porcentaje
   const porcentaje =
     Math.round(
       (lista.filter((a) => a.estado === "presente").length / lista.length) *
         100,
     ) || 0;
 
-  // simular guardado
+  // guardar (simulación RTK futuro)
   const guardarAsistencia = () => {
-    console.log("guardando asistencia:", lista);
+    const payload = {
+      cursoId: id,
+      fecha,
+      asistencia: lista,
+    };
+
+    // simulamos persistencia (como si fuera backend)
+    setAsistenciasPorFecha((prev) => ({
+      ...prev,
+      [fecha]: lista,
+    }));
+
     setGuardado(true);
   };
 
+  const getTipo = (estado) => (estado === "presente" ? "success" : "danger");
+
   return (
-    <div className="panel-container">
-      <Sidebar rol="profesor" />
+    <PanelLayout rol="profesor">
+      <div className="asistencia-profesor-container">
+        {/* HEADER */}
+        <div className="asistencia-header">
+          <div>
+            <Titulo level={1}>asistencia curso {id}</Titulo>
+            <Texto color="muted">selecciona fecha y marca asistencia</Texto>
 
-      <div className="panel-contenido">
-        {/* 👇 CONTENEDOR PROPIO */}
-        <div className="asistencia-profesor-container">
-          {/* HEADER */}
-          <div className="asistencia-header">
-            <h1>asistencia curso {id}</h1>
-
-            <div className="asistencia-global">
-              <p>asistencia</p>
-              <h2>{porcentaje}%</h2>
-            </div>
+            {/* FECHA */}
+            <input
+              type="date"
+              value={fecha}
+              onChange={(e) => setFecha(e.target.value)}
+              className="input-fecha"
+            />
           </div>
 
-          {/* LISTA */}
-          <div className="asistencia-lista">
-            {lista.map((alumno) => (
-              <div className="asistencia-card" key={alumno.id}>
-                <span className="nombre">{alumno.nombre}</span>
-
-                <div className="acciones">
-                  <button
-                    className={alumno.estado === "presente" ? "activo" : ""}
-                    onClick={() => cambiarEstado(alumno.id, "presente")}
-                  >
-                    presente
-                  </button>
-
-                  <button
-                    className={alumno.estado === "ausente" ? "activo" : ""}
-                    onClick={() => cambiarEstado(alumno.id, "ausente")}
-                  >
-                    ausente
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* FOOTER */}
-          <div className="asistencia-footer">
-            <button className="btn-guardar" onClick={guardarAsistencia}>
-              guardar asistencia
-            </button>
-
-            {guardado && (
-              <span className="mensaje-ok">✔ asistencia guardada</span>
-            )}
+          <div className="asistencia-global">
+            <Texto size="sm">asistencia</Texto>
+            <Titulo level={2}>{porcentaje}%</Titulo>
           </div>
         </div>
+
+        {/* LISTA */}
+        <div className="asistencia-lista">
+          {lista.map((alumno) => (
+            <div className="asistencia-card" key={alumno.id}>
+              <div className="info">
+                <Texto>{alumno.nombre}</Texto>
+
+                <Badge texto={alumno.estado} tipo={getTipo(alumno.estado)} />
+              </div>
+
+              <div className="acciones">
+                <Boton
+                  variant={
+                    alumno.estado === "presente" ? "primary" : "secondary"
+                  }
+                  onClick={() => cambiarEstado(alumno.id, "presente")}
+                >
+                  presente
+                </Boton>
+
+                <Boton
+                  variant={alumno.estado === "ausente" ? "danger" : "secondary"}
+                  onClick={() => cambiarEstado(alumno.id, "ausente")}
+                >
+                  ausente
+                </Boton>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* FOOTER */}
+        <div className="asistencia-footer">
+          <Boton onClick={guardarAsistencia}>guardar asistencia</Boton>
+
+          {guardado && (
+            <Texto color="success">✔ asistencia guardada para {fecha}</Texto>
+          )}
+        </div>
       </div>
-    </div>
+    </PanelLayout>
   );
 }
 

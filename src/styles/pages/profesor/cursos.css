@@ -1,18 +1,19 @@
-/* CONTENEDOR SOLO DE ESTA PAGINA */
+/* CONTENEDOR */
 .cursos-profesor-container {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 40px;
 
   display: flex;
   flex-direction: column;
   gap: 25px;
+
+  min-height: 100%;
 }
 
-/* TITULO */
-.cursos-profesor-container h1 {
-  color: #273823;
-  font-size: 2rem;
-  font-weight: 800;
+/* HEADER */
+.cursos-header {
+  margin-bottom: 10px;
 }
 
 /* GRID */
@@ -41,33 +42,7 @@
   transform: translateY(-5px);
 }
 
-/* TEXTO */
-.curso-card h3 {
-  margin: 0;
-  color: #273823;
-}
-
-.curso-card p {
-  margin: 0;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-/* BOTON */
+/* BOTON (ajuste si usas tu atom) */
 .curso-card button {
   margin-top: 10px;
-
-  padding: 10px;
-  border: none;
-  border-radius: 20px;
-
-  background: linear-gradient(135deg, #4b8a64, #afec15);
-  cursor: pointer;
-  font-weight: 600;
-
-  transition: 0.2s;
-}
-
-.curso-card button:hover {
-  transform: scale(1.05);
 }
