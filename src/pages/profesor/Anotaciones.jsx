@@ -7,15 +7,15 @@ import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
 import Badge from "../../components/atoms/Badge";
+import useAnotaciones from "../../hooks/profesor/useAnotaciones";
 
 function AnotacionesProfesor() {
   const { id } = useParams();
 
   const alumnos = ["juan", "maria", "pedro"];
 
-  const [anotaciones, setAnotaciones] = useState([]);
+  const { anotaciones, agregarAnotacion } = useAnotaciones();
 
-  // 🆕 fecha incluida en el form
   const [form, setForm] = useState({
     alumno: "",
     tipo: "positiva",
@@ -27,17 +27,9 @@ function AnotacionesProfesor() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const agregarAnotacion = () => {
-    if (!form.alumno || !form.descripcion) return;
+  const handleSubmit = () => {
+    agregarAnotacion(form);
 
-    setAnotaciones([
-      ...anotaciones,
-      {
-        ...form,
-      },
-    ]);
-
-    // reset pero mantiene fecha actual
     setForm({
       alumno: "",
       tipo: "positiva",
@@ -67,7 +59,6 @@ function AnotacionesProfesor() {
             <option value="negativa">negativa</option>
           </select>
 
-          {/* FECHA */}
           <input
             type="date"
             name="fecha"
@@ -84,13 +75,13 @@ function AnotacionesProfesor() {
             onChange={handleChange}
           />
 
-          <Boton onClick={agregarAnotacion}>guardar anotacion</Boton>
+          <Boton onClick={handleSubmit}>guardar anotacion</Boton>
         </div>
 
         {/* LISTA */}
         <div className="lista-anotaciones">
-          {anotaciones.map((a, i) => (
-            <div key={i} className={`card ${a.tipo}`}>
+          {anotaciones.map((a) => (
+            <div key={a.id} className={`card ${a.tipo}`}>
               <div className="card-top">
                 <Badge
                   texto={a.tipo}
