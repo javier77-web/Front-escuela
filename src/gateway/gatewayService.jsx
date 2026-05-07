@@ -5,6 +5,17 @@ const API_URL = import.meta.env.VITE_API_URL;
 const authFetch = async (endpoint, options = {}) => {
     const { auth } = await import('../firebaseConfig/config');
     
+    //Testeando posibles soluciones
+    // Espera hasta 3 segundos a que Firebase restaure la sesión (si carga todo altiro puede que no se carguen credenciales o que se)
+    if (!auth.currentUser) {
+        await new Promise((resolve) => {
+            const unsub = auth.onAuthStateChanged((u) => {
+                unsub();
+                resolve(u);
+            });
+        });
+    }
+
     const idToken = await auth.currentUser?.getIdToken();
     if (!idToken) throw new Error('No hay sesión activa');
 
@@ -28,7 +39,9 @@ const authFetch = async (endpoint, options = {}) => {
 // Sincroniza el usuario de Firebase con la BD del backend
 // Se llama una sola vez después del register
 export const syncUserWithBackend = async (firebaseUser, nombre, apellido, idRol) => {
-    const idToken = await firebaseUser.getIdToken();
+    const idToken = await firebaseUser.getIdToken(true);
+
+    console.log("Token para sync:", idToken ? "presente" : "vacío")
 
     const response = await fetch(`${API_URL}/api/usuarios/usuarios`, {
         method: 'POST',
@@ -37,7 +50,7 @@ export const syncUserWithBackend = async (firebaseUser, nombre, apellido, idRol)
             'Authorization': `Bearer ${idToken}`,
         },
         body: JSON.stringify({
-            uid: firebaseUser.uid,
+            firebaseuid: firebaseUser.uid,
             nombre: nombre,
             apellido: apellido,
             idRol: idRol
