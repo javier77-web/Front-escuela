@@ -1,14 +1,33 @@
+// store/api/usuariosApi.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { auth } from "../../firebaseConfig/config";
 
+// Helper que espera hasta tener un currentUser con token válido
+const getFirebaseToken = () => {
+  return new Promise((resolve) => {
+    // Si ya hay usuario activo, devuelve el token de inmediato
+    if (auth.currentUser) {
+      auth.currentUser.getIdToken().then(resolve).catch(() => resolve(null));
+      return;
+    }
+    // Si no, espera el primer cambio de estado (Firebase tardó en inicializar)
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      unsubscribe();
+      if (user) {
+        user.getIdToken().then(resolve).catch(() => resolve(null));
+      } else {
+        resolve(null);
+      }
+    });
+  });
+};
+
 export const usuariosApi = createApi({
   reducerPath: "usuariosApi",
-
-  baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_API_URL}/api/usuarios`,
-
-    // adjunta el JWT de Firebase en cada request automaticamente
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${import.meta.env.VITE_API_URL}/api/usuarios`,
     prepareHeaders: async (headers) => {
-      const idToken = await auth.currentUser?.getIdToken();
+      const idToken = await getFirebaseToken();
       if (idToken) {
         headers.set("Authorization", `Bearer ${idToken}`);
       }
@@ -16,18 +35,12 @@ export const usuariosApi = createApi({
       return headers;
     },
   }),
-
-  // etiqueta para invalidar cache cuando se crea/elimina
   tagTypes: ["Usuarios"],
-
   endpoints: (builder) => ({
-    // GET /api/usuarios/usuarios?rol=alumno
     obtenerUsuarios: builder.query({
       query: (rol) => `/usuarios?rol=${rol}`,
       providesTags: ["Usuarios"],
     }),
-
-    // POST — solo guarda en PostgreSQL (Firebase lo maneja el AuthContext)
     crearUsuario: builder.mutation({
       query: (nuevoUsuario) => ({
         url: "/usuarios",
@@ -36,8 +49,6 @@ export const usuariosApi = createApi({
       }),
       invalidatesTags: ["Usuarios"],
     }),
-
-    // DELETE /api/usuarios/usuarios/:id
     eliminarUsuario: builder.mutation({
       query: (id) => ({
         url: `/usuarios/${id}`,
