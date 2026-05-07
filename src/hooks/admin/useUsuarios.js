@@ -16,14 +16,17 @@ function generarContrasena() {
 
 function useUsuarios(tipoUsuario) {
   // funcion register del AuthContext — crea en Firebase + PostgreSQL
-  const { register } = useContext(AuthContext);
+  const { register, user } = useContext(AuthContext);
 
   // RTK Query — obtiene usuarios filtrados por rol
   const {
     data: usuarios = [],
     isLoading,
     isError,
-  } = useObtenerUsuariosQuery(tipoUsuario);
+    refetch,
+  } = useObtenerUsuariosQuery(tipoUsuario, {
+    skip: !user,
+  });
 
   // RTK Query — eliminar usuario
   const [eliminarUsuarioMutation] = useEliminarUsuarioMutation();
@@ -46,6 +49,8 @@ function useUsuarios(tipoUsuario) {
     if (!resultado.ok) {
       throw new Error(resultado.message);
     }
+// Refresca la lista después de crear — el nuevo usuario ya está en PostgreSQL
+    refetch();
 
     return { ok: true, contrasena: contrasenaTemporal };
   };
