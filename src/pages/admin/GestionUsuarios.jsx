@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/pages/admin/gestionUsuarios.css";
 import useFormulario from "../../hooks/useFormulario";
-import { validarContacto } from "../../hooks/validaciones/validarContacto";
+import { validarUsuario } from "../../hooks/validaciones/validarUsuario";
 
 // layout
 import PanelLayout from "../../layouts/PanelLayout";
@@ -22,7 +22,7 @@ function GestionUsuarios({ tipoUsuario }) {
   const { valores, errores, manejarCambio, manejarSubmit, resetForm } =
     useFormulario(
       { nombre: "", apellido: "", email: "", rol: tipoUsuario },
-      validarContacto,
+      validarUsuario,
     );
 
   // filtrados
