@@ -7,14 +7,10 @@ import {
 
 // genera contraseña temporal
 function generarContrasena() {
-  const caracteres =
-    "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#";
-  let contrasena = "";
-  for (let i = 0; i < 10; i++) {
-    contrasena += caracteres.charAt(
-      Math.floor(Math.random() * caracteres.length),
-    );
-  }
+  const caracteres = "1234567"
+
+  let contrasena = caracteres;
+
   return contrasena;
 }
 
