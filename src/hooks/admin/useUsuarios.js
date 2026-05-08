@@ -1,7 +1,7 @@
 // hooks/admin/useUsuarios.js — versión sin Redux, con axios
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
-import { apiGet, apiDelete } from "../../gateway/gatewayService";
+import { getUsuarios, deleteUsuario } from "../../api/usuariosApi";
 
 function generarContrasena() {
   return "1234567"; // misma lógica que tenías
@@ -16,7 +16,7 @@ function useUsuarios(tipoUsuario) {
   const cargarUsuarios = async () => {
     setIsLoading(true);
     try {
-      const data = await apiGet("/api/usuarios/usuarios");
+      const {data} = await getUsuarios();
       // Filtrar por nombre del rol
       const filtrados = data.filter(
         (u) => u.rol?.nombre?.toLowerCase() === tipoUsuario.toLowerCase()
@@ -48,7 +48,7 @@ function useUsuarios(tipoUsuario) {
   };
 
   const eliminarUsuario = async (firebaseuid) => {
-    await apiDelete(`/api/usuarios/usuarios/${firebaseuid}`);
+    await deleteUsuario(firebaseuid);
     await cargarUsuarios();
   };
 
