@@ -1,114 +1,30 @@
-/* contenedor principal de reportes */
+/* CONTENEDOR */
+.reportes-container {
+  padding: 40px;
+  background: #f4f6f0;
+  min-height: 100vh;
+}
+
+/* HEADER */
 .reportes-encabezado {
   margin-bottom: 30px;
 }
 
-.reportes-titulo {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #273823;
-  margin: 0;
-}
-
-.reportes-subtitulo {
-  color: #666;
-  margin-top: 8px;
-  font-size: 0.95rem;
-}
-
-/* grilla de tarjetas */
+/* GRILLA */
 .reportes-grilla {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(260px, 1fr)
+  );
+
   gap: 20px;
 }
 
-/* tarjeta individual */
-.reporte-tarjeta {
-  background: white;
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border-left: 6px solid transparent;
-}
-
-.reporte-tarjeta:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* parte superior */
-.reporte-superior {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.reporte-icono {
-  font-size: 1.4rem;
-}
-
-.reporte-etiqueta {
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #555;
-}
-
-/* valor principal */
-.reporte-valor {
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0 0 8px 0;
-  color: #273823;
-}
-
-/* descripcion */
-.reporte-descripcion {
-  margin: 0;
-  color: #777;
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-/* colores de las tarjetas */
-.verde {
-  border-left-color: #4b8a64;
-}
-
-.azul {
-  border-left-color: #3b82f6;
-}
-
-.amarillo {
-  border-left-color: #eab308;
-}
-
-.morado {
-  border-left-color: #8b5cf6;
-}
-
-.rojo {
-  border-left-color: #ef4444;
-}
-
-.verde-claro {
-  border-left-color: #84cc16;
-}
-
-/* responsive */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .reportes-grilla {
     grid-template-columns: 1fr;
-  }
-
-  .reporte-tarjeta {
-    padding: 20px;
-  }
-
-  .reporte-valor {
-    font-size: 1.8rem;
   }
 }

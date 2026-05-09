@@ -5,10 +5,9 @@ import "../../styles/pages/admin/reportes.css";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
-
+import ReporteCard from "../../components/molecules/admin/ReporteCard";
 // pagina de reportes del administrador
 function Reportes() {
-  // datos estaticos por ahora
   const resumenGeneral = [
     {
       id: 1,
@@ -69,27 +68,17 @@ function Reportes() {
         {/* GRILLA */}
         <div className="reportes-grilla">
           {resumenGeneral.map((reporte) => (
-            <div
+            <ReporteCard
               key={reporte.id}
-              className={`reporte-tarjeta ${reporte.color}`}
-            >
-              <div className="reporte-superior">
-                <Badge texto={reporte.titulo} tipo="secondary" />
-              </div>
-
-              <Titulo level={2} className="reporte-valor">
-                {reporte.valor}
-              </Titulo>
-
-              <Texto size="sm" color="muted">
-                {reporte.descripcion}
-              </Texto>
-            </div>
+              titulo={reporte.titulo}
+              valor={reporte.valor}
+              descripcion={reporte.descripcion}
+              color={reporte.color}
+            />
           ))}
         </div>
       </div>
     </PanelLayout>
   );
 }
-
 export default Reportes;

@@ -1,0 +1,52 @@
+/* CARD */
+.reporte-card {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  border-left: 6px solid transparent;
+}
+
+.reporte-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* TOP */
+.reporte-card-top {
+  margin-bottom: 18px;
+}
+
+/* VALOR */
+.reporte-card-valor {
+  margin-bottom: 8px;
+  color: #273823;
+}
+
+/* COLORES */
+.reporte-card.verde {
+  border-left-color: #4b8a64;
+}
+
+.reporte-card.azul {
+  border-left-color: #3b82f6;
+}
+
+.reporte-card.amarillo {
+  border-left-color: #eab308;
+}
+
+.reporte-card.morado {
+  border-left-color: #8b5cf6;
+}
+
+.reporte-card.rojo {
+  border-left-color: #ef4444;
+}
+
+.reporte-card.verde-claro {
+  border-left-color: #84cc16;
+}
