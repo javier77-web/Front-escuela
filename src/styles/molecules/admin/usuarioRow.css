@@ -1,0 +1,19 @@
+.usuario-row {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.usuario-row:hover {
+  background: #f9fdf5;
+}
+
+.usuario-row td {
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.usuario-acciones {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
