@@ -6,21 +6,32 @@
   gap: 25px;
 }
 
+/* HEADER */
+.anotaciones-header {
+  margin-bottom: 10px;
+}
+
 /* FORM */
 .form-anotacion {
   display: flex;
   flex-direction: column;
   gap: 12px;
-
   background: white;
   padding: 25px;
   border-radius: 16px;
-
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
+/* SELECT */
 .form-anotacion select {
   padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* FECHA */
+.input-fecha {
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
@@ -30,39 +41,4 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-}
-
-/* CARD */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* HEADER CARD */
-.card-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* COLORES */
-.card.positiva {
-  border-left: 5px solid #4b8a64;
-}
-
-.card.negativa {
-  border-left: 5px solid #c0392b;
-}
-
-.input-fecha {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
 }

@@ -4,7 +4,7 @@ import "../../styles/pages/profesor/cursos.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
-import Boton from "../../components/atoms/Boton";
+import CursoProfesorCard from "../../components/molecules/profesor/CursoProfesorCard";
 
 function CursosProfesor() {
   const navigate = useNavigate();
@@ -43,17 +43,13 @@ function CursosProfesor() {
         {/* GRID */}
         <div className="cursos-grid">
           {asignaturas.map((a) => (
-            <div key={a.id} className="curso-card">
-              <Titulo level={3}>{a.nombre}</Titulo>
-
-              <Texto>{a.curso}</Texto>
-
-              <Texto size="sm" color="muted">
-                {a.horario}
-              </Texto>
-
-              <Boton onClick={() => irDetalle(a)}>gestionar</Boton>
-            </div>
+            <CursoProfesorCard
+              key={a.id}
+              nombre={a.nombre}
+              curso={a.curso}
+              horario={a.horario}
+              onGestionar={() => irDetalle(a)}
+            />
           ))}
         </div>
       </div>

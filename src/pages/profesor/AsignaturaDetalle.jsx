@@ -3,11 +3,13 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../styles/pages/profesor/asignaturaDetalle.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
-import Boton from "../../components/atoms/Boton";
+import AccionCursoCard from "../../components/molecules/profesor/AccionCursoCard";
 
 function AsignaturaDetalle() {
   const { id } = useParams();
+
   const location = useLocation();
+
   const navigate = useNavigate();
 
   const asignatura = location.state;
@@ -15,26 +17,34 @@ function AsignaturaDetalle() {
   return (
     <PanelLayout rol="profesor">
       <div className="asignatura-detalle-container">
+        {/* TITULO */}
         <Titulo level={1}>
           {asignatura
             ? `${asignatura.nombre} - ${asignatura.curso}`
             : `asignatura ${id}`}
         </Titulo>
 
+        {/* ACCIONES */}
         <div className="acciones-curso">
-          <Boton onClick={() => navigate(`/profesor/${id}/asistencia`)}>
-            asistencia
-          </Boton>
+          <AccionCursoCard
+            texto="asistencia"
+            onClick={() => navigate(`/profesor/${id}/asistencia`)}
+          />
 
-          <Boton onClick={() => navigate(`/profesor/${id}/notas`)}>notas</Boton>
+          <AccionCursoCard
+            texto="notas"
+            onClick={() => navigate(`/profesor/${id}/notas`)}
+          />
 
-          <Boton onClick={() => navigate(`/profesor/${id}/anotaciones`)}>
-            anotaciones
-          </Boton>
+          <AccionCursoCard
+            texto="anotaciones"
+            onClick={() => navigate(`/profesor/${id}/anotaciones`)}
+          />
 
-          <Boton onClick={() => navigate(`/profesor/${id}/evaluaciones`)}>
-            evaluaciones
-          </Boton>
+          <AccionCursoCard
+            texto="evaluaciones"
+            onClick={() => navigate(`/profesor/${id}/evaluaciones`)}
+          />
         </div>
       </div>
     </PanelLayout>

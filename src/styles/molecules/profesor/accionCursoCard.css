@@ -1,0 +1,17 @@
+.accion-curso-card {
+  flex: 1;
+  min-width: 200px;
+}
+
+.accion-curso-card .boton-atom {
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.accion-curso-card .boton-atom:hover {
+  transform: translateY(-5px);
+}

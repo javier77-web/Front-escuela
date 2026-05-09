@@ -7,7 +7,7 @@ import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
-import Badge from "../../components/atoms/Badge";
+import AlumnoAsistenciaCard from "../../components/molecules/profesor/AlumnoAsistenciaCard";
 import useAsistencia from "../../hooks/profesor/useAsistencia";
 
 function AsistenciaProfesor() {
@@ -32,6 +32,7 @@ function AsistenciaProfesor() {
         <div className="asistencia-header">
           <div>
             <Titulo level={1}>asistencia curso {id}</Titulo>
+
             <Texto color="muted">selecciona fecha y marca asistencia</Texto>
 
             <input
@@ -44,6 +45,7 @@ function AsistenciaProfesor() {
 
           <div className="asistencia-global">
             <Texto size="sm">asistencia</Texto>
+
             <Titulo level={2}>{porcentaje}%</Titulo>
           </div>
         </div>
@@ -51,31 +53,12 @@ function AsistenciaProfesor() {
         {/* LISTA */}
         <div className="asistencia-lista">
           {lista.map((alumno) => (
-            <div className="asistencia-card" key={alumno.id}>
-              <div className="info">
-                <Texto>{alumno.nombre}</Texto>
-
-                <Badge texto={alumno.estado} tipo={getTipo(alumno.estado)} />
-              </div>
-
-              <div className="acciones">
-                <Boton
-                  variant={
-                    alumno.estado === "presente" ? "primary" : "secondary"
-                  }
-                  onClick={() => cambiarEstado(alumno.id, "presente")}
-                >
-                  presente
-                </Boton>
-
-                <Boton
-                  variant={alumno.estado === "ausente" ? "danger" : "secondary"}
-                  onClick={() => cambiarEstado(alumno.id, "ausente")}
-                >
-                  ausente
-                </Boton>
-              </div>
-            </div>
+            <AlumnoAsistenciaCard
+              key={alumno.id}
+              alumno={alumno}
+              cambiarEstado={cambiarEstado}
+              getTipo={getTipo}
+            />
           ))}
         </div>
 
