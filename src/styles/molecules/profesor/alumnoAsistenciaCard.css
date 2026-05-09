@@ -1,0 +1,28 @@
+.alumno-asistencia-card {
+  background: white;
+  border-radius: 16px;
+
+  padding: 20px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alumno-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.alumno-nombre {
+  font-weight: 700;
+  color: #273823;
+}
+
+.alumno-acciones {
+  display: flex;
+  gap: 10px;
+}
