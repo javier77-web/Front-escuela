@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "antd": "^6.3.6",
+    "axios": "^1.16.0",
     "bootstrap": "^5.3.8",
     "firebase": "^12.12.1",
     "framer-motion": "^12.38.0",

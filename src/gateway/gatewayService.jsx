@@ -1,84 +1,25 @@
-//GatewayService
-const API_URL = import.meta.env.VITE_API_URL;
+import api from "../api/axiosConfig";
 
-// Función base privada — adjunta el JWT de Firebase en cada request
-const authFetch = async (endpoint, options = {}) => {
-    const { auth } = await import('../firebaseConfig/config');
-    
-    const idToken = await auth.currentUser?.getIdToken();
-    if (!idToken) throw new Error('No hay sesión activa');
-
-    const response = await fetch(`${API_URL}${endpoint}`, {
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`,
-            ...options.headers,
-        },
-    });
-
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `Error ${response.status}`);
-    }
-
-    return response.json();
-};
-
-// Sincroniza el usuario de Firebase con la BD del backend
-// Se llama una sola vez después del register
+// Esta función es para registrar en PostgreSQL el usuario creado copn firebase por el admin
+// Usa el token directo de firebaseUser porque auth.currentUser
+// todavía no está disponible en el interceptor
 export const syncUserWithBackend = async (firebaseUser, nombre, apellido, idRol) => {
-    const idToken = await firebaseUser.getIdToken();
+    const idToken = await firebaseUser.getIdToken(true);
 
-    const response = await fetch(`${API_URL}/api/usuarios/usuarios`, {
-        method: 'POST',
+    //Log paara comprobar que se captura el token
+    console.log("Token para sync:", idToken ? "presente" : "vacío")
+
+    const {data} = await api.post(`/api/usuarios/usuarios`, {
+        firebaseuid: firebaseUser.uid,
+        nombre,
+        apellido,
+        idRol
+    }, {
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`,
-        },
-        body: JSON.stringify({
-            uid: firebaseUser.uid,
-            nombre: nombre,
-            apellido: apellido,
-            idRol: idRol
-        }),
+            Authorization: `Bearer ${idToken}`
+        }
     });
-
-    if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(err.message || 'Error al crear usuario con el backend');
-    }
-
-    return response.json();
+    return data;
 };
 
-// Helpers GET y POST para usar en cualquier página
-//Son funciones que envuelven authFetch para no tener que repetir configuración en cada llamada. 
-// Sin ellos, cada vez que quisieras pedir datos tendrías que escribir:
-/**
- *
-Antes de de los helpers:
-authFetch('/gestion-academica/cursos', { method: 'GET' })
-authFetch('/gestion-academica/cursos', { method: 'POST', body: JSON.stringify(data) })
-
-Después de los helpers:
-apiGet('/gestion-academica/cursos')
-apiPost('/gestion-academica/cursos', data)
- */
-export const apiGet = (endpoint) =>
-    authFetch(endpoint, { method: 'GET' });
-
-export const apiPost = (endpoint, body) =>
-    authFetch(endpoint, {
-        method: 'POST',
-        body: JSON.stringify(body),
-    });
-
-export const apiPut = (endpoint, body) =>
-    authFetch(endpoint, {
-        method: 'PUT',
-        body: JSON.stringify(body),
-    });
-
-export const apiDelete = (endpoint) =>
-    authFetch(endpoint, { method: 'DELETE' });
+//Antes era más compleja, no estaban aplicados los axios

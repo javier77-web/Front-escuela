@@ -35,6 +35,10 @@ export function AuthProvider({ children }) {
       //Se utiliza el metodo auth de firebase y se crea el user y sus credenciales
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
+
+      // Esperar a que Firebase propague el usuario antes de sincronizar
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       // Sincroniza con el backend para crear el perfil en PostgreSQL
       await syncUserWithBackend(firebaseUser, nombre, apellido, idRol);
 

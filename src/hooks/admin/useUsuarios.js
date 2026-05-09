@@ -1,72 +1,58 @@
-import { useContext } from "react";
+// hooks/admin/useUsuarios.js — versión sin Redux, con axios
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
-import {
-  useObtenerUsuariosQuery,
-  useEliminarUsuarioMutation,
-} from "../../store/api/usuariosApi";
+import { getUsuarios, deleteUsuario } from "../../api/usuariosApi";
 
-// genera contraseña temporal
 function generarContrasena() {
-  const caracteres = "1234567"
-
-  let contrasena = caracteres;
-
-  return contrasena;
+  return "1234567"; // misma lógica que tenías
 }
 
 function useUsuarios(tipoUsuario) {
-  // funcion register del AuthContext — crea en Firebase + PostgreSQL
-  const { register, user } = useContext(AuthContext);
+  const { register,user } = useContext(AuthContext);
+  const [usuarios, setUsuarios] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  // RTK Query — obtiene usuarios filtrados por rol
-  const {
-    data: usuarios = [],
-    isLoading,
-    isError,
-    refetch,
-  } = useObtenerUsuariosQuery(tipoUsuario, {
-    skip: !user,
-  });
+  const cargarUsuarios = async () => {
+    setIsLoading(true);
+    try {
+      const {data} = await getUsuarios();
+      // Filtrar por nombre del rol
+      const filtrados = data.filter(
+        (u) => u.rol?.nombre?.toLowerCase() === tipoUsuario.toLowerCase()
+      );
+      setUsuarios(filtrados);
+    } catch (err) {
+      console.error("Error al cargar usuarios:", err);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  // RTK Query — eliminar usuario
-  const [eliminarUsuarioMutation] = useEliminarUsuarioMutation();
+  useEffect(() => {
+    if (user){
+      cargarUsuarios();
+    }
+  }, [user, tipoUsuario]);
 
-  // crea usuario: Firebase Auth + PostgreSQL via register()
   const crearUsuario = async ({ nombre, apellido, email, rol }) => {
     const contrasenaTemporal = generarContrasena();
-
-    // idRol: 1 = alumno, 2 = profesor (ajusta segun tu BD)
     const idRol = rol === "alumno" ? 1 : 2;
 
-    const resultado = await register(
-      email,
-      contrasenaTemporal,
-      nombre,
-      apellido,
-      idRol,
-    );
+    const resultado = await register(email, contrasenaTemporal, nombre, apellido, idRol);
+    if (!resultado.ok) throw new Error(resultado.message);
 
-    if (!resultado.ok) {
-      throw new Error(resultado.message);
-    }
-// Refresca la lista después de crear — el nuevo usuario ya está en PostgreSQL
-    refetch();
-
+    await cargarUsuarios(); // refresca la lista
     return { ok: true, contrasena: contrasenaTemporal };
   };
 
-  // elimina usuario por id
-  const eliminarUsuario = async (id) => {
-    await eliminarUsuarioMutation(id);
+  const eliminarUsuario = async (firebaseuid) => {
+    await deleteUsuario(firebaseuid);
+    await cargarUsuarios();
   };
 
-  return {
-    usuarios,
-    isLoading,
-    isError,
-    crearUsuario,
-    eliminarUsuario,
-  };
+  return { usuarios, isLoading, isError, crearUsuario, eliminarUsuario };
 }
 
 export default useUsuarios;
