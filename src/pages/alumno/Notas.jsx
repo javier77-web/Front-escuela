@@ -3,7 +3,7 @@ import "../../styles/pages/alumno/notas.css";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
-
+import NotaRow from "../../components/molecules/alumno/NotaRow";
 import PanelLayout from "../../layouts/PanelLayout";
 import useNotasAlumno from "../../hooks/alumno/useNotasAlumno";
 
@@ -31,11 +31,14 @@ function Notas() {
         <div className="notas-header">
           <div>
             <Titulo level={1}>Mis notas</Titulo>
+
             <Texto color="muted">resumen de evaluaciones del semestre</Texto>
           </div>
 
+          {/* PROMEDIO */}
           <div className="notas-promedio-general">
             <Texto size="sm">promedio general</Texto>
+
             <Titulo level={2}>{promedioGeneral}</Titulo>
           </div>
         </div>
@@ -55,24 +58,15 @@ function Notas() {
 
             <tbody>
               {notas.map((n, i) => (
-                <tr key={i}>
-                  <td className="notas-asignatura">
-                    <Texto>{n.asignatura}</Texto>
-                  </td>
-
-                  {[n.nota1, n.nota2, n.nota3].map((nota, j) => (
-                    <td key={j}>
-                      <Badge texto={nota.toFixed(1)} tipo={getTipo(nota)} />
-                    </td>
-                  ))}
-
-                  <td>
-                    <Badge
-                      texto={n.promedio.toFixed(1)}
-                      tipo={getTipo(n.promedio)}
-                    />
-                  </td>
-                </tr>
+                <NotaRow
+                  key={i}
+                  asignatura={n.asignatura}
+                  nota1={n.nota1}
+                  nota2={n.nota2}
+                  nota3={n.nota3}
+                  promedio={n.promedio}
+                  getTipo={getTipo}
+                />
               ))}
             </tbody>
           </table>

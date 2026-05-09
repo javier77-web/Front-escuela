@@ -1,83 +1,24 @@
-/* contenedor principal de la pagina cursos */
+/* CONTENEDOR */
 .cursos-container {
   background: #f4f6f0;
   min-height: 100vh;
   padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-/* encabezado */
+/* HEADER */
 .cursos-header {
-  margin-bottom: 32px;
-}
-
-.cursos-titulo {
-  color: #273823;
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0;
-}
-
-.cursos-subtitulo {
-  color: #666;
-  margin-top: 6px;
-}
-
-/* grilla de cards */
-.cursos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-/* card individual */
-.curso-card {
-  background: white;
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border-left: 5px solid #afec15;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-}
-
-.curso-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-}
-
-/* header de la card */
-.curso-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 12px;
+  align-items: center;
 }
 
-.curso-nombre {
-  color: #273823;
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-/* badge de creditos */
-.curso-creditos {
-  background: #afec15;
-  color: #273823;
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.curso-profesor {
-  color: #666;
-  margin: 0 0 4px;
-  font-size: 0.9rem;
-}
-
-.curso-horario {
-  color: #999;
-  font-size: 0.85rem;
-  margin: 0;
+/* GRID */
+.cursos-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
 }

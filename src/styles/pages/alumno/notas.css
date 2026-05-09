@@ -1,4 +1,4 @@
-/* CONTENEDOR PRINCIPAL */
+/* CONTENEDOR */
 .notas-container {
   min-height: 100vh;
   padding: 40px;
@@ -13,35 +13,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
 }
 
-/* PROMEDIO GENERAL */
+/* PROMEDIO */
 .notas-promedio-general {
-  background: #f7f7f7;
+  background: #273823;
   border-radius: 20px;
-  padding: 16px 28px;
-  min-width: 140px;
-  margin-left: auto;
+  padding: 18px 28px;
+  min-width: 170px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: auto;
 }
 
-/* IMPORTANTE: ahora usas atoms, así que estilizamos el contenido interno */
-.notas-promedio-general span {
-  display: block;
+.notas-promedio-general .texto-atom {
   color: #afec15;
-  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.notas-promedio-general h2 {
-  color: white; /* 👈 antes estaba rojo raro */
+.notas-promedio-general .titulo-atom {
+  color: white;
   margin: 0;
-  font-size: 2.2rem;
-  font-weight: 800;
 }
 
-/* TABLA WRAPPER */
+/* TABLA */
 .notas-tabla-wrapper {
   background: white;
   border-radius: 20px;
@@ -49,7 +48,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* TABLA */
 .notas-tabla {
   width: 100%;
   border-collapse: collapse;
@@ -58,57 +56,15 @@
 /* HEADER TABLA */
 .notas-tabla thead tr {
   background: #273823;
-  color: white;
 }
 
 .notas-tabla th {
-  padding: 16px 20px;
+  padding: 18px 20px;
   text-align: center;
+  color: white;
   font-weight: 600;
 }
 
 .notas-tabla th:first-child {
   text-align: left;
-}
-
-/* FILAS */
-.notas-tabla tbody tr {
-  border-bottom: 1px solid #f0f0f0;
-  transition: background 0.2s;
-}
-
-.notas-tabla tbody tr:hover {
-  background: #f9fdf5;
-}
-
-/* CELDAS */
-.notas-tabla td {
-  padding: 16px 20px;
-  text-align: center;
-}
-
-/* ASIGNATURA */
-.notas-asignatura {
-  font-weight: 600;
-  color: #273823;
-  text-align: left !important;
-}
-
-/* BADGE (usa tu atom) */
-.badge-atom.success {
-  background: #4b8a64;
-  color: white;
-  font-weight: 700;
-}
-
-.badge-atom.warning {
-  background: #f0a500;
-  color: white;
-  font-weight: 700;
-}
-
-.badge-atom.danger {
-  background: #c0392b;
-  color: white;
-  font-weight: 700;
 }
