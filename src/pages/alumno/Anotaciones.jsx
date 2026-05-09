@@ -7,6 +7,7 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
 import Boton from "../../components/atoms/Boton";
+import AnotacionCard from "../../components/molecules/alumno/AnotacionCard";
 import useAnotacionesAlumno from "../../hooks/alumno/useAnotacionesAlumno";
 
 // pagina de anotaciones del alumno — muestra historial con filtros
@@ -21,24 +22,39 @@ function Anotaciones() {
     loading,
   } = useAnotacionesAlumno();
 
+  if (loading) {
+    return (
+      <PanelLayout rol="alumno">
+        <div className="anotaciones-loading">
+          <Texto>cargando anotaciones...</Texto>
+        </div>
+      </PanelLayout>
+    );
+  }
+
   return (
     <PanelLayout rol="alumno">
       <div className="anotaciones-container">
         {/* HEADER */}
         <div className="anotaciones-header">
-          <Titulo level={1}>Anotaciones</Titulo>
-          <Texto color="muted">historial del semestre</Texto>
+          <div>
+            <Titulo level={1}>Anotaciones</Titulo>
+
+            <Texto color="muted">historial del semestre</Texto>
+          </div>
         </div>
 
         {/* RESUMEN */}
         <div className="anotaciones-resumen">
           <div className="resumen-card positiva">
             <Titulo level={2}>{positivas}</Titulo>
+
             <Texto size="sm">positivas</Texto>
           </div>
 
           <div className="resumen-card negativa">
             <Titulo level={2}>{negativas}</Titulo>
+
             <Texto size="sm">negativas</Texto>
           </div>
         </div>
@@ -59,23 +75,15 @@ function Anotaciones() {
         {/* LISTA */}
         <div className="anotaciones-lista">
           {filtradas.map((a) => (
-            <div key={a.id} className={`anotacion-card ${a.tipo}`}>
-              <div>
-                <div className="anotacion-top">
-                  <Badge texto={a.tipo} tipo={getTipoBadge(a.tipo)} />
-                  <Texto>{a.asignatura}</Texto>
-                  <Texto size="sm" color="muted">
-                    • {a.profesor}
-                  </Texto>
-                </div>
-
-                <Texto>{a.descripcion}</Texto>
-              </div>
-
-              <Texto size="sm" color="muted" className="anotacion-fecha">
-                {a.fecha}
-              </Texto>
-            </div>
+            <AnotacionCard
+              key={a.id}
+              tipo={a.tipo}
+              asignatura={a.asignatura}
+              descripcion={a.descripcion}
+              fecha={a.fecha}
+              profesor={a.profesor}
+              getTipoBadge={getTipoBadge}
+            />
           ))}
         </div>
       </div>

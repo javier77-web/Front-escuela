@@ -1,0 +1,37 @@
+.curso-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #afec15;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.curso-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* HEADER */
+.curso-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* TITULO */
+.curso-card .titulo-atom {
+  color: #273823;
+}
+
+/* INFO */
+.curso-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

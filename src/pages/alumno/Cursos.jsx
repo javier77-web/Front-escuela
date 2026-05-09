@@ -3,6 +3,7 @@ import "../../styles/pages/alumno/cursos.css";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
+import CursoCard from "../../components/molecules/alumno/CursoCard";
 // layout
 import PanelLayout from "../../layouts/PanelLayout";
 
@@ -13,36 +14,31 @@ function Cursos() {
       id: 1,
       nombre: "Matemáticas",
       profesor: "Prof. García",
-      horario: "Lun/Mié 08:00",
-      creditos: 4,
+      horario: "Lun/Mié 08:00"
     },
     {
       id: 2,
       nombre: "Lenguaje",
       profesor: "Prof. Martínez",
-      horario: "Mar/Jue 10:00",
-      creditos: 3,
+      horario: "Mar/Jue 10:00"
     },
     {
       id: 3,
       nombre: "Historia",
       profesor: "Prof. López",
-      horario: "Vie 09:00",
-      creditos: 3,
+      horario: "Vie 09:00"
     },
     {
       id: 4,
       nombre: "Ciencias",
       profesor: "Prof. Rodríguez",
-      horario: "Lun/Mié 14:00",
-      creditos: 4,
+      horario: "Lun/Mié 14:00"
     },
     {
       id: 5,
       nombre: "Inglés",
       profesor: "Prof. Smith",
-      horario: "Mar/Jue 08:00",
-      creditos: 3,
+      horario: "Mar/Jue 08:00"
     },
   ];
 
@@ -51,28 +47,24 @@ function Cursos() {
       <div className="cursos-container">
         {/* HEADER */}
         <div className="cursos-header">
-          <Titulo level={1}>Mis cursos</Titulo>
+          <div>
+            <Titulo level={1}>Mis cursos</Titulo>
 
-          <Texto color="muted">
-            tienes {cursos.length} ramos este semestre
-          </Texto>
+            <Texto color="muted">
+              tienes {cursos.length} ramos este semestre
+            </Texto>
+          </div>
         </div>
 
         {/* GRID */}
         <div className="cursos-grid">
           {cursos.map((curso) => (
-            <div key={curso.id} className="curso-card">
-              <div className="curso-card-header">
-                <Titulo level={3}>{curso.nombre}</Titulo>
-              </div>
-
-              {/* INFO */}
-              <Texto>{curso.profesor}</Texto>
-
-              <Texto size="sm" color="muted">
-                {curso.horario}
-              </Texto>
-            </div>
+            <CursoCard
+              key={curso.id}
+              nombre={curso.nombre}
+              profesor={curso.profesor}
+              horario={curso.horario}
+            />
           ))}
         </div>
       </div>
