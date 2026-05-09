@@ -1,5 +1,9 @@
+import React from "react";
+import Titulo from "../../atoms/Titulo";
+import Texto from "../../atoms/Texto";
 import Input from "../../atoms/Input";
 import Boton from "../../atoms/Boton";
+import "../../../styles/molecules/admin/modalFormularioUsuario.css";
 
 function ModalFormularioUsuario({
   tipoUsuario,

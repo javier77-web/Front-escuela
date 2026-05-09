@@ -9,39 +9,57 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
+import UsuarioRow from "../../components/molecules/admin/UsuarioRow";
+import ModalFormularioUsuario from "../../components/molecules/admin/ModalFormularioUsuario";
 import useUsuarios from "../../hooks/admin/useUsuarios";
 
 function GestionUsuarios({ tipoUsuario }) {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [contrasenaGenerada, setContrasenaGenerada] = useState("");
 
-  // HOOK DE USUARIOS (reemplaza useState local)
+  // hook usuarios
   const { usuarios, crearUsuario, eliminarUsuario } = useUsuarios(tipoUsuario);
 
   // formulario
   const { valores, errores, manejarCambio, manejarSubmit, resetForm } =
     useFormulario(
-      { nombre: "", apellido: "", email: "", rol: tipoUsuario },
+      {
+        nombre: "",
+        apellido: "",
+        email: "",
+        rol: tipoUsuario,
+      },
       validarUsuario,
     );
 
-  // filtrados
+  // filtrar usuarios
   const filtrados = usuarios.filter((u) => u.rol === tipoUsuario);
 
-  // enviar formulario: crea usuario en Firebase + PostgreSQL, muestra contraseña temporal en modal
+  // crear usuario
   const manejarEnvio = manejarSubmit(async () => {
     try {
-      const resultado = await crearUsuario({ ...valores });
+      const resultado = await crearUsuario({
+        ...valores,
+      });
+
       setContrasenaGenerada(resultado.contrasena);
+
       resetForm();
     } catch (error) {
       alert(`error al crear usuario: ${error.message}`);
     }
   });
 
+  // cerrar modal
   const cerrarModal = () => {
     setModalAbierto(false);
+
     setContrasenaGenerada("");
+  };
+
+  // editar usuario
+  const editarUsuario = (usuario) => {
+    console.log("editar", usuario);
   };
 
   return (
@@ -70,21 +88,12 @@ function GestionUsuarios({ tipoUsuario }) {
 
             <tbody>
               {filtrados.map((usuario) => (
-                <tr key={usuario.id}>
-                  <td>{usuario.nombre}</td>
-                  <td>{usuario.apellido}</td>
-                  <td>{usuario.email}</td>
-                  <td>
-                    <Boton variant="secondary">editar</Boton>
-
-                    <Boton
-                      variant="danger"
-                      onClick={() => eliminarUsuario(usuario.id)}
-                    >
-                      borrar
-                    </Boton>
-                  </td>
-                </tr>
+                <UsuarioRow
+                  key={usuario.id}
+                  usuario={usuario}
+                  onEditar={editarUsuario}
+                  onEliminar={eliminarUsuario}
+                />
               ))}
             </tbody>
           </table>
@@ -92,70 +101,15 @@ function GestionUsuarios({ tipoUsuario }) {
 
         {/* MODAL */}
         {modalAbierto && (
-          <div className="modal-fondo" onClick={cerrarModal}>
-            <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
-              <Titulo level={2}>nuevo {tipoUsuario}</Titulo>
-
-              {contrasenaGenerada ? (
-                <div className="modal-contrasena">
-                  <Texto>usuario creado exitosamente</Texto>
-
-                  <Texto size="sm">contraseña temporal:</Texto>
-
-                  <Texto className="contrasena-valor">
-                    {contrasenaGenerada}
-                  </Texto>
-
-                  <Texto size="sm" color="muted">
-                    copia esta contraseña y entrégasela al usuario
-                  </Texto>
-
-                  <Boton onClick={cerrarModal}>cerrar</Boton>
-                </div>
-              ) : (
-                <form onSubmit={manejarEnvio} className="modal-formulario">
-                  <Input
-                    label="nombre"
-                    name="nombre"
-                    value={valores.nombre}
-                    onChange={manejarCambio}
-                    error={errores.nombre}
-                  />
-
-                  <Input
-                    label="apellido"
-                    name="apellido"
-                    value={valores.apellido}
-                    onChange={manejarCambio}
-                    error={errores.apellido}
-                  />
-
-                  <Input
-                    label="email"
-                    name="email"
-                    type="email"
-                    value={valores.email}
-                    onChange={manejarCambio}
-                    error={errores.email}
-                  />
-
-                  <Input label="rol" name="rol" value={valores.rol} disabled />
-
-                  <div className="modal-botones">
-                    <Boton
-                      type="button"
-                      variant="secondary"
-                      onClick={cerrarModal}
-                    >
-                      cancelar
-                    </Boton>
-
-                    <Boton type="submit">crear usuario</Boton>
-                  </div>
-                </form>
-              )}
-            </div>
-          </div>
+          <ModalFormularioUsuario
+            tipoUsuario={tipoUsuario}
+            valores={valores}
+            errores={errores}
+            manejarCambio={manejarCambio}
+            manejarEnvio={manejarEnvio}
+            cerrarModal={cerrarModal}
+            contrasenaGenerada={contrasenaGenerada}
+          />
         )}
       </div>
     </PanelLayout>
