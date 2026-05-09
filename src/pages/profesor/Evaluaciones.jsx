@@ -6,13 +6,14 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Input from "../../components/atoms/Input";
 import Boton from "../../components/atoms/Boton";
-import Badge from "../../components/atoms/Badge";
+import EvaluacionCard from "../../components/molecules/profesor/EvaluacionCard";
 import useEvaluacionesProfesor from "../../hooks/profesor/useEvaluaciones";
 
 function EvaluacionesProfesor() {
   const { id } = useParams();
 
-  const { evaluaciones, form, handleChange, agregarEvaluacion, getTipoBadge } = useEvaluacionesProfesor();
+  const { evaluaciones, form, handleChange, agregarEvaluacion, getTipoBadge } =
+    useEvaluacionesProfesor();
 
   return (
     <PanelLayout rol="profesor">
@@ -20,6 +21,7 @@ function EvaluacionesProfesor() {
         {/* HEADER */}
         <div className="evaluaciones-header">
           <Titulo level={1}>evaluaciones asignatura {id}</Titulo>
+
           <Texto color="muted">
             crea y gestiona las evaluaciones del curso
           </Texto>
@@ -58,17 +60,13 @@ function EvaluacionesProfesor() {
         {/* LISTA */}
         <div className="lista-evaluaciones">
           {evaluaciones.map((e) => (
-            <div key={e.id} className="card-evaluacion">
-              <div className="card-header">
-                <Titulo level={3}>{e.titulo}</Titulo>
-
-                <Badge texto={e.tipo} tipo={getTipoBadge(e.tipo)} />
-              </div>
-
-              <Texto size="sm" color="muted">
-                fecha: {e.fecha}
-              </Texto>
-            </div>
+            <EvaluacionCard
+              key={e.id}
+              titulo={e.titulo}
+              tipo={e.tipo}
+              fecha={e.fecha}
+              getTipoBadge={getTipoBadge}
+            />
           ))}
         </div>
       </div>

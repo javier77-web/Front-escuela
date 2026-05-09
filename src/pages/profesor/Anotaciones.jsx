@@ -6,7 +6,7 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
-import Badge from "../../components/atoms/Badge";
+import AnotacionProfesorCard from "../../components/molecules/profesor/AnotacionProfesorCard";
 import useAnotaciones from "../../hooks/profesor/useAnotaciones";
 
 function AnotacionesProfesor() {
@@ -24,7 +24,10 @@ function AnotacionesProfesor() {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = () => {
@@ -41,12 +44,16 @@ function AnotacionesProfesor() {
   return (
     <PanelLayout rol="profesor">
       <div className="anotaciones-profesor-container">
-        <Titulo level={1}>anotaciones curso {id}</Titulo>
+        {/* HEADER */}
+        <div className="anotaciones-header">
+          <Titulo level={1}>anotaciones curso {id}</Titulo>
+        </div>
 
         {/* FORM */}
         <div className="form-anotacion">
           <select name="alumno" value={form.alumno} onChange={handleChange}>
             <option value="">seleccionar alumno</option>
+
             {alumnos.map((a, i) => (
               <option key={i} value={a}>
                 {a}
@@ -81,22 +88,13 @@ function AnotacionesProfesor() {
         {/* LISTA */}
         <div className="lista-anotaciones">
           {anotaciones.map((a) => (
-            <div key={a.id} className={`card ${a.tipo}`}>
-              <div className="card-top">
-                <Badge
-                  texto={a.tipo}
-                  tipo={a.tipo === "positiva" ? "success" : "danger"}
-                />
-
-                <Texto>{a.alumno}</Texto>
-              </div>
-
-              <Texto>{a.descripcion}</Texto>
-
-              <Texto size="sm" color="muted">
-                {a.fecha}
-              </Texto>
-            </div>
+            <AnotacionProfesorCard
+              key={a.id}
+              alumno={a.alumno}
+              tipo={a.tipo}
+              descripcion={a.descripcion}
+              fecha={a.fecha}
+            />
           ))}
         </div>
       </div>

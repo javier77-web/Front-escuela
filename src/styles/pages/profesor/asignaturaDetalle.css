@@ -1,35 +1,14 @@
-/* CONTENEDOR */
 .asignatura-detalle-container {
   max-width: 900px;
   margin: 0 auto;
-
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-/* acciones */
+/* GRID ACCIONES */
 .acciones-curso {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-}
-
-/* adaptar BOTON atom */
-.acciones-curso button {
-  flex: 1;
-  min-width: 200px;
-
-  padding: 20px;
-  border-radius: 20px;
-
-  font-weight: 700;
-  font-size: 1rem;
-
-  transition: all 0.2s;
-}
-
-/* hover */
-.acciones-curso button:hover {
-  transform: translateY(-5px);
 }
