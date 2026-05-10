@@ -16,50 +16,70 @@ import useUsuarios from "../../hooks/admin/useUsuarios";
 function GestionUsuarios({ tipoUsuario }) {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [contrasenaGenerada, setContrasenaGenerada] = useState("");
+  const [usuarioEditando, setUsuarioEditando] = useState(null);
 
   // hook usuarios
-  const { usuarios, crearUsuario, eliminarUsuario } = useUsuarios(tipoUsuario);
+  const {
+    usuarios,
+    isLoading,
+    isError,
+    crearUsuario,
+    eliminarUsuario,
+    actualizarUsuario,
+  } = useUsuarios(tipoUsuario);
 
   // formulario
-  const { valores, errores, manejarCambio, manejarSubmit, resetForm } =
-    useFormulario(
-      {
-        nombre: "",
-        apellido: "",
-        email: "",
-        rol: tipoUsuario,
-      },
-      validarUsuario,
-    );
+  const {
+    valores,
+    errores,
+    manejarCambio,
+    manejarSubmit,
+    resetForm,
+    setValores,
+  } = useFormulario(
+    { nombre: "", apellido: "", email: "", rol: tipoUsuario },
+     (valores) => validarUsuario(valores, !!usuarioEditando),
+  );
 
-  // filtrar usuarios
-  const filtrados = usuarios.filter((u) => u.rol === tipoUsuario);
+  const cerrarModal = () => {
+    setModalAbierto(false);
+    setContrasenaGenerada("");
+    setUsuarioEditando(null);
+    resetForm();
+  };
 
-  // crear usuario
+  // crear o editar según el modo
   const manejarEnvio = manejarSubmit(async () => {
+    console.log("1. callback ejecutado");
+    console.log("2. usuarioEditando:", usuarioEditando);
+    console.log("3. valores:", valores);
     try {
-      const resultado = await crearUsuario({
-        ...valores,
-      });
-
-      setContrasenaGenerada(resultado.contrasena);
-
-      resetForm();
+      if (usuarioEditando) {
+        console.log("4. llamando actualizarUsuario");
+        await actualizarUsuario(usuarioEditando.firebaseuid, valores);
+        console.log("5. actualizado ok");
+        cerrarModal();
+      } else {
+        const resultado = await crearUsuario({ ...valores });
+        setContrasenaGenerada(resultado.contrasena);
+        resetForm();
+      }
     } catch (error) {
-      alert(`error al crear usuario: ${error.message}`);
+      console.log("ERROR:", error);
+      alert(`error: ${error.message}`);
     }
   });
 
-  // cerrar modal
-  const cerrarModal = () => {
-    setModalAbierto(false);
-
-    setContrasenaGenerada("");
-  };
-
-  // editar usuario
+  // abre el modal precargado con los datos del usuario
   const editarUsuario = (usuario) => {
-    console.log("editar", usuario);
+    setValores({
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      email: "",
+      rol: usuario.rol?.nombre?.toLowerCase(),
+    });
+    setUsuarioEditando(usuario);
+    setModalAbierto(true);
   };
 
   return (
@@ -68,36 +88,46 @@ function GestionUsuarios({ tipoUsuario }) {
         {/* HEADER */}
         <div className="gestion-header">
           <Titulo level={1}>gestión de {tipoUsuario}s</Titulo>
-
           <Boton onClick={() => setModalAbierto(true)}>
             nuevo {tipoUsuario}
           </Boton>
         </div>
 
-        {/* TABLA */}
-        <div className="tabla-wrapper">
-          <table className="tabla-admin">
-            <thead>
-              <tr>
-                <th>nombre</th>
-                <th>apellido</th>
-                <th>email</th>
-                <th>acciones</th>
-              </tr>
-            </thead>
+        {/* ESTADOS DE CARGA */}
+        {isLoading && <p>cargando usuarios...</p>}
+        {isError && <p>error al cargar usuarios</p>}
 
-            <tbody>
-              {filtrados.map((usuario) => (
-                <UsuarioRow
-                  key={usuario.id}
-                  usuario={usuario}
-                  onEditar={editarUsuario}
-                  onEliminar={eliminarUsuario}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {/* TABLA */}
+        {!isLoading && !isError && (
+          <div className="tabla-wrapper">
+            <table className="tabla-admin">
+              <thead>
+                <tr>
+                  <th>nombre</th>
+                  <th>apellido</th>
+                  <th>fecha registro</th>
+                  <th>acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usuarios.length === 0 ? (
+                  <tr>
+                    <td colSpan={4}>no hay {tipoUsuario}s registrados</td>
+                  </tr>
+                ) : (
+                  usuarios.map((usuario) => (
+                    <UsuarioRow
+                      key={usuario.firebaseuid}
+                      usuario={usuario}
+                      onEditar={editarUsuario}
+                      onEliminar={() => eliminarUsuario(usuario.firebaseuid)}
+                    />
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {/* MODAL */}
         {modalAbierto && (
@@ -109,6 +139,7 @@ function GestionUsuarios({ tipoUsuario }) {
             manejarEnvio={manejarEnvio}
             cerrarModal={cerrarModal}
             contrasenaGenerada={contrasenaGenerada}
+            modoEdicion={!!usuarioEditando} //
           />
         )}
       </div>

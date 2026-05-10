@@ -1,0 +1,11 @@
+import api from "./axiosConfig";
+
+// GET historial de mensajes enviados por un usuario
+// GET /api/usuarios/mensajes/emisor/:firebaseuid
+export const getMensajesPorEmisor = (firebaseuid) =>
+  api.get(`/api/usuarios/mensajes/emisor/${firebaseuid}`);
+
+// POST enviar un mensaje
+// POST /api/usuarios/mensajes
+// data { contenido, fecha_envio, usuario: { firebaseuid } }
+export const enviarMensaje = (data) => api.post("/api/usuarios/mensajes", data);

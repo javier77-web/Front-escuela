@@ -5,8 +5,11 @@ function RutaProtegida({ children, rolRequerido }) {
   const { user, perfil } = useAuth();
 
   if (!user) return <Navigate to="/login" />;
-  
-  if (rolRequerido && perfil?.rol !== rolRequerido) {
+
+  if (
+    rolRequerido &&
+    perfil?.rol?.nombre?.trim().toLowerCase() !== rolRequerido.toLowerCase()
+  ) {
     return <Navigate to="/no-autorizado" />;
   }
 

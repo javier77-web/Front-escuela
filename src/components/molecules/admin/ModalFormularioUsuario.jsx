@@ -13,24 +13,24 @@ function ModalFormularioUsuario({
   manejarEnvio,
   cerrarModal,
   contrasenaGenerada,
+  modoEdicion,
 }) {
   return (
     <div className="modal-fondo" onClick={cerrarModal}>
       <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
-        <Titulo level={2}>nuevo {tipoUsuario}</Titulo>
+        {/* ← título cambia según modo */}
+        <Titulo level={2}>
+          {modoEdicion ? `editar ${tipoUsuario}` : `nuevo ${tipoUsuario}`}
+        </Titulo>
 
         {contrasenaGenerada ? (
           <div className="modal-contrasena">
             <Texto>usuario creado exitosamente</Texto>
-
             <Texto size="sm">contraseña temporal:</Texto>
-
             <Texto className="contrasena-valor">{contrasenaGenerada}</Texto>
-
             <Texto size="sm" color="muted">
               copia esta contraseña y entrégasela al usuario
             </Texto>
-
             <Boton onClick={cerrarModal}>cerrar</Boton>
           </div>
         ) : (
@@ -42,7 +42,6 @@ function ModalFormularioUsuario({
               onChange={manejarCambio}
               error={errores.nombre}
             />
-
             <Input
               label="apellido"
               name="apellido"
@@ -51,14 +50,17 @@ function ModalFormularioUsuario({
               error={errores.apellido}
             />
 
-            <Input
-              label="email"
-              name="email"
-              type="email"
-              value={valores.email}
-              onChange={manejarCambio}
-              error={errores.email}
-            />
+            {/* ← email solo al crear */}
+            {!modoEdicion && (
+              <Input
+                label="email"
+                name="email"
+                type="email"
+                value={valores.email}
+                onChange={manejarCambio}
+                error={errores.email}
+              />
+            )}
 
             <Input label="rol" name="rol" value={valores.rol} disabled />
 
@@ -67,7 +69,10 @@ function ModalFormularioUsuario({
                 cancelar
               </Boton>
 
-              <Boton type="submit">crear usuario</Boton>
+              {/* ← texto del botón cambia según modo */}
+              <Boton type="submit">
+                {modoEdicion ? "guardar cambios" : "crear usuario"}
+              </Boton>
             </div>
           </form>
         )}

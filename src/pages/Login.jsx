@@ -23,12 +23,14 @@ function Login() {
 
     const res = await login(email, password);
 
+    //lee el rol del perfil que ya devuelve login()
     if (res.ok) {
-      console.log("login correcto");
+      const rol = res.perfil?.rol?.nombre?.trim().toLowerCase();
 
-      navegar("/"); // redirige al home
-    } else {
-      alert(res.message);
+      if (rol === "admin") navegar("/panel/admin");
+      else if (rol === "alumno") navegar("/panel/alumno");
+      else if (rol === "profesor") navegar("/panel/profesor");
+      else navegar("/");
     }
   };
 
