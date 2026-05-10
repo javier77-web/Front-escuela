@@ -1,0 +1,70 @@
+/* CONTENEDOR */
+.notas-container {
+  min-height: 100vh;
+  padding: 40px;
+  background: #f4f6f0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* HEADER */
+.notas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* PROMEDIO */
+.notas-promedio-general {
+  background: #273823;
+  border-radius: 20px;
+  padding: 18px 28px;
+  min-width: 170px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.notas-promedio-general .texto-atom {
+  color: #afec15;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.notas-promedio-general .titulo-atom {
+  color: white;
+  margin: 0;
+}
+
+/* TABLA */
+.notas-tabla-wrapper {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.notas-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* HEADER TABLA */
+.notas-tabla thead tr {
+  background: #273823;
+}
+
+.notas-tabla th {
+  padding: 18px 20px;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+}
+
+.notas-tabla th:first-child {
+  text-align: left;
+}

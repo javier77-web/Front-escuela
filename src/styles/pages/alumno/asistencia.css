@@ -1,0 +1,23 @@
+/* CONTENEDOR */
+.asistencia-container {
+  background: #f4f6f0;
+  min-height: 100vh;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER */
+.asistencia-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LISTA */
+.asistencia-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

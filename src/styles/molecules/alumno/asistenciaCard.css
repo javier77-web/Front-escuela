@@ -1,0 +1,72 @@
+/* CARD */
+.asistencia-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* HEADER */
+.asistencia-card-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  align-items: center;
+  gap: 20px;
+}
+
+/* IZQUIERDA */
+.asistencia-nombre {
+  text-align: left;
+  color: #273823;
+}
+
+/* CENTRO */
+.asistencia-detalle {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.presentes {
+  color: #4b8a64;
+  font-size: 0.9rem;
+}
+
+.ausentes {
+  color: #c0392b;
+  font-size: 0.9rem;
+}
+
+/* DERECHA */
+.asistencia-badge {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* BARRA */
+.barra-fondo {
+  margin-top: 14px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.barra-progreso {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.barra-progreso.asistencia-success {
+  background: #4b8a64;
+}
+
+.barra-progreso.asistencia-warning {
+  background: #f0a500;
+}
+
+.barra-progreso.asistencia-danger {
+  background: #c0392b;
+}

@@ -1,0 +1,30 @@
+/* CONTENEDOR */
+.reportes-container {
+  padding: 40px;
+  background: #f4f6f0;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.reportes-encabezado {
+  margin-bottom: 30px;
+}
+
+/* GRILLA */
+.reportes-grilla {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(260px, 1fr)
+  );
+
+  gap: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .reportes-grilla {
+    grid-template-columns: 1fr;
+  }
+}

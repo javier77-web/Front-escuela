@@ -1,0 +1,91 @@
+/* RESET BÁSICO (MEJORA IMPORTANTE) Evita espacios raros por defecto del navegador*/
+* {
+  box-sizing: border-box;
+}
+
+/*BASE DEL DOCUMENTO (ANTES height:100% que causa problemas) */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%; /* MEJOR que height:100% */
+}
+body {
+  background-color: #ffffff;
+  color: #111; /* MEJORA: mejor contraste */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* MEJORA: suaviza fuentes */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* LAYOUT ROOT (REEMPLAZA TU index.css #root)*/
+#root {
+  min-height: 100vh; /* MEJORA: ocupa toda la pantalla */
+  width: 100%;       /* MEJORA: responsive real */
+  display: flex;
+  flex-direction: column;
+}
+
+/*COMPONENTE: */
+.electric-line {
+  position: relative;
+  height: 4px;
+  width: 100%;
+  background-color: #000000f1;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+/* RAYOS BASE*/
+.ray {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 2px;
+  opacity: 0.9;
+}
+
+/* RAYO 1*/
+.ray1 {
+  width: 25px;
+  background-color: #0011f8;
+  filter: drop-shadow(0 0 6px #5b6768);
+  animation: moveRay1 1.5s linear infinite;
+}
+
+/*RAYO 2 - azul largo*/
+.ray2 {
+  width: 60px;
+  background-color: #0047ff;
+  filter: drop-shadow(0 0 10px #0047ff);
+  animation: moveRay2 3s linear infinite;
+  opacity: 0.6;
+  animation-delay: 1s;
+}
+
+/*RAYO 3 - violeta*/
+.ray3 {
+  width: 40px;
+  background-color: #9d00ff;
+  filter: drop-shadow(0 0 8px #9d00ff);
+  animation: moveRay3 2s linear infinite;
+  opacity: 0.8;
+  animation-delay: 0.5s;
+}
+
+/* ANIMACIONES */
+@keyframes moveRay1 {
+  0% { left: -30px; }
+  100% { left: 100%; }
+}
+
+@keyframes moveRay2 {
+  0% { left: -70px; }
+  100% { left: 100%; }
+}
+
+@keyframes moveRay3 {
+  0% { left: -40px; }
+  100% { left: 100%; }
+}

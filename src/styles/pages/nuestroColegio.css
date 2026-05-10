@@ -1,0 +1,83 @@
+/* contenedor principal */
+.colegio-container {
+  padding-top: 100px; /* evita que el navbar tape contenido */
+}
+
+/* hero principal */
+.colegio-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px;
+  gap: 40px;
+  align-items: stretch; /* 🔥 hace que la imagen crezca en alto */
+}
+
+/* bloque de texto */
+.colegio-texto h1 {
+  font-size: 2.5rem;
+  color: #273823;
+}
+
+/* descripcion */
+.colegio-texto p {
+  margin-top: 20px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* boton */
+.btn-colegio {
+  margin: 20px auto 0 auto; /* 🔥 centra horizontal */
+  display: block;
+  transition: 0.3s;;
+}
+
+/* efecto hover */
+.btn-colegio:hover {
+  transform: scale(1.05);
+}
+
+/* imagen */
+.colegio-imagen img {
+  width: 300px;
+  border-radius: 20px;
+  transition: 0.3s;
+  filter: brightness(1.05) contrast(1.1);
+
+}
+.colegio-imagen img:hover {
+  transform: scale(1.05);
+}
+
+/* seccion de tarjetas */
+.colegio-caracteristicas {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 40px 0;
+}
+
+/* tarjeta individual */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+/* animacion al pasar mouse */
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* seccion de frase */
+.colegio-frase {
+  text-align: center;
+  padding: 60px;
+  background: linear-gradient(135deg, #f0f7f3, #b5bba6);
+  color: rgb(2, 2, 2);
+}

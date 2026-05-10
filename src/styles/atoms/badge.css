@@ -1,0 +1,29 @@
+.badge-atom {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+/* notas */
+.badge-atom.aprobado   { background: #d4f5c0; color: #2d6a1f; }
+.badge-atom.reprobado  { background: #ffd6d6; color: #c0392b; }
+
+/* asistencia */
+.badge-atom.alta       { background: #d4f5c0; color: #2d6a1f; }
+.badge-atom.media      { background: #fff3cd; color: #856404; }
+.badge-atom.baja       { background: #ffd6d6; color: #c0392b; }
+
+/* anotaciones */
+.badge-atom.positiva   { background: #d4f5c0; color: #2d6a1f; }
+.badge-atom.negativa   { background: #ffd6d6; color: #c0392b; }
+
+/* roles */
+.badge-atom.alumno     { background: #e0f0ff; color: #1a5fa8; }
+.badge-atom.profesor   { background: #ede0ff; color: #6a1ab8; }
+.badge-atom.admin      { background: #273823; color: #afec15; }
+
+/* default */
+.badge-atom.default    { background: #eee; color: #555; }

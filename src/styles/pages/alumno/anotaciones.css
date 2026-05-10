@@ -1,0 +1,74 @@
+/* CONTENEDOR */
+.anotaciones-container {
+  background: #f4f6f0;
+  min-height: 100vh;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER */
+.anotaciones-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* RESUMEN */
+.anotaciones-resumen {
+  display: flex;
+  gap: 16px;
+}
+
+.resumen-card {
+  flex: 1;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.resumen-card.positiva {
+  background: #e8f5e9;
+}
+
+.resumen-card.negativa {
+  background: #fdecea;
+}
+
+/* TITULOS DENTRO */
+.resumen-card .titulo-atom {
+  margin-bottom: 6px;
+}
+
+.resumen-card.positiva .titulo-atom {
+  color: #4b8a64;
+}
+
+.resumen-card.negativa .titulo-atom {
+  color: #c0392b;
+}
+
+/* TEXTO */
+.resumen-card .texto-atom {
+  font-weight: 600;
+}
+
+/* FILTROS */
+.anotaciones-filtros {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* LISTA */
+.anotaciones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* LOADING */
+.anotaciones-loading {
+  padding: 40px;
+}

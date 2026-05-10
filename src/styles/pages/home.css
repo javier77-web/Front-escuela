@@ -1,0 +1,93 @@
+/* contenedor principal */
+.hero {
+  position: relative;
+  min-height: 100vh; /* 🔥 mejor que height fijo */
+  width: 100%;       /* 🔥 asegura full width */
+  background: radial-gradient(circle at 20% 50%, #273823, #f8f8f8);
+  color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  overflow: hidden;
+}
+/* contenido */
+.hero-contenido {
+  z-index: 2;
+  max-width: 500px;
+  animation: fadeIn 1.2s ease;
+}
+
+/* titulo */
+.titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.titu2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.2px;
+    color: #000000;
+}
+
+/* subtitulo */
+.subtitulo {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+/* forma diagonal */
+.hero-forma {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(135deg, #4b8a64, #afec15);
+
+  clip-path: polygon(
+    220% 0,     /* arriba */
+    100% 0, 
+    100% 100%, 
+    0% 110%     /* abajo */
+  );
+
+  animation: slideIn 1.5s ease;
+}
+
+/* glow efecto */
+.glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: #ffffff;
+  filter: blur(120px);
+  opacity: 0.2;
+  top: 20%;
+  left: 10%;
+}
+
+/* animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

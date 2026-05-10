@@ -1,0 +1,54 @@
+.notas-profesor-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* HEADER */
+.notas-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* TABLA */
+.tabla-wrapper {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.tabla-notas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-notas thead {
+  background: #273823;
+  color: white;
+}
+
+.tabla-notas th {
+  padding: 16px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.tabla-notas th:first-child {
+  text-align: left;
+}
+
+.tabla-notas td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-notas td:first-child {
+  text-align: left;
+}
+
+.tabla-notas tbody tr:hover {
+  background: #f9fdf5;
+}

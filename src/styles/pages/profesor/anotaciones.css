@@ -1,0 +1,44 @@
+.anotaciones-profesor-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* HEADER */
+.anotaciones-header {
+  margin-bottom: 10px;
+}
+
+/* FORM */
+.form-anotacion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* SELECT */
+.form-anotacion select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* FECHA */
+.input-fecha {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* LISTA */
+.lista-anotaciones {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

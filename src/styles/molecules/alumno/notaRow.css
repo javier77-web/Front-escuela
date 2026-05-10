@@ -1,0 +1,22 @@
+.nota-row {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.nota-row:hover {
+  background: #f9fdf5;
+}
+
+.nota-row td {
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.nota-asignatura {
+  text-align: left !important;
+}
+
+.nota-asignatura .texto-atom {
+  font-weight: 700;
+  color: #273823;
+}

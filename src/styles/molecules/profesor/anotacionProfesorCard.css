@@ -1,0 +1,36 @@
+.anotacion-profesor-card {
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 20px;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.anotacion-profesor-card.positiva {
+  border-left: 5px solid #4b8a64;
+}
+
+.anotacion-profesor-card.negativa {
+  border-left: 5px solid #c0392b;
+}
+
+.anotacion-profesor-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alumno-nombre {
+  font-weight: 700;
+  color: #273823;
+}
+
+.fecha {
+  margin-top: 4px;
+}

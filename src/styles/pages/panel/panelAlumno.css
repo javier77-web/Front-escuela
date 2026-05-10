@@ -1,0 +1,33 @@
+/* contenedor principal del panel */
+.panel-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* contenido principal */
+.panel-contenido {
+  flex: 1;
+  padding: 40px;
+}
+
+/* contenedor de tarjetas */
+.panel-cards {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* tarjeta individual */
+.panel-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 200px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+/* animacion hover */
+.panel-card:hover {
+  transform: translateY(-5px);
+}

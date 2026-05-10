@@ -1,0 +1,24 @@
+/* CONTENEDOR */
+.cursos-container {
+  background: #f4f6f0;
+  min-height: 100vh;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* HEADER */
+.cursos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* GRID */
+.cursos-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}

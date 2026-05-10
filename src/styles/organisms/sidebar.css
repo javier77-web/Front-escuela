@@ -1,0 +1,83 @@
+/* contenedor principal del sidebar */
+.sidebar {
+  width: 220px;
+  min-height: 100vh; /* ocupa toda la pantalla */
+  background: linear-gradient(180deg, #273823, #1b2518);
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* titulo (rol: alumno / admin) */
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.4rem;
+  text-transform: capitalize;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 10px;
+}
+
+/* contenedor de links */
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* links normales */
+.sidebar a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+/* efecto hover */
+.sidebar a:hover {
+  background: #4b8a64;
+  transform: translateX(5px); /* pequeño movimiento */
+}
+
+/* link activo (cuando estes en esa ruta) */
+.sidebar a.active {
+  background: #afec15;
+  color: #273823;
+  font-weight: bold;
+}
+
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #273823, #1b2518);
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+ 
+}
+
+.panel-contenido {
+  margin-left: 220px;
+}
+
+/* boton cerrar sesion al fondo del sidebar */
+.sidebar-logout {
+  margin-top: auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar-logout:hover {
+  background: #c0392b;
+  border-color: #c0392b;
+}

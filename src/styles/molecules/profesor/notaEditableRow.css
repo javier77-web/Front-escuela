@@ -1,0 +1,22 @@
+.nota-editable-row {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.nota-editable-row:hover {
+  background: #f9fdf5;
+}
+
+.nota-editable-row td {
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.alumno-columna {
+  text-align: left !important;
+}
+
+.alumno-columna .texto-atom {
+  font-weight: 700;
+  color: #273823;
+}

@@ -1,0 +1,14 @@
+.asignatura-detalle-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* GRID ACCIONES */
+.acciones-curso {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
