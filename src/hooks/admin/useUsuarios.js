@@ -1,18 +1,16 @@
 // hooks/admin/useUsuarios.js — versión sin Redux, con axios
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
-import {
-  getUsuarios,
-  deleteUsuario,
-  updateUsuario,
-} from "../../api/usuariosApi";
+import { getUsuarios, deleteUsuario, updateUsuario } from "../../api/usuariosApi";
+import { crearUsuarioAdmin } from  "../../gateway/gatewayService";
 
+//Lógica sencilla, luego debe migrar a backend o analizar
 function generarContrasena() {
-  return "1234567"; // misma lógica que tenías
+  return "1234567";
 }
 
 function useUsuarios(tipoUsuario) {
-  const { register, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [usuarios, setUsuarios] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -43,12 +41,11 @@ function useUsuarios(tipoUsuario) {
 
   const crearUsuario = async ({ nombre, apellido, email, rol }) => {
     const contrasenaTemporal = generarContrasena();
-
     // Mapear rol a ID esperado por backend
     const rolesMap = { alumno: 1, profesor: 2, admin: 3 };
     const idRol = rolesMap[rol?.toLowerCase()] ?? 1;
 
-    const resultado = await register(
+    const resultado = await crearUsuarioAdmin(
       email,
       contrasenaTemporal,
       nombre,
