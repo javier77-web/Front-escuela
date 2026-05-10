@@ -7,7 +7,12 @@ import { useAuth } from "../../hooks/useAuth";
 
 function NavBar() {
   const hora = useHora();
-  const { user, logout } = useAuth();
+  const { user, perfil, logout } = useAuth();
+
+  //Error en la rutal del panel desde home, creamos la constante que setee el panel según el rol
+    const rutaPanel = perfil?.rol?.nombre
+    ? `/panel/${perfil.rol.nombre.trim().toLowerCase()}`
+    : "/";
 
   return (
     <Navbar bg="transparent" variant="light" expand="lg">
@@ -39,12 +44,9 @@ function NavBar() {
             {user ? (
               <div className="navbar-user">
                 {/* boton panel */}
-                <Link to="/panel/alumno" className="btn-login">
+                <Link to={rutaPanel} className="btn-login">
                   mi panel
                 </Link>
-                {/*
-                <Link to="/panel/{rol}" className="btn-login">
-                */}
 
                 {/* logout */}
                 <button onClick={logout} className="btn-login">

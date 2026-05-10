@@ -12,8 +12,6 @@ export function AuthProvider({ children }) {
   const [perfilLoading, setPerfilLoading] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
 
-
-
   // Escucha cambios de sesión de Firebase
   // Si hay usuario activo, también carga su perfil desde la BD
   useEffect(() => {
@@ -32,7 +30,7 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-    // Obtiene el perfil del usuario desde PostgreSQL usando axios
+  // Obtiene el perfil del usuario desde PostgreSQL usando axios
   const obtenerPerfil = async (firebaseUser) => {
     setPerfilLoading(true)
     try {
@@ -79,7 +77,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     user,
-    perfil, // ← ahora disponible en toda la app
+    perfil,
     loading,
     perfilLoading,
     authLoading,

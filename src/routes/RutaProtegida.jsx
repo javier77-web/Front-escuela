@@ -19,7 +19,7 @@ function RutaProtegida({ children, rolRequerido }) {
     rolRequerido &&
     perfil?.rol?.nombre?.trim().toLowerCase() !== rolRequerido.toLowerCase()
   ) {
-    return <Navigate to="/no-autorizado" />;
+    return console.error("obtenerPerfil falló:", perfil.rol);;
   }
 
   return children;
