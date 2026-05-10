@@ -2,7 +2,6 @@ import { useState } from "react";
 
 // este hook sirve para manejar formularios reutilizables
 function useFormulario(valoresIniciales, validar) {
-
   // estado de los inputs
   const [valores, setValores] = useState(valoresIniciales);
 
@@ -15,8 +14,14 @@ function useFormulario(valoresIniciales, validar) {
 
     setValores({
       ...valores,
-      [name]: value
+      [name]: value,
     });
+  };
+
+  // resetear formulario
+  const resetForm = () => {
+    setValores(valoresIniciales);
+    setErrores({});
   };
 
   // manejar submit
@@ -36,9 +41,10 @@ function useFormulario(valoresIniciales, validar) {
     valores,
     errores,
     manejarCambio,
-    manejarSubmit
+    manejarSubmit,
+    resetForm,
+    setValores
   };
 }
 
 export default useFormulario;
-
