@@ -1,17 +1,95 @@
-Esta carpeta contiene toda la comunicación con el backend (API Gateway).
+CARPETA /api — DOCUMENTACIÓN
 
-Se utiliza Redux Toolkit Query (RTK Query) para:
-- Realizar peticiones HTTP
-- Manejar cache automáticamente
-- Simplificar el uso de fetch o axios
+Esta carpeta contiene la capa de comunicación
+con el backend. Todos los archivos que hacen
+peticiones HTTP viven acá.
 
-Aquí se definen los endpoints:
-- cursos
-- usuarios
-- asistencia
+ARCHIVO: axiosConfig.js
 
-Ejemplo de archivos:
-api/ (cursosService.js)
-- api.js (configuración base)
-- cursosApi.js
-- usuariosApi.js
+QUÉ ES:
+  Cliente HTTP base configurado con Axios.
+  Se crea una sola vez y se reutiliza en toda
+  la app.
+
+QUÉ HACE:
+  1. Crea una instancia de axios apuntando a
+     VITE_API_URL (definida en .env).
+  2. Agrega un interceptor que antes de CADA
+     petición:
+       a. Espera a que Firebase termine de
+          cargar el usuario (por si la app
+          inicia y Firebase tarda).
+       b. Obtiene el token JWT del usuario
+          autenticado.
+       c. Lo inyecta en el header:
+          Authorization: Bearer <token>
+
+POR QUÉ EXISTE:
+  Sin este archivo tendrías que escribir el
+  token a mano en cada fetch/axios de cada
+  componente. Con esto lo haces una sola vez.
+
+CÓMO IMPORTARLO:
+  import api from "../api/axiosConfig";
+
+  // Ejemplo de uso directo:
+  const res = await api.get("/api/cursos");
+
+ARCHIVO: usuariosService.js
+
+QUÉ ES:
+  Capa de servicio específica para el
+  microservicio de usuarios.
+
+QUÉ HACE:
+  Define las operaciones disponibles contra
+  el endpoint de usuarios:
+
+  getUsuarios()
+    → GET /api/usuarios/usuarios
+    → Devuelve todos los usuarios
+
+  createUsuario(data)
+    → POST /api/usuarios/usuarios
+    → Crea un nuevo usuario en la BD
+    → data: { uid, nombre, apellido, idRol }
+
+  deleteUsuario(uid)
+    → DELETE /api/usuarios/usuarios/:uid
+    → Elimina un usuario por su UID de Firebase
+
+POR QUÉ EXISTE:
+  Para no escribir URLs hardcodeadas en los
+  componentes. Si el endpoint cambia, solo
+  cambias este archivo, no todos los
+  componentes que lo usan.
+
+CÓMO IMPORTARLO:
+  import { getUsuarios, createUsuario, deleteUsuario }
+    from "../api/usuariosService";
+
+  // Ejemplo de uso en un componente:
+  const { data } = await getUsuarios();
+  const usuario = data[0];
+
+FLUJO COMPLETO DE UNA PETICIÓN
+
+
+  Componente
+      │
+      ▼
+  usuariosService.js      ← define QUÉ pedir
+  (ej: getUsuarios())
+      │
+      ▼
+  axiosConfig.js          ← define CÓMO pedirlo
+  (interceptor agrega token Firebase)
+      │
+      ▼
+  API Gateway (puerto 8080)
+      │
+      ▼
+  Microservicio usuarios (puerto 8082)
+      │
+      ▼
+  Base de datos (Neon / PostgreSQL)
