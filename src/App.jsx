@@ -5,7 +5,7 @@ import NuestroColegio from "./pages/NuestroColegio";
 import Noticias from "./pages/noticias";
 import Contacto from "./pages/Contacto";
 import Login from "./pages/Login";
-import RutasPrivadas from "./Routes/RutasPrivadas";
+import RutasPrivadas from "./routes/RutasPrivadas";
 
 function App() {
   return (
