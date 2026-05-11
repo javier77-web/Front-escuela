@@ -16,7 +16,7 @@ const redes = [
 // datos de navegacion
 const navegacion = [
   { nombre: "inicio", ruta: "/" },
-  { nombre: "nuestro colegio", ruta: "/colegio" },
+  { nombre: "nuestro colegio", ruta: "/nuestroColegio" },
   { nombre: "noticias", ruta: "/noticias" },
   { nombre: "contacto", ruta: "/contacto" },
 ];
