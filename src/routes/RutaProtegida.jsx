@@ -12,7 +12,7 @@ function RutaProtegida({ children, rolRequerido }) {
 
   if (!user) return <Navigate to="/login" />;
 
-  //Si hay user pero perfil null el fetch falló
+  //Si hay user pero perfil null el fetch fall
   if(!perfil) return <Navigate to="/login"/>;
 
   if (
