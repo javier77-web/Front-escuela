@@ -1,28 +1,64 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { getAsistenciasPorUsuario } from "../../api/gestionUsuario/asistenciaService";
+import { getAsignaturaPorId } from "../../api/gestionAcademica/asignaturaService";
 
 function useAsistenciaAlumno() {
+  const { user } = useContext(AuthContext);
   const [asistencia, setAsistencia] = useState([]);
   const [promedioGlobal, setPromedioGlobal] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 🔴 simulación (luego va API)
-    const data = [
-      { asignatura: "Matemáticas", presentes: 18, ausentes: 2, porcentaje: 90 },
-      { asignatura: "Lenguaje", presentes: 20, ausentes: 0, porcentaje: 100 },
-      { asignatura: "Historia", presentes: 15, ausentes: 5, porcentaje: 75 },
-    ];
+    if (!user) return;
 
-    setAsistencia(data);
+    const cargar = async () => {
+      try {
+        const { data } = await getAsistenciasPorUsuario(user.uid);
 
-    const promedio =
-      Math.round(
-        data.reduce((acc, a) => acc + a.porcentaje, 0) / data.length,
-      ) || 0;
+        // agrupa por id_asignatura
+        const agrupado = {};
+        data.forEach((a) => {
+          const key = a.idAsignatura;
+          if (!agrupado[key]) {
+            agrupado[key] = {
+              id: key,
+              asignatura: `Asignatura ${key}`, // opción A — sin nombre real
+              presentes: 0,
+              ausentes: 0,
+            };
+          }
+          if (a.estado?.toLowerCase() === "presente") {
+            agrupado[key].presentes += 1;
+          } else {
+            agrupado[key].ausentes += 1;
+          }
+        });
 
-    setPromedioGlobal(promedio);
-    setLoading(false);
-  }, []);
+        // calcula porcentaje por asignatura
+        const lista = Object.values(agrupado).map((a) => ({
+          ...a,
+          porcentaje:
+            Math.round((a.presentes / (a.presentes + a.ausentes)) * 100) || 0,
+        }));
+
+        setAsistencia(lista);
+
+        const promedio =
+          Math.round(
+            lista.reduce((acc, a) => acc + a.porcentaje, 0) / lista.length,
+          ) || 0;
+
+        setPromedioGlobal(promedio);
+      } catch (error) {
+        console.error("Error al cargar asistencia:", error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargar();
+  }, [user]);
 
   const getTipo = (p) => {
     if (p >= 90) return "success";
@@ -30,12 +66,7 @@ function useAsistenciaAlumno() {
     return "danger";
   };
 
-  return {
-    asistencia,
-    promedioGlobal,
-    getTipo,
-    loading,
-  };
+  return { asistencia, promedioGlobal, getTipo, loading };
 }
 
 export default useAsistenciaAlumno;
