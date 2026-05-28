@@ -11,12 +11,7 @@ function Noticias() {
       <div className="noticias-header">
         <Titulo level={1} className="titulo-noticias">
           noticias del dia
-        </Titulo>
-
-        {/* esto despues lo conectas */}
-        <div className="info-tiempo">
-          <span>22°c</span>
-        </div>
+        </Titulo>  
       </div>
 
       {/* noticia principal */}
