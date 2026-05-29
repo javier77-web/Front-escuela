@@ -15,6 +15,8 @@ function ModalFormularioUsuario({
   contrasenaGenerada,
   modoEdicion,
 }) {
+  const hayErrores = Object.values(errores).some(Boolean);
+
   return (
     <div className="modal-fondo" onClick={cerrarModal}>
       <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
@@ -69,8 +71,8 @@ function ModalFormularioUsuario({
                 cancelar
               </Boton>
 
-              {/* ← texto del botón cambia según modo */}
-              <Boton type="submit">
+              {/* ← texto del botón cambia según modo // */}
+             <Boton type="submit" disabled={hayErrores}>
                 {modoEdicion ? "guardar cambios" : "crear usuario"}
               </Boton>
             </div>
