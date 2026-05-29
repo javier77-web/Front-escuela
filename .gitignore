@@ -26,3 +26,5 @@ dist-ssr
 #variables de entorno
 .env
 
+#Otros
+txt/
