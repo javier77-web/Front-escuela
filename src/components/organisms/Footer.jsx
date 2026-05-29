@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/organisms/Footer.css";
+import { Link } from "react-router-dom";
 
 // datos de redes sociales
 const redes = [
@@ -16,7 +17,7 @@ const redes = [
 // datos de navegacion
 const navegacion = [
   { nombre: "inicio", ruta: "/" },
-  { nombre: "nuestro colegio", ruta: "/colegio" },
+  { nombre: "nuestro colegio", ruta: "/NuestroColegio" },
   { nombre: "noticias", ruta: "/noticias" },
   { nombre: "contacto", ruta: "/contacto" },
 ];
@@ -42,9 +43,9 @@ function Footer() {
         {/* links centrados abajo */}
         <div className="footer-links">
           {navegacion.map((item) => (
-            <a key={item.nombre} href={item.ruta}>
+            <Link key={item.nombre} to={item.ruta}>
               {item.nombre}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
