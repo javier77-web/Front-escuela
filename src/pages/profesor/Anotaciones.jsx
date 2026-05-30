@@ -3,17 +3,18 @@ import { useParams } from "react-router-dom";
 import "../../styles/pages/profesor/anotaciones.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
-import Texto from "../../components/atoms/Texto";
-import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
-import AnotacionProfesorCard from "../../components/molecules/profesor/AnotacionProfesorCard";
+import Boton from "../../components/atoms/Boton";
+import AnotacionCard from "../../components/molecules/AnotacionCard";
 import useAnotaciones from "../../hooks/profesor/useAnotaciones";
+
+// Luego reemplazar por fetch a /api/academica/asignaturas/:id/alumnos
+const ALUMNOS_MOCK = ["juan", "maria", "pedro"];
+
+const getTipoBadge = (tipo) => (tipo === "positiva" ? "success" : "danger");
 
 function AnotacionesProfesor() {
   const { id } = useParams();
-
-  const alumnos = ["juan", "maria", "pedro"];
-
   const { anotaciones, agregarAnotacion } = useAnotaciones();
 
   const [form, setForm] = useState({
@@ -24,40 +25,26 @@ function AnotacionesProfesor() {
   });
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = () => {
     agregarAnotacion(form);
-
-    setForm({
-      alumno: "",
-      tipo: "positiva",
-      descripcion: "",
-      fecha: form.fecha,
-    });
+    setForm({ alumno: "", tipo: "positiva", descripcion: "", fecha: form.fecha });
   };
 
   return (
     <PanelLayout rol="profesor">
       <div className="anotaciones-profesor-container">
-        {/* HEADER */}
         <div className="anotaciones-header">
           <Titulo level={1}>anotaciones curso {id}</Titulo>
         </div>
 
-        {/* FORM */}
         <div className="form-anotacion">
           <select name="alumno" value={form.alumno} onChange={handleChange}>
             <option value="">seleccionar alumno</option>
-
-            {alumnos.map((a, i) => (
-              <option key={i} value={a}>
-                {a}
-              </option>
+            {ALUMNOS_MOCK.map((a) => (
+              <option key={a} value={a}>{a}</option>
             ))}
           </select>
 
@@ -75,7 +62,6 @@ function AnotacionesProfesor() {
           />
 
           <Input
-            as="textarea"
             name="descripcion"
             placeholder="descripcion"
             value={form.descripcion}
@@ -85,15 +71,16 @@ function AnotacionesProfesor() {
           <Boton onClick={handleSubmit}>guardar anotacion</Boton>
         </div>
 
-        {/* LISTA */}
         <div className="lista-anotaciones">
           {anotaciones.map((a) => (
-            <AnotacionProfesorCard
+            <AnotacionCard
               key={a.id}
-              alumno={a.alumno}
+              vista="profesor"
               tipo={a.tipo}
+              alumno={a.alumno}
               descripcion={a.descripcion}
               fecha={a.fecha}
+              getTipoBadge={getTipoBadge}
             />
           ))}
         </div>

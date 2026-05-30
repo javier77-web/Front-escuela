@@ -4,6 +4,30 @@ import "../../styles/organisms/sidebar.css";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
+//Mi asistente me recomendó refactorizar la function sidebar
+//me recomendó que instanciara una const con los rol y la ruta fuera de la función
+//De esta manera podemos agregar rutas sin tener que tocar la estructura del sidebar,
+//Sólo agregamos el label y la ruta respectiva según el rol correspondiente
+const NavPorRol = {
+  alumno: [
+    { label: "panel",       ruta: "/panel/alumno" },
+    { label: "mis cursos",  ruta: "/alumno/cursos" },
+    { label: "notas",       ruta: "/alumno/notas" },
+    { label: "asistencia",  ruta: "/alumno/asistencia" },
+    { label: "anotaciones", ruta: "/alumno/anotaciones" },
+  ],
+  admin: [
+    { label: "panel",      ruta: "/panel/admin" },
+    { label: "alumnos",    ruta: "/admin/alumnos" },
+    { label: "profesores", ruta: "/admin/profesores" },
+    { label: "reportes",   ruta: "/admin/reportes" },
+  ],
+  profesor: [
+    { label: "panel",  ruta: "/panel/profesor" },
+    { label: "cursos", ruta: "/profesor/cursos" },
+  ],
+};
+
 // sidebar principal del panel, cambia links segun el rol del usuario
 function Sidebar({ rol }) {
   const { logout } = useAuth();
@@ -14,6 +38,8 @@ function Sidebar({ rol }) {
     await logout();
     navigate("/");
   };
+
+  const links = NavPorRol[rol] ?? [];
   return (
     <div className="sidebar">
       {/* titulo con el rol actual */}
@@ -26,35 +52,11 @@ function Sidebar({ rol }) {
         </NavLink>
 
         {/* links exclusivos del alumno */}
-        {rol === "alumno" && (
-          <>
-            <NavLink to= "/panel/alumno">Panel</NavLink>
-            <NavLink to="/alumno/cursos">mis cursos</NavLink>
-            <NavLink to="/alumno/notas">notas</NavLink>
-            <NavLink to="/alumno/asistencia">asistencia</NavLink>
-            <NavLink to="/alumno/anotaciones">anotaciones</NavLink>
-          </>
-        )}
-
-        {/* links exclusivos del admin */}
-        {rol === "admin" && (
-          <>
-            <NavLink to= "/panel/admin">Panel</NavLink>
-            <NavLink to="/admin/alumnos">alumnos</NavLink>
-            <NavLink to="/admin/profesores">profesores</NavLink>
-            <NavLink to="/admin/reportes">reportes</NavLink>
-          </>
-        )}
-
-        {rol === "profesor" && (
-          <>
-            <NavLink to="/panel/profesor">Panel</NavLink>
-
-            <NavLink to="/profesor/cursos">
-              Cursos
-            </NavLink>
-          </>
-        )}
+        {links.map(({ label, ruta }) =>(
+          <NavLink key={ruta} to={ruta}>
+            {label}
+          </NavLink>
+        ))}
       </nav>
 
       <button className="sidebar-logout" onClick={handleLogout}>
