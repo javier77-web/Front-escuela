@@ -28,6 +28,7 @@ function Sidebar({ rol }) {
         {/* links exclusivos del alumno */}
         {rol === "alumno" && (
           <>
+            <NavLink to= "/panel/alumno">Panel</NavLink>
             <NavLink to="/alumno/cursos">mis cursos</NavLink>
             <NavLink to="/alumno/notas">notas</NavLink>
             <NavLink to="/alumno/asistencia">asistencia</NavLink>
@@ -38,6 +39,7 @@ function Sidebar({ rol }) {
         {/* links exclusivos del admin */}
         {rol === "admin" && (
           <>
+            <NavLink to= "/panel/admin">Panel</NavLink>
             <NavLink to="/admin/alumnos">alumnos</NavLink>
             <NavLink to="/admin/profesores">profesores</NavLink>
             <NavLink to="/admin/reportes">reportes</NavLink>
@@ -46,7 +48,11 @@ function Sidebar({ rol }) {
 
         {rol === "profesor" && (
           <>
-            <NavLink to="/profesor/cursos">cursos</NavLink>
+            <NavLink to="/panel/profesor">Panel</NavLink>
+
+            <NavLink to="/profesor/cursos">
+              Cursos
+            </NavLink>
           </>
         )}
       </nav>
