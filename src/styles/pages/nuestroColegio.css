@@ -81,3 +81,69 @@
   background: linear-gradient(135deg, #f0f7f3, #b5bba6);
   color: rgb(2, 2, 2);
 }
+
+/* 
+   Medidas para diseño responsivo
+   */
+
+/*  Ajustes para Tablets  */
+@media (max-width: 992px) {
+  .colegio-hero {
+    flex-direction: column; 
+    padding: 40px 20px;
+    align-items: center; 
+  }
+
+  .colegio-texto h1 {
+    font-size: 2.2rem; 
+  }
+
+  .colegio-imagen img {
+    width: 100%; 
+    max-width: 400px; 
+    height: auto;
+  }
+
+  .colegio-caracteristicas {
+    justify-content: center;
+    flex-wrap: wrap; 
+    padding: 20px;
+  }
+
+  .card {
+    width: calc(50% - 20px); 
+    min-width: 240px; 
+  }
+}
+
+/*para celulares */
+@media (max-width: 576px) {
+  .colegio-container {
+    padding-top: 80px; 
+  }
+
+  .colegio-hero {
+    padding: 30px 15px;
+    gap: 25px;
+  }
+
+  .colegio-texto h1 {
+    font-size: 1.8rem; 
+  }
+
+  .colegio-texto p {
+    font-size: 0.95rem;
+  }
+
+  .colegio-imagen img {
+    max-width: 100%; /* La imagen se adapta en los diferentes telefonos */
+  }
+
+  .card {
+    width: 100%; 
+  }
+
+  .colegio-frase {
+    padding: 40px 20px;
+  }
+}
