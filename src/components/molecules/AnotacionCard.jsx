@@ -1,12 +1,12 @@
 import React from "react";
-import "../../styles/molecules/alumno/AnotacionCard.css";
+import "../../styles/molecules/alumno/anotacionCard.css";
 import Texto from "../atoms/Texto";
 import Badge from "../atoms/Badge";
 
 //Antes habían diferentes elementos para las anotacion, se unificaron en este
 
 function AnotacionCard({
-  vista="alumno",
+  vista = "alumno",
   tipo,
   asignatura,
   descripcion,
