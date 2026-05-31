@@ -4,7 +4,7 @@ import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
 import Badge from "../../components/atoms/Badge";
 import Texto from "../../components/atoms/Texto";
-import AsistenciaCard from "../../components/molecules/alumno/AsistenciaCard";
+import AsistenciaResumenCard from "../../components/molecules/alumno/AsistenciaResumenCard";
 import useAsistenciaAlumno from "../../hooks/alumno/useAsistenciaAlumno";
 
 // pagina de asistencia del alumno — muestra porcentaje por asignatura
@@ -37,7 +37,7 @@ function Asistencia() {
         {/* LISTA */}
         <div className="asistencia-lista">
           {asistencia.map((a) => (
-            <AsistenciaCard
+            <AsistenciaResumenCard
               key={a.id}
               asignatura={a.asignatura}
               presentes={a.presentes}

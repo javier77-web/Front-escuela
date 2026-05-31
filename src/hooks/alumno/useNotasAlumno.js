@@ -1,60 +1,50 @@
 import { useState, useEffect } from "react";
 
+//Actualicé el hook ya que cambiaba la estrcutura en las cards,
+//Se supone quedó casi listo para luego cambiar el mock por el fetch a la api
+
 function useNotasAlumno() {
   const [notas, setNotas] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // simula backend (después aquí va fetch)
-    const data = [
-      {
-        asignatura: "Matemáticas",
-        nota1: 6.5,
-        nota2: 5.8,
-        nota3: 7.0,
-      },
-      {
-        asignatura: "Lenguaje",
-        nota1: 5.5,
-        nota2: 6.2,
-        nota3: 6.8,
-      },
-      {
-        asignatura: "Historia",
-        nota1: 7.0,
-        nota2: 6.5,
-        nota3: 6.9,
-      },
-      {
-        asignatura: "Ciencias",
-        nota1: 4.5,
-        nota2: 5.0,
-        nota3: 5.5,
-      },
-      {
-        asignatura: "Inglés",
-        nota1: 6.8,
-        nota2: 7.0,
-        nota3: 6.5,
-      },
-    ];
+    const cargarNotas = async () => {
+      try {
+        // Simulación de latencia de red
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
-    // calcular promedio dentro del hook 🔥
-    const conPromedio = data.map((n) => {
-      const promedio = (n.nota1 + n.nota2 + n.nota3) / 3;
+        // Mock temporal hasta conectar la API
+        const data = [
+          { asignatura: "Matemáticas", notas: [6.5, 5.8, 7.0] },
+          { asignatura: "Lenguaje", notas: [5.5, 6.2, 6.8] },
+          { asignatura: "Historia", notas: [7.0, 6.5, 6.9] },
+          { asignatura: "Ciencias", notas: [4.5, 5.0, 5.5] },
+          { asignatura: "Inglés", notas: [6.8, 7.0, 6.5] },
+        ];
 
-      return {
-        ...n,
-        promedio,
-      };
-    });
+        const conPromedio = data.map((asignatura) => ({
+          ...asignatura,
+          promedio:
+            asignatura.notas.reduce((acc, nota) => acc + nota, 0) /
+            asignatura.notas.length,
+        }));
 
-    setNotas(conPromedio);
-    setLoading(false);
+        setNotas(conPromedio);
+      } catch (error) {
+        console.error("Error al cargar notas:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarNotas();
   }, []);
 
   const promedioGeneral = notas.length
-    ? (notas.reduce((acc, n) => acc + n.promedio, 0) / notas.length).toFixed(1)
+    ? (
+        notas.reduce((acc, asignatura) => acc + asignatura.promedio, 0) /
+        notas.length
+      ).toFixed(1)
     : "0.0";
 
   return {

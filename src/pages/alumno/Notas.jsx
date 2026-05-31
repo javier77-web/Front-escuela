@@ -3,7 +3,7 @@ import "../../styles/pages/alumno/notas.css";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
-import NotaRow from "../../components/molecules/alumno/NotaRow";
+import NotaRow from "../../components/molecules/NotaRow";
 import PanelLayout from "../../layouts/PanelLayout";
 import useNotasAlumno from "../../hooks/alumno/useNotasAlumno";
 
@@ -49,9 +49,9 @@ function Notas() {
             <thead>
               <tr>
                 <th>asignatura</th>
-                <th>nota 1</th>
-                <th>nota 2</th>
-                <th>nota 3</th>
+                {notas[0]?.notas.map((_, i) => (
+                  <th key={i}>nota {i + 1}</th>
+                ))}
                 <th>promedio</th>
               </tr>
             </thead>
@@ -60,11 +60,7 @@ function Notas() {
               {notas.map((n, i) => (
                 <NotaRow
                   key={i}
-                  asignatura={n.asignatura}
-                  nota1={n.nota1}
-                  nota2={n.nota2}
-                  nota3={n.nota3}
-                  promedio={n.promedio}
+                  notas={n.notas}
                   getTipo={getTipo}
                 />
               ))}

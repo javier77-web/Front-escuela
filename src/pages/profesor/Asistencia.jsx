@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import "../../styles/pages/profesor/asistencia.css";
 import PanelLayout from "../../layouts/PanelLayout";
-
-// pagina de asistencia del profesor — puede marcar asistencia
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
-import AlumnoAsistenciaCard from "../../components/molecules/profesor/AlumnoAsistenciaCard";
+import AsistenciaRegistroCard from "../../components/molecules/profesor/AsistenciaRegistroCard";
 import useAsistencia from "../../hooks/profesor/useAsistencia";
 
 function AsistenciaProfesor() {
-  const { id } = useParams(); // ← este id debe ser idAsignatura
+  const { id } = useParams();
 
   const {
     lista,
@@ -29,7 +27,6 @@ function AsistenciaProfesor() {
   return (
     <PanelLayout rol="profesor">
       <div className="asistencia-profesor-container">
-        {/* HEADER */}
         <div className="asistencia-header">
           <div>
             <Titulo level={1}>asistencia asignatura {id}</Titulo>
@@ -41,24 +38,20 @@ function AsistenciaProfesor() {
               className="input-fecha"
             />
           </div>
-
           <div className="asistencia-global">
             <Texto size="sm">asistencia</Texto>
             <Titulo level={2}>{porcentaje}%</Titulo>
           </div>
         </div>
 
-        {/* LISTA */}
         {loading ? (
           <Texto>cargando...</Texto>
         ) : lista.length === 0 ? (
-          <Texto color="muted">
-            no hay asistencia registrada para esta fecha
-          </Texto>
+          <Texto color="muted">no hay asistencia registrada para esta fecha</Texto>
         ) : (
           <div className="asistencia-lista">
             {lista.map((alumno) => (
-              <AlumnoAsistenciaCard
+              <AsistenciaRegistroCard
                 key={alumno.id}
                 alumno={alumno}
                 cambiarEstado={cambiarEstado}
@@ -68,7 +61,6 @@ function AsistenciaProfesor() {
           </div>
         )}
 
-        {/* FOOTER */}
         <div className="asistencia-footer">
           <Boton onClick={guardar}>guardar asistencia</Boton>
           {guardado && (
