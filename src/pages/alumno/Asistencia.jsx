@@ -4,37 +4,63 @@ import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
 import Badge from "../../components/atoms/Badge";
 import Texto from "../../components/atoms/Texto";
+import Spinner from "../../components/atoms/Spinner";
 import AsistenciaResumenCard from "../../components/molecules/alumno/AsistenciaResumenCard";
 import useAsistenciaAlumno from "../../hooks/alumno/useAsistenciaAlumno";
 
-// pagina de asistencia del alumno — muestra porcentaje por asignatura
 function Asistencia() {
-  const { asistencia, promedioGlobal, getTipo, loading } =
+  const { asistencia, promedioGlobal, getTipo, loading, error } =
     useAsistenciaAlumno();
 
+  //  Estado: cargando 
   if (loading) {
     return (
       <PanelLayout rol="alumno">
-        <Texto>cargando asistencia...</Texto>
+        <div className="asistencia-container asistencia-center">
+          <Spinner />
+          <Texto color="muted">Cargando asistencia...</Texto>
+        </div>
       </PanelLayout>
     );
   }
 
+  //  Estado: error de red o del servidor 
+  if (error) {
+    return (
+      <PanelLayout rol="alumno">
+        <div className="asistencia-container asistencia-center">
+          <Texto color="danger">{error}</Texto>
+        </div>
+      </PanelLayout>
+    );
+  }
+
+  //  Estado: sin registros 
+  if (asistencia.length === 0) {
+    return (
+      <PanelLayout rol="alumno">
+        <div className="asistencia-container">
+          <div className="asistencia-header">
+            <Titulo level={1}>Asistencia</Titulo>
+          </div>
+          <Texto color="muted">Aún no hay registros de asistencia.</Texto>
+        </div>
+      </PanelLayout>
+    );
+  }
+
+  //  Estado: datos OK 
   return (
     <PanelLayout rol="alumno">
       <div className="asistencia-container">
-        {/* HEADER */}
         <div className="asistencia-header">
           <div>
             <Titulo level={1}>Asistencia</Titulo>
-
             <Texto color="muted">registro por asignatura</Texto>
           </div>
-
           <Badge texto={`${promedioGlobal}%`} tipo={getTipo(promedioGlobal)} />
         </div>
 
-        {/* LISTA */}
         <div className="asistencia-lista">
           {asistencia.map((a) => (
             <AsistenciaResumenCard

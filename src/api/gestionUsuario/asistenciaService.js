@@ -16,3 +16,6 @@ export const registrarAsistencia = (data) =>
 
 export const eliminarAsistencia = (id) =>
   api.delete(`/api/usuarios/asistencias/${id}`);
+
+export const getAsistenciasUsuario = (firebaseuid) =>
+  api.get(`/api/usuarios/asistencias/usuario/${firebaseuid}`);
