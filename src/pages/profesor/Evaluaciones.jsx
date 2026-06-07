@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import "../../styles/pages/profesor/evaluaciones.css";
 import PanelLayout from "../../layouts/PanelLayout";
@@ -6,14 +6,23 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Input from "../../components/atoms/Input";
 import Boton from "../../components/atoms/Boton";
+import Spinner from "../../components/atoms/Spinner";
 import EvaluacionCard from "../../components/molecules/profesor/EvaluacionCard";
 import useEvaluacionesProfesor from "../../hooks/profesor/useEvaluaciones";
 
 function EvaluacionesProfesor() {
   const { id } = useParams();
 
-  const { evaluaciones, form, handleChange, agregarEvaluacion, getTipoBadge } =
-    useEvaluacionesProfesor();
+  // Se pasa id al hook para que cargue y cree evaluaciones en la asignatura correcta
+  const {
+    evaluaciones,
+    loading,
+    error,
+    form,
+    handleChange,
+    agregarEvaluacion,
+    getTipoBadge,
+  } = useEvaluacionesProfesor(id);
 
   return (
     <PanelLayout rol="profesor">
@@ -21,17 +30,14 @@ function EvaluacionesProfesor() {
         {/* HEADER */}
         <div className="evaluaciones-header">
           <Titulo level={1}>evaluaciones asignatura {id}</Titulo>
-
-          <Texto color="muted">
-            crea y gestiona las evaluaciones del curso
-          </Texto>
+          <Texto color="muted">crea y gestiona las evaluaciones del curso</Texto>
         </div>
 
-        {/* FORM */}
+        {/* FORMULARIO NUEVA EVALUACIÓN */}
         <div className="form-evaluacion">
           <Input
             name="titulo"
-            placeholder="titulo (ej: prueba 1)"
+            placeholder="título (ej: prueba 1)"
             value={form.titulo}
             onChange={handleChange}
           />
@@ -54,21 +60,31 @@ function EvaluacionesProfesor() {
             onChange={handleChange}
           />
 
-          <Boton onClick={agregarEvaluacion}>crear evaluación</Boton>
+          <Boton onClick={agregarEvaluacion} disabled={loading}>
+            crear evaluación
+          </Boton>
         </div>
 
+        {error && <Texto color="danger">{error}</Texto>}
+
         {/* LISTA */}
-        <div className="lista-evaluaciones">
-          {evaluaciones.map((e) => (
-            <EvaluacionCard
-              key={e.id}
-              titulo={e.titulo}
-              tipo={e.tipo}
-              fecha={e.fecha}
-              getTipoBadge={getTipoBadge}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <Spinner texto="cargando evaluaciones..." />
+        ) : evaluaciones.length === 0 ? (
+          <Texto color="muted">no hay evaluaciones registradas aún</Texto>
+        ) : (
+          <div className="lista-evaluaciones">
+            {evaluaciones.map((e) => (
+              <EvaluacionCard
+                key={e.id_evaluacion ?? e.id}
+                titulo={e.titulo}
+                tipo={e.tipo}
+                fecha={e.fecha}
+                getTipoBadge={getTipoBadge}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </PanelLayout>
   );

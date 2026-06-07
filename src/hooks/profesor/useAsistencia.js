@@ -4,13 +4,9 @@ import {
   registrarAsistencia,
 } from "../../api/gestionUsuario/asistenciaService";
 
-import { getAlumnosPorAsignatura } from "../../api/gestionAcademica/asignaturaService";
-
 function useAsistencia(idAsignatura) {
   const [lista, setLista] = useState([]);
-  //AL usar toISOString la date se setea con año, mes, dia, hora, minutos, segundos, etc. 
-  //el split ("T") divide la fecha del tiempo y después selecciono el primer espacio del array (sólo fecha)
-  const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]); //
+  const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
   const [guardado, setGuardado] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -20,35 +16,25 @@ function useAsistencia(idAsignatura) {
     const cargar = async () => {
       setLoading(true);
       setGuardado(false);
-
       try {
         const res = await getAsistenciasPorAsignaturaYFecha(idAsignatura, fecha);
+        const data = Array.isArray(res.data) ? res.data : [];
 
-        if (res.data && res.data.length > 0) {
-          // si la asistencia ya existe, la mapeo y la busco
+        if (data.length > 0) {
           setLista(
-            res.data.map((a) => ({
+            data.map((a) => ({
               id: a.usuario.firebaseuid,
               nombre: `${a.usuario.nombre} ${a.usuario.apellido}`,
               estado: a.estado,
-              idAsistencia: a.idAsistencia, // antes era id_asistencia, pero lombok trabaja con CamelCase
+              idAsistencia: a.idAsistencia ?? a.id_asistencia,
             }))
           );
-          return;
+        } else {
+          // 204 No Content o lista vacía — no hay asistencia para esta fecha aún
+          setLista([]);
         }
-
-        // si no hay asistencia debería cargar alumnos de la asignatura (api en Node aún no activa del todo, quizá falla xdxd)
-        const alumnosRes = await getAlumnosPorAsignatura(idAsignatura);
-        setLista(
-          alumnosRes.data.map((a) => ({
-            id: a.firebaseuid,
-            nombre: `${a.nombre} ${a.apellido}`,
-            estado: "ausente",
-            idAsistencia: null,
-          }))
-        );
-      } catch (error) {
-        console.error("Error al cargar asistencia:", error.response?.data || error.message);
+      } catch (err) {
+        console.error("Error al cargar asistencia:", err.response?.data ?? err.message);
         setLista([]);
       } finally {
         setLoading(false);
@@ -70,18 +56,26 @@ function useAsistencia(idAsignatura) {
       (lista.filter((a) => a.estado === "presente").length / lista.length) * 100
     ) || 0;
 
-  const guardar = async () => {
-    if (lista.length === 0) return;
+  const guardar = async (alumnos = []) => {
+    // alumnos: [{ firebaseuid, nombre, apellido }] — lista completa del curso
+    // Se usa cuando la fecha no tiene registros previos
+    const listaAGuardar = lista.length > 0 ? lista : alumnos.map((a) => ({
+      id: a.firebaseuid,
+      nombre: `${a.nombre} ${a.apellido}`,
+      estado: "ausente",
+      idAsistencia: null,
+    }));
 
-    // este arreglo es para evitar que se pase lista dos veces el mismo dia
-    if (lista.some((a) => a.idAsistencia)) {
-      alert("ya se pasó asistencia para esta fecha");
+    if (listaAGuardar.length === 0) return;
+
+    if (listaAGuardar.some((a) => a.idAsistencia)) {
+      alert("Ya se pasó asistencia para esta fecha.");
       return;
     }
 
     try {
       const resultados = await Promise.allSettled(
-        lista.map((a) =>
+        listaAGuardar.map((a) =>
           registrarAsistencia({
             fecha,
             estado: a.estado,
@@ -94,17 +88,16 @@ function useAsistencia(idAsignatura) {
       const errores = resultados.filter((r) => r.status === "rejected");
       if (errores.length > 0) {
         console.error("Algunas asistencias fallaron:", errores);
-        alert("algunas asistencias no pudieron guardarse");
+        alert("Algunas asistencias no pudieron guardarse.");
         return;
       }
-
       setGuardado(true);
-    } catch (error) {
-      console.error("Error al guardar asistencia:", error.response?.data || error.message);
+    } catch (err) {
+      console.error("Error al guardar asistencia:", err.response?.data ?? err.message);
     }
   };
 
-  return { lista, fecha, setFecha, cambiarEstado, porcentaje, guardar, guardado, loading };
+  return { lista, setLista, fecha, setFecha, cambiarEstado, porcentaje, guardar, guardado, loading };
 }
 
 export default useAsistencia;

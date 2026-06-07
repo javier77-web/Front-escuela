@@ -1,7 +1,10 @@
 import api from "../axiosConfig";
 
-export const getCurso = () => 
+export const getCursos = () => 
     api.get("/api/academica/cursos");
+
+export const getCursoPorId = (id) =>
+    api.get(`/api/academica/cursos/${id}`);
 
 export const crearCurso = (data) => 
     api.post("/api/academica/cursos", data);

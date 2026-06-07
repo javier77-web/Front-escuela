@@ -1,44 +1,63 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { getEvaluacionesPorAsignatura } from "../../api/gestionAcademica/evaluacionService";
+import { getAsignaturas } from "../../api/gestionAcademica/asignaturaService";
 
 //Actualicé el hook ya que cambiaba la estrcutura en las cards,
 //Se supone quedó casi listo para luego cambiar el mock por el fetch a la api
-
 function useNotasAlumno() {
+  const { user } = useContext(AuthContext);
   const [notas, setNotas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const cargarNotas = async () => {
+    if (!user) return;
+
+    const cargar = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        // Simulación de latencia de red
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        // 1. Obtener todas las asignaturas
+        const { data: asignaturas } = await getAsignaturas();
 
-        // Mock temporal hasta conectar la API
-        const data = [
-          { asignatura: "Matemáticas", notas: [6.5, 5.8, 7.0] },
-          { asignatura: "Lenguaje", notas: [5.5, 6.2, 6.8] },
-          { asignatura: "Historia", notas: [7.0, 6.5, 6.9] },
-          { asignatura: "Ciencias", notas: [4.5, 5.0, 5.5] },
-          { asignatura: "Inglés", notas: [6.8, 7.0, 6.5] },
-        ];
+        // 2. Por cada asignatura obtener sus evaluaciones en paralelo
+        const resultados = await Promise.allSettled(
+          asignaturas.map(async (asignatura) => {
+            const { data: evaluaciones } = await getEvaluacionesPorAsignatura(
+              asignatura.id_asignatura
+            );
+            const notasValidas = evaluaciones
+              .map((e) => parseFloat(e.nota))
+              .filter((n) => !isNaN(n));
 
-        const conPromedio = data.map((asignatura) => ({
-          ...asignatura,
-          promedio:
-            asignatura.notas.reduce((acc, nota) => acc + nota, 0) /
-            asignatura.notas.length,
-        }));
+            return {
+              asignatura: asignatura.nombre,
+              notas: notasValidas,
+              promedio:
+                notasValidas.length > 0
+                  ? notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length
+                  : 0,
+            };
+          })
+        );
 
-        setNotas(conPromedio);
-      } catch (error) {
-        console.error("Error al cargar notas:", error);
+        const lista = resultados
+          .filter((r) => r.status === "fulfilled")
+          .map((r) => r.value)
+          .filter((a) => a.notas.length > 0); // omite asignaturas sin notas
+
+        setNotas(lista);
+      } catch (err) {
+        setError("No se pudieron cargar las notas.");
+        console.error("Error al cargar notas:", err.response?.data ?? err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    cargarNotas();
-  }, []);
+    cargar();
+  }, [user]);
 
   const promedioGeneral = notas.length
     ? (
@@ -51,6 +70,7 @@ function useNotasAlumno() {
     notas,
     promedioGeneral,
     loading,
+    error
   };
 }
 

@@ -57,10 +57,11 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     setAuthLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // No llames obtenerPerfil aqui porque el onAuthStateChanged se encargará de eso autma
-      // onAuthStateChanged se va a disparar solo y lo va a cargar
-      return { ok: true };
+      const credential = await signInWithEmailAndPassword(auth, email, password);
+      // Carga el perfil de inmediato para poder leer el rol en Login.jsx
+      // onAuthStateChanged también lo cargará, pero puede llegar tarde para la redirección
+      const perfilObtenido = await obtenerPerfil(credential.user);
+      return { ok: true, perfil: perfilObtenido };
     } catch (error) {
       return {
         ok: false,
@@ -78,7 +79,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     await signOut(auth);
-    setPerfil(null); // limpia el perfil al cerrar sesión
+    setPerfil(null);
   };
 
   const value = {
