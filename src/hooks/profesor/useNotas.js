@@ -1,17 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getEvaluacionesPorAsignatura, actualizarEvaluacion } from "../../api/gestionAcademica/evaluacionService";
 
-function useNotasProfesor() {
-  const [alumnos, setAlumnos] = useState([
-    { nombre: "juan", notas: [6.5, 5.8, 7.0] },
-    { nombre: "maria", notas: [5.5, 6.2, 6.8] },
-    { nombre: "pedro", notas: [7.0, 6.5, 6.9] },
-  ]);
+
+function useNotasProfesor(idAsignatura) {
+  const [evaluaciones, setEvaluaciones] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!idAsignatura) return;
+
+    const cargar = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const { data } = await getEvaluacionesPorAsignatura(idAsignatura);
+        setEvaluaciones(Array.isArray(data) ? data : []);
+      } catch (err) {
+        setError("No se pudieron cargar las notas.");
+        console.error(err.response?.data ?? err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargar();
+  }, [idAsignatura]);
 
   // actualizar nota
-  const actualizarNota = (i, j, valor) => {
-    const nuevos = [...alumnos];
-    nuevos[i].notas[j] = parseFloat(valor) || 0;
-    setAlumnos(nuevos);
+  const actualizarNota = async (idEvaluacion, nota) => {
+    try {
+      await actualizarEvaluacion(idEvaluacion, { nota });
+      setEvaluaciones((prev) =>
+        prev.map((e) =>
+          e.id_evaluacion === idEvaluacion ? { ...e, nota } : e
+        )
+      );
+    } catch (err) {
+      console.error("Error al actualizar nota:", err.response?.data ?? err.message);
+    }
   };
 
   // promedio (number)
@@ -26,10 +53,12 @@ function useNotasProfesor() {
   };
 
   return {
-    alumnos,
+    evaluaciones,
     actualizarNota,
     calcularPromedio,
     getTipo,
+    loading,
+    error,
   };
 }
 

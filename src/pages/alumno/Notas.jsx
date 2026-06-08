@@ -4,11 +4,12 @@ import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Badge from "../../components/atoms/Badge";
 import NotaRow from "../../components/molecules/NotaRow";
+import Spinner from "../../components/atoms/Spinner";
 import PanelLayout from "../../layouts/PanelLayout";
 import useNotasAlumno from "../../hooks/alumno/useNotasAlumno";
 
 function Notas() {
-  const { notas, promedioGeneral, loading } = useNotasAlumno();
+  const { notas, promedioGeneral, loading, error } = useNotasAlumno();
 
   const getTipo = (nota) => {
     if (nota >= 6.0) return "success";
@@ -19,10 +20,25 @@ function Notas() {
   if (loading) {
     return (
       <PanelLayout rol="alumno">
-        <Texto>cargando notas...</Texto>
+        <div className="notas-container">
+          <Spinner texto="cargando notas..." />
+        </div>
       </PanelLayout>
     );
   }
+
+  if (error) {
+    return (
+      <PanelLayout rol="alumno">
+        <div className="notas-container">
+          <Texto color="danger">{error}</Texto>
+        </div>
+      </PanelLayout>
+    );
+  }
+
+  // Máximo de notas entre todas las asignaturas (para encabezado de columnas)
+  const maxNotas = notas.reduce((max, n) => Math.max(max, n.notas.length), 0);
 
   return (
     <PanelLayout rol="alumno">
@@ -35,38 +51,45 @@ function Notas() {
             <Texto color="muted">resumen de evaluaciones del semestre</Texto>
           </div>
 
-          {/* PROMEDIO */}
+          {/* PROMEDIO GENERAL */}
           <div className="notas-promedio-general">
             <Texto size="sm">promedio general</Texto>
-
-            <Titulo level={2}>{promedioGeneral}</Titulo>
+            <Titulo level={2}>
+              <Badge texto={promedioGeneral} tipo={getTipo(parseFloat(promedioGeneral))} />
+            </Titulo>
           </div>
         </div>
 
         {/* TABLA */}
-        <div className="notas-tabla-wrapper">
-          <table className="notas-tabla">
-            <thead>
-              <tr>
-                <th>asignatura</th>
-                {notas[0]?.notas.map((_, i) => (
-                  <th key={i}>nota {i + 1}</th>
-                ))}
-                <th>promedio</th>
-              </tr>
-            </thead>
+        {notas.length === 0 ? (
+          <Texto color="muted">no hay notas registradas aún</Texto>
+        ) : (
+          <div className="notas-tabla-wrapper">
+            <table className="notas-tabla">
+              <thead>
+                <tr>
+                  <th>asignatura</th>
+                  {Array.from({ length: maxNotas }, (_, i) => (
+                    <th key={i}>nota {i + 1}</th>
+                  ))}
+                  <th>promedio</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {notas.map((n, i) => (
-                <NotaRow
-                  key={i}
-                  notas={n.notas}
-                  getTipo={getTipo}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+              <tbody>
+                {notas.map((n, i) => (
+                  <NotaRow
+                    key={i}
+                    alumno={n.asignatura}
+                    notas={n.notas}
+                    editable={false}
+                    getTipo={getTipo}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </PanelLayout>
   );
