@@ -1,41 +1,26 @@
-import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getEvaluacionesPorAsignatura, actualizarEvaluacion } from "../../api/gestionAcademica/evaluacionService";
 
 
 function useNotasProfesor(idAsignatura) {
-  const [evaluaciones, setEvaluaciones] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!idAsignatura) return;
-
-    const cargar = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const { data } = await getEvaluacionesPorAsignatura(idAsignatura);
-        setEvaluaciones(Array.isArray(data) ? data : []);
-      } catch (err) {
-        setError("No se pudieron cargar las notas.");
-        console.error(err.response?.data ?? err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    cargar();
-  }, [idAsignatura]);
+  const { data: evaluaciones = [], isLoading: loading, isError } = useQuery({
+    queryKey: ["evaluaciones", idAsignatura],
+    queryFn: async () => {
+      const { data } = await getEvaluacionesPorAsignatura(idAsignatura);
+      return Array.isArray(data) ? data : [];
+    },
+    enabled: !!idAsignatura,
+    staleTime: 5 * 60 * 1000,
+  });
 
   // actualizar nota
   const actualizarNota = async (idEvaluacion, nota) => {
     try {
       await actualizarEvaluacion(idEvaluacion, { nota });
-      setEvaluaciones((prev) =>
-        prev.map((e) =>
-          e.id_evaluacion === idEvaluacion ? { ...e, nota } : e
-        )
-      );
+      // refresca la lista de evaluaciones de esta asignatura
+      await queryClient.invalidateQueries({ queryKey: ["evaluaciones", idAsignatura] });
     } catch (err) {
       console.error("Error al actualizar nota:", err.response?.data ?? err.message);
     }
@@ -52,6 +37,8 @@ function useNotasProfesor(idAsignatura) {
     return "danger";
   };
 
+  const error = isError ? "No se pudieron cargar las notas." : null;
+  
   return {
     evaluaciones,
     actualizarNota,

@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
 import { getEvaluacionesPorAsignatura } from "../../api/gestionAcademica/evaluacionService";
 import { getAsignaturas } from "../../api/gestionAcademica/asignaturaService";
@@ -7,57 +8,46 @@ import { getAsignaturas } from "../../api/gestionAcademica/asignaturaService";
 //Se supone quedó casi listo para luego cambiar el mock por el fetch a la api
 function useNotasAlumno() {
   const { user } = useContext(AuthContext);
-  const [notas, setNotas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!user) return;
+  const {
+    data: notas = [],
+    isLoading: loading,
+    isError,
+  } = useQuery({
+    queryKey: ["notas-alumno"],
+    queryFn: async () => {
+      // 1. Obtener todas las asignaturas
+      const { data: asignaturas } = await getAsignaturas();
 
-    const cargar = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        // 1. Obtener todas las asignaturas
-        const { data: asignaturas } = await getAsignaturas();
+      // 2. Por cada asignatura obtener sus evaluaciones en paralelo
+      const resultados = await Promise.allSettled(
+        asignaturas.map(async (asignatura) => {
+          const { data: evaluaciones } = await getEvaluacionesPorAsignatura(
+            asignatura.id_asignatura,
+          );
+          const notasValidas = evaluaciones
+            .map((e) => parseFloat(e.nota))
+            .filter((n) => !isNaN(n));
 
-        // 2. Por cada asignatura obtener sus evaluaciones en paralelo
-        const resultados = await Promise.allSettled(
-          asignaturas.map(async (asignatura) => {
-            const { data: evaluaciones } = await getEvaluacionesPorAsignatura(
-              asignatura.id_asignatura
-            );
-            const notasValidas = evaluaciones
-              .map((e) => parseFloat(e.nota))
-              .filter((n) => !isNaN(n));
+          return {
+            asignatura: asignatura.nombre,
+            notas: notasValidas,
+            promedio:
+              notasValidas.length > 0
+                ? notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length
+                : 0,
+          };
+        }),
+      );
 
-            return {
-              asignatura: asignatura.nombre,
-              notas: notasValidas,
-              promedio:
-                notasValidas.length > 0
-                  ? notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length
-                  : 0,
-            };
-          })
-        );
-
-        const lista = resultados
-          .filter((r) => r.status === "fulfilled")
-          .map((r) => r.value)
-          .filter((a) => a.notas.length > 0); // omite asignaturas sin notas
-
-        setNotas(lista);
-      } catch (err) {
-        setError("No se pudieron cargar las notas.");
-        console.error("Error al cargar notas:", err.response?.data ?? err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    cargar();
-  }, [user]);
+      return resultados
+        .filter((r) => r.status === "fulfilled")
+        .map((r) => r.value)
+        .filter((a) => a.notas.length > 0); // omite asignaturas sin notas
+    },
+    enabled: !!user,
+    staleTime: 5 * 60 * 1000,
+  });
 
   const promedioGeneral = notas.length
     ? (
@@ -66,11 +56,13 @@ function useNotasAlumno() {
       ).toFixed(1)
     : "0.0";
 
+  const error = isError ? "no se pudieron cargar las notas." : null;
+
   return {
     notas,
     promedioGeneral,
     loading,
-    error
+    error,
   };
 }
 
