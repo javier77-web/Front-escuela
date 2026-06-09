@@ -1,33 +1,31 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../auth/AuthContext";
 import { getAsignaturas } from "../../api/gestionAcademica/asignaturaService";
 
 // Carga todas las asignaturas disponibles para el alumno.
 // Si el backend expone un endpoint filtrado por alumno en el futuro,
 // reemplazar getAsignaturas() por ese llamado.
 function useCursosAlumno() {
-    const [cursos, setCursos] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const { user } = useContext(AuthContext);
 
-    useEffect(() => {
-        const cargar = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const { data } = await getAsignaturas();
-            setCursos(Array.isArray(data) ? data : []);
-        } catch (err) {
-            setError("No se pudieron cargar los cursos.");
-            console.error("Error al cargar cursos:", err.response?.data ?? err.message);
-        } finally {
-            setLoading(false);
-        }
-        };
+  const {
+    data: cursos = [],
+    isLoading: loading,
+    isError,
+  } = useQuery({
+    queryKey: ["asignaturas"],
+    queryFn: async () => {
+      const { data } = await getAsignaturas();
+      return Array.isArray(data) ? data : [];
+    },
+    enabled: !!user,
+    staleTime: 5 * 60 * 1000,
+  });
 
-        cargar();
-    }, []);
+  const error = isError ? "No se pudieron cargar los cursos." : null;
 
-    return { cursos, loading, error };
+  return { cursos, loading, error };
 }
 
 export default useCursosAlumno;

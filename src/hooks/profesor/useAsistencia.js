@@ -1,52 +1,45 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAsistenciasPorAsignaturaYFecha,
   registrarAsistencia,
 } from "../../api/gestionUsuario/asistenciaService";
 
 function useAsistencia(idAsignatura) {
-  const [lista, setLista] = useState([]);
+  const queryClient = useQueryClient();
   const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
   const [guardado, setGuardado] = useState(false);
-  const [loading, setLoading] = useState(false);
+  
 
-  useEffect(() => {
-    if (!idAsignatura) return;
+  const { data: lista = [], isLoading: loading } = useQuery({
+    queryKey: ["asistencia-clase", idAsignatura, fecha],
+    queryFn: async () => {
+      const res = await getAsistenciasPorAsignaturaYFecha(idAsignatura, fecha);
+      const data = Array.isArray(res.data) ? res.data : [];
 
-    const cargar = async () => {
-      setLoading(true);
-      setGuardado(false);
-      try {
-        const res = await getAsistenciasPorAsignaturaYFecha(idAsignatura, fecha);
-        const data = Array.isArray(res.data) ? res.data : [];
+      if (data.length === 0) return [];
 
-        if (data.length > 0) {
-          setLista(
-            data.map((a) => ({
-              id: a.usuario.firebaseuid,
-              nombre: `${a.usuario.nombre} ${a.usuario.apellido}`,
-              estado: a.estado,
-              idAsistencia: a.idAsistencia ?? a.id_asistencia,
-            }))
-          );
-        } else {
-          // 204 No Content o lista vacía — no hay asistencia para esta fecha aún
-          setLista([]);
-        }
-      } catch (err) {
-        console.error("Error al cargar asistencia:", err.response?.data ?? err.message);
-        setLista([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+      return data.map((a) => ({
+        id: a.usuario.firebaseuid,
+        nombre: `${a.usuario.nombre} ${a.usuario.apellido}`,
+        estado: a.estado,
+        idAsistencia: a.idAsistencia ?? a.id_asistencia,
+      }));
+    },
+    enabled: !!idAsignatura,
+    staleTime: 5 * 60 * 1000,
+  });
 
-    cargar();
-  }, [idAsignatura, fecha]);
+  // lista local mutable para cambios de estado antes de guardar
+  const [listaLocal, setListaLocal] = useState([]);
+  const listaActiva = listaLocal.length > 0 ? listaLocal : lista;
 
   const cambiarEstado = (uid, nuevoEstado) => {
-    setLista((prev) =>
-      prev.map((a) => (a.id === uid ? { ...a, estado: nuevoEstado } : a))
+    const base = listaLocal.length > 0 ? listaLocal : lista;
+    setListaLocal((prev) =>
+      (prev.length > 0 ? prev : base).map((a) =>
+        a.id === uid ? { ...a, estado: nuevoEstado } : a
+      )
     );
     setGuardado(false);
   };
@@ -59,11 +52,13 @@ function useAsistencia(idAsignatura) {
   const guardar = async (alumnos = []) => {
     // alumnos: [{ firebaseuid, nombre, apellido }] — lista completa del curso
     // Se usa cuando la fecha no tiene registros previos
-    const listaAGuardar = lista.length > 0 ? lista : alumnos.map((a) => ({
-      id: a.firebaseuid,
-      nombre: `${a.nombre} ${a.apellido}`,
-      estado: "ausente",
-      idAsistencia: null,
+    const listaAGuardar = listaActiva.length > 0
+        ? listaActiva
+        : alumnos.map((a) => ({
+            id: a.firebaseuid,
+            nombre: `${a.nombre} ${a.apellido}`,
+            estado: "ausente",
+            idAsistencia: null,
     }));
 
     if (listaAGuardar.length === 0) return;
@@ -79,7 +74,7 @@ function useAsistencia(idAsignatura) {
           registrarAsistencia({
             fecha,
             estado: a.estado,
-            idAsignatura: idAsignatura,
+            idAsignatura,
             usuario: { firebaseuid: a.id },
           })
         )
@@ -92,12 +87,17 @@ function useAsistencia(idAsignatura) {
         return;
       }
       setGuardado(true);
+      setListaLocal([]);
+      // refresca el cache para esta asignatura y fecha
+      await queryClient.invalidateQueries({
+        queryKey: ["asistencia-clase", idAsignatura, fecha],
+      });
     } catch (err) {
       console.error("Error al guardar asistencia:", err.response?.data ?? err.message);
     }
   };
 
-  return { lista, setLista, fecha, setFecha, cambiarEstado, porcentaje, guardar, guardado, loading };
+  return { lista: listaActiva, setLista: setListaLocal, fecha, setFecha, cambiarEstado, porcentaje, guardar, guardado, loading };
 }
 
 export default useAsistencia;
