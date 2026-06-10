@@ -17,18 +17,27 @@ function AsignaturaDetalle() {
   return (
     <PanelLayout rol="profesor">
       <div className="asignatura-detalle-container">
-        {/* TITULO */}
+        {/* TITULO /}
         <Titulo level={1}>
           {asignatura
-            ? `${asignatura.nombre} - ${asignatura.curso}`
-            : `asignatura ${id}`}
+            ? ${asignatura.nombre} - ${asignatura.curso}
+            : asignatura ${id}}
         </Titulo>
 
-        {/* ACCIONES */}
+        {/ ACCIONES */}
         <div className="acciones-curso">
           <AccionCursoCard
             texto="asistencia"
-            onClick={() => navigate(`/profesor/${id}/asistencia`)}
+            onClick={() =>
+              navigate(`/profesor/${id}/asistencia`, {
+                state: {
+                  id: asignatura.id,
+                  nombre: asignatura.nombre,
+                  curso: asignatura.curso,
+                  cursoId: asignatura.cursoId,
+                },
+              })
+            }
           />
 
           <AccionCursoCard

@@ -1,15 +1,18 @@
-import { useState} from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAsistenciasPorAsignaturaYFecha,
   registrarAsistencia,
+  getUsuariosPorCurso,
 } from "../../api/gestionUsuario/asistenciaService";
 
 function useAsistencia(idAsignatura) {
   const queryClient = useQueryClient();
+  const location = useLocation();
+  const cursoId = location.state?.cursoId;
   const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
   const [guardado, setGuardado] = useState(false);
-  
 
   const { data: lista = [], isLoading: loading } = useQuery({
     queryKey: ["asistencia-clase", idAsignatura, fecha],
@@ -17,7 +20,25 @@ function useAsistencia(idAsignatura) {
       const res = await getAsistenciasPorAsignaturaYFecha(idAsignatura, fecha);
       const data = Array.isArray(res.data) ? res.data : [];
 
-      if (data.length === 0) return [];
+      // Si todavía no existe asistencia para esta fecha,
+      // cargamos los alumnos del curso para que el profesor
+      // pueda registrar asistencia por primera vez.
+      if (data.length === 0) {
+        const alumnosRes = await getUsuariosPorCurso(cursoId);
+
+        const alumnos = Array.isArray(alumnosRes.data) ? alumnosRes.data : [];
+
+        return alumnos.map((a) => ({
+          id: a.firebaseuid,
+          nombre: `${a.nombre} ${a.apellido}`,
+
+          // Estado inicial antes de guardar
+          estado: "ausente",
+
+          // Indica que aún no existe registro en BD
+          idAsistencia: null,
+        }));
+      }
 
       return data.map((a) => ({
         id: a.usuario.firebaseuid,
@@ -38,28 +59,30 @@ function useAsistencia(idAsignatura) {
     const base = listaLocal.length > 0 ? listaLocal : lista;
     setListaLocal((prev) =>
       (prev.length > 0 ? prev : base).map((a) =>
-        a.id === uid ? { ...a, estado: nuevoEstado } : a
-      )
+        a.id === uid ? { ...a, estado: nuevoEstado } : a,
+      ),
     );
     setGuardado(false);
   };
 
   const porcentaje =
     Math.round(
-      (lista.filter((a) => a.estado === "presente").length / lista.length) * 100
+      (lista.filter((a) => a.estado === "presente").length / lista.length) *
+        100,
     ) || 0;
 
   const guardar = async (alumnos = []) => {
     // alumnos: [{ firebaseuid, nombre, apellido }] — lista completa del curso
     // Se usa cuando la fecha no tiene registros previos
-    const listaAGuardar = listaActiva.length > 0
+    const listaAGuardar =
+      listaActiva.length > 0
         ? listaActiva
         : alumnos.map((a) => ({
             id: a.firebaseuid,
             nombre: `${a.nombre} ${a.apellido}`,
             estado: "ausente",
             idAsistencia: null,
-    }));
+          }));
 
     if (listaAGuardar.length === 0) return;
 
@@ -76,8 +99,8 @@ function useAsistencia(idAsignatura) {
             estado: a.estado,
             idAsignatura,
             usuario: { firebaseuid: a.id },
-          })
-        )
+          }),
+        ),
       );
 
       const errores = resultados.filter((r) => r.status === "rejected");
@@ -93,11 +116,24 @@ function useAsistencia(idAsignatura) {
         queryKey: ["asistencia-clase", idAsignatura, fecha],
       });
     } catch (err) {
-      console.error("Error al guardar asistencia:", err.response?.data ?? err.message);
+      console.error(
+        "Error al guardar asistencia:",
+        err.response?.data ?? err.message,
+      );
     }
   };
 
-  return { lista: listaActiva, setLista: setListaLocal, fecha, setFecha, cambiarEstado, porcentaje, guardar, guardado, loading };
+  return {
+    lista: listaActiva,
+    setLista: setListaLocal,
+    fecha,
+    setFecha,
+    cambiarEstado,
+    porcentaje,
+    guardar,
+    guardado,
+    loading,
+  };
 }
 
 export default useAsistencia;

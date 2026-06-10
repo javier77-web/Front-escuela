@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState} from "react";
+import { useParams, useLocation } from "react-router-dom";
 import "../../styles/pages/profesor/anotaciones.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
@@ -9,41 +9,23 @@ import Spinner from "../../components/atoms/Spinner";
 import Texto from "../../components/atoms/Texto";
 import AnotacionCard from "../../components/molecules/AnotacionCard";
 import useAnotaciones from "../../hooks/profesor/useAnotaciones";
-import { getUsuarios } from "../../api/usuariosApi";
+import useUsuariosCurso from "../../hooks/useUsuariosCurso";
 
 const getTipoBadge = (tipo) => (tipo === "positiva" ? "success" : "danger");
 
 function AnotacionesProfesor() {
   const { id } = useParams();
-   const { anotaciones, agregarAnotacion, guardando, error } = useAnotaciones(id);
+  const { anotaciones, agregarAnotacion, guardando, error } = useAnotaciones(id);
 
-  const [alumnos, setAlumnos] = useState([]);
-  const [cargandoAlumnos, setCargandoAlumnos] = useState(true);
-  
+  const location = useLocation();
+  const cursoId = location.state?.cursoId;
+  const { alumnos, loading: cargandoAlumnos } = useUsuariosCurso(cursoId);
   const [form, setForm] = useState({
     alumno: "",
     tipo: "positiva",
     descripcion: "",
     fecha: new Date().toISOString().split("T")[0],
   });
-
-  // Carga lista de alumnos reales desde la API
-  useEffect(() => {
-    const cargar = async () => {
-      try {
-        const { data } = await getUsuarios();
-        const soloAlumnos = data.filter(
-          (u) => u.rol?.nombre?.toLowerCase() === "alumno"
-        );
-        setAlumnos(soloAlumnos);
-      } catch (err) {
-        console.error("Error al cargar alumnos:", err.response?.data ?? err.message);
-      } finally {
-        setCargandoAlumnos(false);
-      }
-    };
-    cargar();
-  }, []);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));

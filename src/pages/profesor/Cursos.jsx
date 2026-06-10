@@ -19,6 +19,7 @@ function CursosProfesor() {
         id: asignatura.id_asignatura,
         nombre: asignatura.nombre,
         curso: asignatura.curso?.nombre ?? `Curso ${asignatura.curso_id}`,
+        curso_id: asignatura.curso_id,
       },
     });
   };

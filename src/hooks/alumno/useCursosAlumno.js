@@ -14,7 +14,7 @@ function useCursosAlumno() {
     isLoading: loading,
     isError,
   } = useQuery({
-    queryKey: ["asignaturas"],
+    queryKey: ["asignaturas", user?.uid],
     queryFn: async () => {
       const { data } = await getAsignaturas();
       return Array.isArray(data) ? data : [];

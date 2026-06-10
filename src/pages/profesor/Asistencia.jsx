@@ -47,7 +47,9 @@ function AsistenciaProfesor() {
         {loading ? (
           <Texto>cargando...</Texto>
         ) : lista.length === 0 ? (
-          <Texto color="muted">no hay asistencia registrada para esta fecha</Texto>
+          <Texto color="muted">
+            no hay asistencia registrada para esta fecha
+          </Texto>
         ) : (
           <div className="asistencia-lista">
             {lista.map((alumno) => (

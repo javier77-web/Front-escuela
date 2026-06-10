@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../firebaseConfig/config";
-import { getUsuarioPorUid } from "../api/usuariosApi";
+import { getUsuarioPorUid } from "../api/gestionUsuario/usuariosApi";
 
 const AuthContext = createContext();
 
