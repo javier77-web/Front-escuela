@@ -3,6 +3,7 @@ import Texto from "../../atoms/Texto";
 import Badge from "../../atoms/Badge";
 import Titulo from "../../atoms/Titulo";
 
+//alumno
 function AsistenciaResumenCard({
   asignatura,
   presentes,

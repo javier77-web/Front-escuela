@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
-import { getUsuarios } from "../../api/usuariosApi";
+import { getUsuarios } from "../../api/gestionUsuario/usuariosApi";
 
 function useReportes() {
   const { user } = useContext(AuthContext);

@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
-import { getUsuarios, deleteUsuario, updateUsuario } from "../../api/usuariosApi";
+import { getUsuarios, deleteUsuario, updateUsuario } from "../../api/gestionUsuario/usuariosApi";
 import { crearUsuarioAdmin } from  "../../gateway/gatewayService";
 
 //Lógica sencilla, luego debe migrar a backend o analizar
