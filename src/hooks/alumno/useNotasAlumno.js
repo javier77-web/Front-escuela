@@ -14,7 +14,7 @@ function useNotasAlumno() {
     isLoading: loading,
     isError,
   } = useQuery({
-    queryKey: ["notas-alumno"],
+    queryKey: ["notas-alumno", user?.uid],
     queryFn: async () => {
       // 1. Obtener todas las asignaturas
       const { data: asignaturas } = await getAsignaturas();

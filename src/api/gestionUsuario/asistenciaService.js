@@ -15,6 +15,10 @@ export const getAsistenciasPorAsignaturaYFecha = (idAsignatura, fecha) =>
 export const getAsistenciasPorUsuarioYAsignatura = (firebaseuid, idAsignatura) =>
     api.get(`/api/usuarios/asistencias/usuario/${firebaseuid}/asignatura/${idAsignatura}`);
 
+
+export const getUsuariosPorCurso = (cursoId) =>
+    api.get(`/api/usuarios/usuarios/curso/${cursoId}`);
+
 // POST
 // data: { fecha, estado, idAsignatura, usuario: { firebaseuid } }
 export const registrarAsistencia = (data) =>

@@ -17,21 +17,24 @@ function AsignaturaDetalle() {
   return (
     <PanelLayout rol="profesor">
       <div className="asignatura-detalle-container">
-        {/* TITULO */}
+        {/* TITULO /}
         <Titulo level={1}>
           {asignatura
-            ? `${asignatura.nombre} - ${asignatura.curso}`
-            : `asignatura ${id}`}
+            ? ${asignatura.nombre} - ${asignatura.curso}
+            : asignatura ${id}}
         </Titulo>
 
-        {/* ACCIONES */}
+        {/ ACCIONES */}
         <div className="acciones-curso">
           <AccionCursoCard
             texto="asistencia"
             onClick={() =>
               navigate(`/profesor/${id}/asistencia`, {
                 state: {
-                  cursoId: asignatura?.curso_id,
+                  id: asignatura.id,
+                  nombre: asignatura.nombre,
+                  curso: asignatura.curso,
+                  cursoId: asignatura.cursoId,
                 },
               })
             }
@@ -44,11 +47,7 @@ function AsignaturaDetalle() {
 
           <AccionCursoCard
             texto="anotaciones"
-            onClick={() => navigate(`/profesor/${id}/anotaciones`, {
-              state: {
-                cursoId: asignatura?.curso_id
-              }
-            })}
+            onClick={() => navigate(`/profesor/${id}/anotaciones`)}
           />
 
           <AccionCursoCard
