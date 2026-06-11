@@ -37,8 +37,10 @@ function Notas() {
     );
   }
 
-  // Máximo de notas entre todas las asignaturas (para encabezado de columnas)
-  const maxNotas = notas.reduce((max, n) => Math.max(max, n.notas.length), 0);
+  const maxNotas = notas.reduce(
+    (max, n) => Math.max(max, n.notas.length),
+    0
+  );
 
   return (
     <PanelLayout rol="alumno">

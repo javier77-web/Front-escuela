@@ -10,12 +10,6 @@ export const getEvaluacionPorId = (id) =>
 export const getEvaluacionesPorAsignatura = (asignaturaId) =>
     api.get(`/api/academica/evaluaciones/asignatura/${asignaturaId}`);
 
-//Metodo personalziado, nota roja
-export const getAlumnosEnRiesgo = (asignaturaId, notaLimite) =>
-    api.get(`/api/academica/evaluaciones/asignatura/${asignaturaId}/riesgo`, {
-        params: notaLimite !== undefined ? { notaLimite } : {},
-    });
-
 //post
 export const crearEvaluacion = (data) => 
     api.post("/api/academica/evaluaciones", data);

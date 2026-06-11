@@ -1,11 +1,8 @@
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
-import { getEvaluacionesPorAsignatura } from "../../api/gestionAcademica/evaluacionService";
-import { getAsignaturas } from "../../api/gestionAcademica/asignaturaService";
+import { getNotasAlumno } from "../../api/gestionAcademica/evaluacionAlumnoService";
 
-//Actualicé el hook ya que cambiaba la estrcutura en las cards,
-//Se supone quedó casi listo para luego cambiar el mock por el fetch a la api
 function useNotasAlumno() {
   const { user } = useContext(AuthContext);
 
@@ -16,34 +13,34 @@ function useNotasAlumno() {
   } = useQuery({
     queryKey: ["notas-alumno", user?.uid],
     queryFn: async () => {
-      // 1. Obtener todas las asignaturas
-      const { data: asignaturas } = await getAsignaturas();
+      const { data } = await getNotasAlumno(user.uid);
 
-      // 2. Por cada asignatura obtener sus evaluaciones en paralelo
-      const resultados = await Promise.allSettled(
-        asignaturas.map(async (asignatura) => {
-          const { data: evaluaciones } = await getEvaluacionesPorAsignatura(
-            asignatura.id_asignatura,
-          );
-          const notasValidas = evaluaciones
-            .map((e) => parseFloat(e.nota))
-            .filter((n) => !isNaN(n));
+      const agrupadas = {};
 
-          return {
-            asignatura: asignatura.nombre,
-            notas: notasValidas,
-            promedio:
-              notasValidas.length > 0
-                ? notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length
-                : 0,
-          };
-        }),
-      );
+      data.forEach((registro) => {
+        const asignatura = registro.evaluacion?.asignatura?.nombre;
 
-      return resultados
-        .filter((r) => r.status === "fulfilled")
-        .map((r) => r.value)
-        .filter((a) => a.notas.length > 0); // omite asignaturas sin notas
+        if (!asignatura) return;
+
+        const nota = parseFloat(registro.nota);
+
+        if (isNaN(nota)) return;
+
+        if (!agrupadas[asignatura]) {
+          agrupadas[asignatura] = [];
+        }
+
+        agrupadas[asignatura].push(nota);
+      });
+
+      return Object.entries(agrupadas).map(([asignatura, notas]) => ({
+        asignatura,
+        notas,
+        promedio:
+          notas.length > 0
+            ? notas.reduce((acc, n) => acc + n, 0) / notas.length
+            : 0,
+      }));
     },
     enabled: !!user,
     staleTime: 5 * 60 * 1000,
@@ -56,13 +53,11 @@ function useNotasAlumno() {
       ).toFixed(1)
     : "0.0";
 
-  const error = isError ? "no se pudieron cargar las notas." : null;
-
   return {
     notas,
     promedioGeneral,
     loading,
-    error,
+    error: isError ? "No se pudieron cargar las notas." : null,
   };
 }
 

@@ -2,13 +2,11 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getEvaluacionesPorAsignatura,
-  crearEvaluacion,
-  getAlumnosEnRiesgo,
+  crearEvaluacion
 } from "../../api/gestionAcademica/evaluacionService";
 
 function useEvaluacionesProfesor(idAsignatura) {
   const queryClient = useQueryClient();
-  const [enRiesgo, setEnRiesgo] = useState([]);
   const [error, setError] = useState(null);
   const [form, setForm] = useState({ titulo: "", tipo: "prueba", fecha: "" });
 
@@ -44,19 +42,6 @@ function useEvaluacionesProfesor(idAsignatura) {
     }
   };
 
-  const cargarEnRiesgo = async (notaLimite) => {
-    if (!idAsignatura) return;
-    try {
-      const { data } = await getAlumnosEnRiesgo(idAsignatura, notaLimite);
-      setEnRiesgo(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error(
-        "Error al cargar alumnos en riesgo:",
-        err.response?.data ?? err.message,
-      );
-    }
-  };
-
   const getTipoBadge = (tipo) => {
     if (tipo === "prueba") return "danger";
     if (tipo === "control") return "warning";
@@ -65,13 +50,11 @@ function useEvaluacionesProfesor(idAsignatura) {
 
   return {
     evaluaciones,
-    enRiesgo,
     loading,
     error,
     form,
     handleChange,
     agregarEvaluacion,
-    cargarEnRiesgo,
     getTipoBadge,
   };
 }
