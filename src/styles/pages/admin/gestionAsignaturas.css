@@ -1,0 +1,293 @@
+.gestion-asignaturas-container {
+  padding: 40px;
+  background: #f4f6f0;
+  min-height: 100%;
+}
+
+.gestion-asignaturas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.asignaturas-tabla-wrapper {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.asignaturas-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.asignaturas-tabla th {
+  background: #0e0e0e;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.asignaturas-tabla td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  color: #030303;
+}
+
+.asignaturas-tabla tr:hover td {
+  background: #e7e3e3;
+}
+
+.asignaturas-acciones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ==========================
+   BADGES TABLA
+========================== */
+
+.profesor-badge {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sin-profesor {
+  background: #fff3e0;
+  color: #ef6c00;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ==========================
+   MODAL BASE
+========================== */
+
+.asignaturas-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.asignaturas-modal-contenido {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.asignaturas-modal-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* ==========================
+   SELECTS
+========================== */
+
+.asignaturas-modal-contenido select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #444;
+  background: white;
+  outline: none;
+}
+
+.asignaturas-modal-contenido select:focus {
+  border-color: #273823;
+}
+
+/* ==========================
+   CURSOS
+========================== */
+
+.asignaturas-cursos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.asignaturas-curso-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #444;
+  cursor: pointer;
+}
+
+.asignaturas-curso-item:hover {
+  background: #f9fdf5;
+}
+
+.asignaturas-curso-item input[type="checkbox"] {
+  accent-color: #273823;
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================
+   TAGS CURSOS
+========================== */
+
+.asignatura-cursos-badge {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.asignatura-curso-tag {
+  background: #f0f7e6;
+  color: #273823;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ==========================
+   PROFESORES
+========================== */
+
+.asignatura-seleccionada {
+  background: #f4f8f2;
+  color: #273823;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.profesores-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.profesor-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: white;
+}
+
+.profesor-card:hover {
+  border-color: #273823;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(39, 56, 35, 0.12);
+}
+
+.profesor-card.selected {
+  background: #f4f8f2;
+  border-color: #273823;
+  box-shadow: 0 0 0 3px rgba(39, 56, 35, 0.15);
+}
+
+.profesor-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #273823;
+  color: white;
+  font-weight: bold;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.profesor-info {
+  flex: 1;
+}
+
+.profesor-info h4 {
+  margin: 0;
+  color: #222;
+  font-size: 0.95rem;
+}
+
+.profesor-info span {
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.profesor-check {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #273823;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.asignatura-seleccionada {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.asignaturas-curso-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.asignaturas-curso-item:hover {
+  background: #f8f8f8;
+}
+
+.asignaturas-curso-item.seleccionado {
+  border-color: #273823;
+  background: #f4f8f2;
+}
+
+.asignaturas-curso-item input {
+  accent-color: #273823;
+}

@@ -14,6 +14,8 @@ import Anotaciones from "../pages/alumno/Anotaciones";
 
 //Rutas Admin
 import GestionUsuarios from "../pages/admin/GestionUsuarios";
+import GestionCursos from "../pages/admin/GestionCursos";
+import GestionAsignaturas from "../pages/admin/GestionAsignaturas";
 import Reportes from "../pages/admin/Reportes";
 
 //Rutas Profesor
@@ -43,6 +45,8 @@ function RutasPrivadas() {
       {/* Admin */}
       <Route path="/admin/alumnos"  element={<RutaProtegida rolRequerido="admin"><GestionUsuarios tipoUsuario="alumno" /></RutaProtegida>} />
       <Route path="/admin/profesores" element={<RutaProtegida rolRequerido="admin"><GestionUsuarios tipoUsuario="profesor" /></RutaProtegida>} />
+      <Route path="/admin/cursos" element={<RutaProtegida rolRequerido="admin"><GestionCursos /></RutaProtegida>} />
+      <Route path="/admin/asignaturas" element={<RutaProtegida rolRequerido="admin"><GestionAsignaturas /></RutaProtegida>} />
       <Route path="/admin/reportes" element={<RutaProtegida rolRequerido="admin"><Reportes /></RutaProtegida>} />
 
       {/* Profesor */}

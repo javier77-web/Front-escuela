@@ -1,0 +1,82 @@
+.gestion-cursos-container {
+  padding: 40px;
+  background: #f4f6f0;
+  min-height: 100%;
+}
+
+.gestion-cursos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.cursos-tabla-wrapper {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.cursos-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cursos-tabla th {
+  background: #050505;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.cursos-tabla td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+}
+
+.cursos-tabla tr:hover td {
+  background: #f9fdf5;
+}
+
+.cursos-acciones {
+  display: flex;
+  gap: 8px;
+}
+
+/* MODAL */
+.cursos-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.cursos-modal-contenido {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cursos-modal-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cursos-modal-hint {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: -8px;
+}
