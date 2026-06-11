@@ -7,34 +7,29 @@ import AccionCursoCard from "../../components/molecules/profesor/AccionCursoCard
 
 function AsignaturaDetalle() {
   const { id } = useParams();
-
   const location = useLocation();
-
   const navigate = useNavigate();
-
   const asignatura = location.state;
 
   return (
     <PanelLayout rol="profesor">
       <div className="asignatura-detalle-container">
-        {/* TITULO /}
         <Titulo level={1}>
           {asignatura
-            ? ${asignatura.nombre} - ${asignatura.curso}
-            : asignatura ${id}}
+            ? `${asignatura.nombre} - ${asignatura.curso}`
+            : `asignatura ${id}`}
         </Titulo>
 
-        {/ ACCIONES */}
         <div className="acciones-curso">
           <AccionCursoCard
             texto="asistencia"
             onClick={() =>
               navigate(`/profesor/${id}/asistencia`, {
                 state: {
-                  id: asignatura.id,
-                  nombre: asignatura.nombre,
-                  curso: asignatura.curso,
-                  cursoId: asignatura.cursoId,
+                  id: asignatura?.id,
+                  nombre: asignatura?.nombre,
+                  curso: asignatura?.curso,
+                  cursoId: asignatura?.curso_id, // ← fix: era asignatura.cursoId
                 },
               })
             }

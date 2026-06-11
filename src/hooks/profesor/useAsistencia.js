@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -11,96 +11,96 @@ function useAsistencia(idAsignatura) {
   const queryClient = useQueryClient();
   const location = useLocation();
   const cursoId = location.state?.cursoId;
+
   const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
   const [guardado, setGuardado] = useState(false);
+  const [listaLocal, setListaLocal] = useState([]);
+
+  // Limpiar estado local cada vez que cambia la fecha
+  useEffect(() => {
+    setListaLocal([]);
+    setGuardado(false);
+  }, [fecha]);
 
   const { data: lista = [], isLoading: loading } = useQuery({
     queryKey: ["asistencia-clase", idAsignatura, fecha],
+    enabled: !!idAsignatura && !!cursoId,
+    staleTime: 5 * 60 * 1000,
     queryFn: async () => {
-      const res = await getAsistenciasPorAsignaturaYFecha(idAsignatura, fecha);
+      const res = await getAsistenciasPorAsignaturaYFecha(idAsignatura, fecha)
+        .catch((err) => {
+          if (err.response?.status === 404) return { data: [] };
+          throw err;
+        });
+
       const data = Array.isArray(res.data) ? res.data : [];
 
-      // Si todavía no existe asistencia para esta fecha,
-      // cargamos los alumnos del curso para que el profesor
-      // pueda registrar asistencia por primera vez.
       if (data.length === 0) {
         const alumnosRes = await getUsuariosPorCurso(cursoId);
-
         const alumnos = Array.isArray(alumnosRes.data) ? alumnosRes.data : [];
-
         return alumnos.map((a) => ({
           id: a.firebaseuid,
           nombre: `${a.nombre} ${a.apellido}`,
-
-          // Estado inicial antes de guardar
           estado: "ausente",
-
-          // Indica que aún no existe registro en BD
           idAsistencia: null,
         }));
       }
 
       return data.map((a) => ({
-        id: a.usuario.firebaseuid,
-        nombre: `${a.usuario.nombre} ${a.usuario.apellido}`,
+        id: a.usuario?.firebaseuid ?? a.firebaseuid,
+        nombre: a.usuario
+          ? `${a.usuario.nombre} ${a.usuario.apellido}`
+          : a.nombreCompleto,
         estado: a.estado,
         idAsistencia: a.idAsistencia ?? a.id_asistencia,
       }));
     },
-    enabled: !!idAsignatura,
-    staleTime: 5 * 60 * 1000,
   });
 
-  // lista local mutable para cambios de estado antes de guardar
-  const [listaLocal, setListaLocal] = useState([]);
   const listaActiva = listaLocal.length > 0 ? listaLocal : lista;
 
   const cambiarEstado = (uid, nuevoEstado) => {
     const base = listaLocal.length > 0 ? listaLocal : lista;
-    setListaLocal((prev) =>
-      (prev.length > 0 ? prev : base).map((a) =>
-        a.id === uid ? { ...a, estado: nuevoEstado } : a,
-      ),
+    setListaLocal(
+      base.map((a) => (a.id === uid ? { ...a, estado: nuevoEstado } : a))
     );
     setGuardado(false);
   };
 
   const porcentaje =
     Math.round(
-      (lista.filter((a) => a.estado === "presente").length / lista.length) *
-        100,
+      (listaActiva.filter((a) => a.estado === "presente").length /
+        listaActiva.length) *
+        100
     ) || 0;
 
-  const guardar = async (alumnos = []) => {
-    // alumnos: [{ firebaseuid, nombre, apellido }] — lista completa del curso
-    // Se usa cuando la fecha no tiene registros previos
-    const listaAGuardar =
-      listaActiva.length > 0
-        ? listaActiva
-        : alumnos.map((a) => ({
-            id: a.firebaseuid,
-            nombre: `${a.nombre} ${a.apellido}`,
-            estado: "ausente",
-            idAsistencia: null,
-          }));
+  const yaFuePasada =
+    lista.length > 0 && lista.every((a) => a.idAsistencia != null);
 
-    if (listaAGuardar.length === 0) return;
+  const guardar = async () => {
+    if (listaActiva.length === 0) return;
 
-    if (listaAGuardar.some((a) => a.idAsistencia)) {
+    if (yaFuePasada) {
       alert("Ya se pasó asistencia para esta fecha.");
+      return;
+    }
+
+    const hoy = new Date().toISOString().split("T")[0];
+    if (fecha > hoy) {
+      alert("No se puede registrar asistencia para una fecha futura.");
       return;
     }
 
     try {
       const resultados = await Promise.allSettled(
-        listaAGuardar.map((a) =>
+        listaActiva.map((a) =>
           registrarAsistencia({
             fecha,
             estado: a.estado,
             idAsignatura,
             usuario: { firebaseuid: a.id },
-          }),
-        ),
+          })
+        )
       );
 
       const errores = resultados.filter((r) => r.status === "rejected");
@@ -109,17 +109,15 @@ function useAsistencia(idAsignatura) {
         alert("Algunas asistencias no pudieron guardarse.");
         return;
       }
+
       setGuardado(true);
-      setListaLocal([]);
-      // refresca el cache para esta asignatura y fecha
-      await queryClient.invalidateQueries({
+      await queryClient.refetchQueries({
         queryKey: ["asistencia-clase", idAsignatura, fecha],
       });
+      setListaLocal([]);
     } catch (err) {
-      console.error(
-        "Error al guardar asistencia:",
-        err.response?.data ?? err.message,
-      );
+      console.error("Error al guardar asistencia:", err.response?.data ?? err.message);
+      alert("Error al guardar la asistencia.");
     }
   };
 
@@ -133,6 +131,7 @@ function useAsistencia(idAsignatura) {
     guardar,
     guardado,
     loading,
+    yaFuePasada,
   };
 }
 

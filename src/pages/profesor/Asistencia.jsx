@@ -20,8 +20,10 @@ function AsistenciaProfesor() {
     guardar,
     guardado,
     loading,
+    yaFuePasada,
   } = useAsistencia(id);
 
+  const hoy = new Date().toISOString().split("T")[0];
   const getTipo = (estado) => (estado === "presente" ? "success" : "danger");
 
   return (
@@ -34,6 +36,7 @@ function AsistenciaProfesor() {
             <input
               type="date"
               value={fecha}
+              max={hoy}
               onChange={(e) => setFecha(e.target.value)}
               className="input-fecha"
             />
@@ -47,28 +50,38 @@ function AsistenciaProfesor() {
         {loading ? (
           <Texto>cargando...</Texto>
         ) : lista.length === 0 ? (
-          <Texto color="muted">
-            no hay asistencia registrada para esta fecha
-          </Texto>
+          <Texto color="muted">no hay alumnos registrados para este curso</Texto>
         ) : (
-          <div className="asistencia-lista">
-            {lista.map((alumno) => (
-              <AsistenciaRegistroCard
-                key={alumno.id}
-                alumno={alumno}
-                cambiarEstado={cambiarEstado}
-                getTipo={getTipo}
-              />
-            ))}
-          </div>
+          <>
+            {yaFuePasada && (
+              <div className="asistencia-aviso">
+                <Texto size="sm" color="muted">
+                  lista ya registrada para esta fecha — solo lectura
+                </Texto>
+              </div>
+            )}
+            <div className="asistencia-lista">
+              {lista.map((alumno, index) => (
+                <AsistenciaRegistroCard
+                  key={alumno.id ?? index}
+                  alumno={alumno}
+                  cambiarEstado={cambiarEstado}
+                  getTipo={getTipo}
+                  soloLectura={yaFuePasada}
+                />
+              ))}
+            </div>
+          </>
         )}
 
-        <div className="asistencia-footer">
-          <Boton onClick={guardar}>guardar asistencia</Boton>
-          {guardado && (
-            <Texto color="success">asistencia guardada para {fecha}</Texto>
-          )}
-        </div>
+        {lista.length > 0 && !yaFuePasada && (
+          <div className="asistencia-footer">
+            <Boton onClick={guardar}>guardar asistencia</Boton>
+            {guardado && (
+              <Texto color="success">asistencia guardada para {fecha}</Texto>
+            )}
+          </div>
+        )}
       </div>
     </PanelLayout>
   );
