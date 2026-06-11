@@ -29,8 +29,8 @@ function useUsuarios(tipoUsuario) {
   const crearUsuario = async ({ nombre, apellido, email, rol }) => {
     const contrasenaTemporal = generarContrasena();
     // Mapear rol a ID esperado por backend
-    const rolesMap = { alumno: 1, profesor: 2, admin: 3 };
-    const idRol = rolesMap[rol?.toLowerCase()] ?? 1;
+    const rolesMap = { alumno: 5, profesor: 6, admin: 7 };
+    const idRol = rolesMap[rol?.toLowerCase()] ?? 5;
 
     const resultado = await crearUsuarioAdmin(
       email,
@@ -51,10 +51,11 @@ function useUsuarios(tipoUsuario) {
   };
 
   // dentro del hook, después de eliminarUsuario:
-  const actualizarUsuario = async (firebaseuid, { nombre, apellido, rol }) => {
-    const rolesMap = { alumno: 1, profesor: 2, admin: 3 };
-    const idRol = rolesMap[rol?.toLowerCase()] ?? 1;
-    await updateUsuario(firebaseuid, { nombre, apellido, idRol });
+  const actualizarUsuario = async (firebaseuid, { nombre, apellido, rol, cursoId }) => {
+    const rolesMap = { alumno: 5, profesor: 6, admin: 7 };
+    const idRol = rolesMap[rol?.toLowerCase()] ?? 5;
+    console.log("Enviando:", { nombre, apellido, idRol, cursoId }); 
+    await updateUsuario(firebaseuid, { nombre, apellido, idRol, cursoId });
     await queryClient.invalidateQueries({ queryKey: ["usuarios", tipoUsuario] });
   };
 
