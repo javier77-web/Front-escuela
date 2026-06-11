@@ -14,13 +14,11 @@ function ModalFormularioUsuario({
   cerrarModal,
   contrasenaGenerada,
   modoEdicion,
+  cursos = [], // ← lista de cursos para el selector
 }) {
-  const hayErrores = Object.values(errores).some(Boolean);
-
   return (
     <div className="modal-fondo" onClick={cerrarModal}>
       <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
-        {/* ← título cambia según modo */}
         <Titulo level={2}>
           {modoEdicion ? `editar ${tipoUsuario}` : `nuevo ${tipoUsuario}`}
         </Titulo>
@@ -52,7 +50,6 @@ function ModalFormularioUsuario({
               error={errores.apellido}
             />
 
-            {/* ← email solo al crear */}
             {!modoEdicion && (
               <Input
                 label="email"
@@ -66,13 +63,31 @@ function ModalFormularioUsuario({
 
             <Input label="rol" name="rol" value={valores.rol} disabled />
 
+            {/* selector de curso solo para alumnos en modo edición */}
+            {modoEdicion && tipoUsuario === "alumno" && (
+              <div className="modal-campo">
+                <label className="modal-label">curso</label>
+                <select
+                  name="cursoId"
+                  value={valores.cursoId ?? ""}
+                  onChange={manejarCambio}
+                  className="modal-select"
+                >
+                  <option value="">sin curso</option>
+                  {cursos.map((curso) => (
+                    <option key={curso.id_curso} value={curso.id_curso}>
+                      {curso.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             <div className="modal-botones">
               <Boton type="button" variant="secondary" onClick={cerrarModal}>
                 cancelar
               </Boton>
-
-              {/* ← texto del botón cambia según modo // */}
-             <Boton type="submit" disabled={hayErrores}>
+              <Boton type="submit">
                 {modoEdicion ? "guardar cambios" : "crear usuario"}
               </Boton>
             </div>
