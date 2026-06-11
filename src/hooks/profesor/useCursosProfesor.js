@@ -17,7 +17,9 @@ function useCursosProfesor() {
     queryKey: ["asignaturas", user?.uid],
     queryFn: async () => {
       const { data } = await getAsignaturas();
-      return Array.isArray(data) ? data : [];
+      const todas = Array.isArray(data) ? data : [];
+      // filtra solo las asignaturas asignadas a este profesor
+      return todas.filter((a) => a.profesor_uid === user.uid);
     },
     enabled: !!user,
     staleTime: 5 * 60 * 1000,

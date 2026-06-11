@@ -10,21 +10,23 @@ import { useNavigate } from "react-router-dom";
 //Sólo agregamos el label y la ruta respectiva según el rol correspondiente
 const NavPorRol = {
   alumno: [
-    { label: "Panel",       ruta: "/panel/alumno" },
-    { label: "Mis cursos",  ruta: "/alumno/cursos" },
-    { label: "Notas",       ruta: "/alumno/notas" },
-    { label: "Asistencia",  ruta: "/alumno/asistencia" },
+    { label: "Panel", ruta: "/panel/alumno" },
+    { label: "Mis asignaturas", ruta: "/alumno/cursos" },
+    { label: "Notas", ruta: "/alumno/notas" },
+    { label: "Asistencia", ruta: "/alumno/asistencia" },
     { label: "Anotaciones", ruta: "/alumno/anotaciones" },
   ],
   admin: [
-    { label: "Panel",      ruta: "/panel/admin" },
-    { label: "Alumnos",    ruta: "/admin/alumnos" },
+    { label: "Panel", ruta: "/panel/admin" },
+    { label: "Alumnos", ruta: "/admin/alumnos" },
     { label: "Profesores", ruta: "/admin/profesores" },
-    { label: "Reportes",   ruta: "/admin/reportes" },
+    { label: "Cursos", ruta: "/admin/cursos" },
+    { label: "Asignaturas", ruta: "/admin/asignaturas" },
+    { label: "Reportes", ruta: "/admin/reportes" },
   ],
   profesor: [
-    { label: "Panel",  ruta: "/panel/profesor" },
-    { label: "Cursos", ruta: "/profesor/cursos" },
+    { label: "Panel", ruta: "/panel/profesor" },
+    { label: "Mis Cursos", ruta: "/profesor/cursos" },
   ],
 };
 
@@ -52,7 +54,7 @@ function Sidebar({ rol }) {
         </NavLink>
 
         {/* links exclusivos del alumno */}
-        {links.map(({ label, ruta }) =>(
+        {links.map(({ label, ruta }) => (
           <NavLink key={ruta} to={ruta}>
             {label}
           </NavLink>
