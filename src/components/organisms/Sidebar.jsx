@@ -10,21 +10,21 @@ import { useNavigate } from "react-router-dom";
 //Sólo agregamos el label y la ruta respectiva según el rol correspondiente
 const NavPorRol = {
   alumno: [
-    { label: "panel",       ruta: "/panel/alumno" },
-    { label: "mis cursos",  ruta: "/alumno/cursos" },
-    { label: "notas",       ruta: "/alumno/notas" },
-    { label: "asistencia",  ruta: "/alumno/asistencia" },
-    { label: "anotaciones", ruta: "/alumno/anotaciones" },
+    { label: "Panel",       ruta: "/panel/alumno" },
+    { label: "Mis cursos",  ruta: "/alumno/cursos" },
+    { label: "Notas",       ruta: "/alumno/notas" },
+    { label: "Asistencia",  ruta: "/alumno/asistencia" },
+    { label: "Anotaciones", ruta: "/alumno/anotaciones" },
   ],
   admin: [
-    { label: "panel",      ruta: "/panel/admin" },
-    { label: "alumnos",    ruta: "/admin/alumnos" },
-    { label: "profesores", ruta: "/admin/profesores" },
-    { label: "reportes",   ruta: "/admin/reportes" },
+    { label: "Panel",      ruta: "/panel/admin" },
+    { label: "Alumnos",    ruta: "/admin/alumnos" },
+    { label: "Profesores", ruta: "/admin/profesores" },
+    { label: "Reportes",   ruta: "/admin/reportes" },
   ],
   profesor: [
-    { label: "panel",  ruta: "/panel/profesor" },
-    { label: "cursos", ruta: "/profesor/cursos" },
+    { label: "Panel",  ruta: "/panel/profesor" },
+    { label: "Cursos", ruta: "/profesor/cursos" },
   ],
 };
 
@@ -48,7 +48,7 @@ function Sidebar({ rol }) {
       <nav>
         {/* inicio del panel */}
         <NavLink to="/" end>
-          inicio
+          Inicio
         </NavLink>
 
         {/* links exclusivos del alumno */}
@@ -60,7 +60,7 @@ function Sidebar({ rol }) {
       </nav>
 
       <button className="sidebar-logout" onClick={handleLogout}>
-        cerrar sesion
+        Cerrar Sesion
       </button>
     </div>
   );

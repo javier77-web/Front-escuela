@@ -37,13 +37,13 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2 className="login-titulo">iniciar sesion</h2>
+        <h2 className="login-titulo">Iniciar Sesion</h2>
 
         <form onSubmit={manejarLogin}>
           <Input
             type="email"
             name="email"
-            placeholder="correo"
+            placeholder="Correo"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -51,7 +51,7 @@ function Login() {
           <Input
             type="password"
             name="password"
-            placeholder="contraseña"
+            placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -60,7 +60,7 @@ function Login() {
             <Spinner texto="ingresando..." />
           ) : (
             <Boton type="submit" variant="primary">
-              ingresar
+              Ingresar
             </Boton>
           )}
         </form>

@@ -18,7 +18,7 @@ function Asistencia() {
       <PanelLayout rol="alumno">
         <div className="asistencia-container asistencia-center">
           <Spinner />
-          <Texto color="muted">Cargando asistencia...</Texto>
+          <Texto color="muted">Cargando Asistencia...</Texto>
         </div>
       </PanelLayout>
     );
@@ -56,7 +56,7 @@ function Asistencia() {
         <div className="asistencia-header">
           <div>
             <Titulo level={1}>Asistencia</Titulo>
-            <Texto color="muted">registro por asignatura</Texto>
+            <Texto color="muted">Registro por asignatura</Texto>
           </div>
           <Badge texto={`${promedioGlobal}%`} tipo={getTipo(promedioGlobal)} />
         </div>

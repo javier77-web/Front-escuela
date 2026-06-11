@@ -15,36 +15,36 @@ function NuestroColegio() {
           <Titulo level={1}>Colegio Bernardo O'higgins</Titulo>
 
           <Texto>
-            institución educativa enfocada en la excelencia académica, la
+            Nuestra institución educativa enfocada en la excelencia académica, la
             formación integral y el desarrollo de estudiantes preparados para
             enfrentar los desafíos del futuro.
           </Texto>
 
           <Boton variant="primary" className="btn-colegio">
-            conocer más
+            Conocer más
           </Boton>
 
           {/* CARDS */}
           <div className="colegio-caracteristicas">
             <div className="card">
-              <Titulo level={3}>excelencia académica</Titulo>
+              <Titulo level={3}>Excelencia Académica</Titulo>
               <Texto size="sm" color="muted">
-                programas educativos modernos centrados en el aprendizaje real
+                Programas educativos modernos centrados en el aprendizaje real.
               </Texto>
             </div>
 
             <div className="card">
-              <Titulo level={3}>formación integral</Titulo>
+              <Titulo level={3}>Formación Integral</Titulo>
               <Texto size="sm" color="muted">
-                desarrollo de valores, habilidades sociales y pensamiento
-                crítico
+                Desarrollo de valores, habilidades sociales y pensamiento
+                crítico.
               </Texto>
             </div>
 
             <div className="card">
-              <Titulo level={3}>innovación</Titulo>
+              <Titulo level={3}>Innovación</Titulo>
               <Texto size="sm" color="muted">
-                uso de tecnología para mejorar el proceso educativo
+                El uso de tecnología para mejorar el proceso educativo.
               </Texto>
             </div>
           </div>
@@ -58,7 +58,7 @@ function NuestroColegio() {
 
       {/* FRASE FINAL */}
       <section className="colegio-frase">
-        <Titulo level={2}>"educar es formar personas para el futuro"</Titulo>
+        <Titulo level={2}>"Educar es formar personas para el futuro de nuestro pais"</Titulo>
       </section>
     </div>
   );

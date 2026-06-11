@@ -87,15 +87,15 @@ function GestionUsuarios({ tipoUsuario }) {
       <div className="gestion-container">
         {/* HEADER */}
         <div className="gestion-header">
-          <Titulo level={1}>gestión de {tipoUsuario}s</Titulo>
+          <Titulo level={1}>Gestión de {tipoUsuario}s</Titulo>
           <Boton onClick={() => setModalAbierto(true)}>
             nuevo {tipoUsuario}
           </Boton>
         </div>
 
         {/* ESTADOS DE CARGA */}
-        {isLoading && <p>cargando usuarios...</p>}
-        {isError && <p>error al cargar usuarios</p>}
+        {isLoading && <p>Cargando usuarios...</p>}
+        {isError && <p>Error al cargar usuarios</p>}
 
         {/* TABLA */}
         {!isLoading && !isError && (
@@ -103,16 +103,16 @@ function GestionUsuarios({ tipoUsuario }) {
             <table className="tabla-admin">
               <thead>
                 <tr>
-                  <th>nombre</th>
-                  <th>apellido</th>
-                  <th>fecha registro</th>
-                  <th>acciones</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Fecha Registro</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {usuarios.length === 0 ? (
                   <tr>
-                    <td colSpan={4}>no hay {tipoUsuario}s registrados</td>
+                    <td colSpan={4}>No hay {tipoUsuario}s registrados</td>
                   </tr>
                 ) : (
                   usuarios.map((usuario) => (

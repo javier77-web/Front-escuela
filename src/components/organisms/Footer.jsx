@@ -16,10 +16,10 @@ const redes = [
 
 // datos de navegacion
 const navegacion = [
-  { nombre: "inicio", ruta: "/" },
-  { nombre: "nuestro colegio", ruta: "/NuestroColegio" },
-  { nombre: "noticias", ruta: "/noticias" },
-  { nombre: "contacto", ruta: "/contacto" },
+  { nombre: "Inicio", ruta: "/" },
+  { nombre: "Nuestro Colegio", ruta: "/NuestroColegio" },
+  { nombre: "Noticias", ruta: "/noticias" },
+  { nombre: "Contacto", ruta: "/contacto" },
 ];
 
 function Footer() {
@@ -27,7 +27,7 @@ function Footer() {
     <footer className="footer">
       {/* redes arriba */}
       <div className="redes-superior">
-        <h4>redes sociales</h4>
+        <h4>Redes Sociales</h4>
 
         <div className="iconos-redes">
           {redes.map((red) => (
@@ -51,7 +51,7 @@ function Footer() {
       </div>
 
       {/* copy */}
-      <div className="footer-copy">© 2026 sistema academico</div>
+      <div className="footer-copy">© 2026 Sistema Academico</div>
     </footer>
   );
 }
