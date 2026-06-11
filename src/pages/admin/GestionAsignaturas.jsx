@@ -217,12 +217,29 @@ function GestionAsignaturas() {
               <Titulo level={2}>
                 {asignaturaEditando ? "editar asignatura" : "nueva asignatura"}
               </Titulo>
+
+              {/* Campo nombre */}
               <Input
                 type="text"
                 placeholder="nombre de la asignatura"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
               />
+
+              {/* Dropdown de profesores */}
+              <select
+                value={profesorUid}
+                onChange={(e) => setProfesorUid(e.target.value)}
+                style={{ marginTop: "12px", marginBottom: "12px" }}
+              >
+                <option value="">-- Selecciona un profesor --</option>
+                {profesores.map((prof) => (
+                  <option key={prof.firebaseuid} value={prof.firebaseuid}>
+                    {prof.nombre} {prof.apellido}
+                  </option>
+                ))}
+              </select>
+
               <div className="asignaturas-modal-acciones">
                 <Boton onClick={manejarEnvio}>
                   {asignaturaEditando ? "guardar cambios" : "crear asignatura"}
@@ -257,11 +274,10 @@ function GestionAsignaturas() {
                   {cursos.map((curso) => (
                     <label
                       key={curso.id_curso}
-                      className={`asignaturas-curso-item ${
-                        cursosSeleccionados.includes(curso.id_curso)
+                      className={`asignaturas-curso-item ${cursosSeleccionados.includes(curso.id_curso)
                           ? "seleccionado"
                           : ""
-                      }`}
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -297,9 +313,8 @@ function GestionAsignaturas() {
                 {profesores.map((profesor) => (
                   <div
                     key={profesor.firebaseuid}
-                    className={`profesor-card ${
-                      profesorUid === profesor.firebaseuid ? "selected" : ""
-                    }`}
+                    className={`profesor-card ${profesorUid === profesor.firebaseuid ? "selected" : ""
+                      }`}
                     onClick={() => setProfesorUid(profesor.firebaseuid)}
                   >
                     <div className="profesor-avatar">
