@@ -47,3 +47,9 @@
   border: 1px solid #ccc;
   outline: none;
 }
+.asistencia-aviso {
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 10px 16px;
+  border-left: 3px solid #ccc;
+}
