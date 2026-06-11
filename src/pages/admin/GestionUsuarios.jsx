@@ -12,11 +12,13 @@ import Input from "../../components/atoms/Input";
 import UsuarioRow from "../../components/molecules/admin/UsuarioRow";
 import ModalFormularioUsuario from "../../components/molecules/admin/ModalFormularioUsuario";
 import useUsuarios from "../../hooks/admin/useUsuarios";
+import useCursos from "../../hooks/admin/useCursos";
 
 function GestionUsuarios({ tipoUsuario }) {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [contrasenaGenerada, setContrasenaGenerada] = useState("");
   const [usuarioEditando, setUsuarioEditando] = useState(null);
+  const { cursos } = useCursos();
 
   // hook usuarios
   const {
@@ -38,7 +40,7 @@ function GestionUsuarios({ tipoUsuario }) {
     setValores,
   } = useFormulario(
     { nombre: "", apellido: "", email: "", rol: tipoUsuario },
-     (valores) => validarUsuario(valores, !!usuarioEditando),
+    (valores) => validarUsuario(valores, !!usuarioEditando),
   );
 
   const cerrarModal = () => {
@@ -77,6 +79,7 @@ function GestionUsuarios({ tipoUsuario }) {
       apellido: usuario.apellido,
       email: "",
       rol: usuario.rol?.nombre?.toLowerCase(),
+      cursoId: usuario.cursoId ?? "",
     });
     setUsuarioEditando(usuario);
     setModalAbierto(true);
@@ -139,7 +142,8 @@ function GestionUsuarios({ tipoUsuario }) {
             manejarEnvio={manejarEnvio}
             cerrarModal={cerrarModal}
             contrasenaGenerada={contrasenaGenerada}
-            modoEdicion={!!usuarioEditando} //
+            modoEdicion={!!usuarioEditando}
+            cursos={cursos}
           />
         )}
       </div>

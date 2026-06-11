@@ -91,3 +91,30 @@
   font-weight: 800;
   margin: 10px 0;
 }
+
+.modal-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-label {
+  font-size: 0.85rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.modal-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #444;
+  background: white;
+  outline: none;
+}
+
+.modal-select:focus {
+  border-color: #273823;
+}
