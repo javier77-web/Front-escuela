@@ -25,6 +25,8 @@ const NavPorRol = {
   profesor: [
     { label: "panel",  ruta: "/panel/profesor" },
     { label: "cursos", ruta: "/profesor/cursos" },
+    { label: "evaluaciones", ruta: "/profesor/:id/evaluaciones" },
+    { label: "evaluacion alumnos", ruta: "/profesor/:id/evaluaciones/alumnos" },
   ],
 };
 

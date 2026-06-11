@@ -23,6 +23,8 @@ import AsistenciaProfesor from "../pages/profesor/Asistencia";
 import NotasProfesor from "../pages/profesor/Notas";
 import AnotacionesProfesor from "../pages/profesor/Anotaciones";
 import EvaluacionesProfesor from "../pages/profesor/Evaluaciones";
+import EvaluacionAlumno from "../pages/profesor/EvaluacionAlumno";
+
 
 function RutasPrivadas() {
   return (
@@ -50,6 +52,7 @@ function RutasPrivadas() {
       <Route path="/profesor/:id/notas" element={<RutaProtegida rolRequerido="profesor"><NotasProfesor /></RutaProtegida>} />
       <Route path="/profesor/:id/anotaciones" element={<RutaProtegida rolRequerido="profesor"><AnotacionesProfesor /></RutaProtegida>} />
       <Route path="/profesor/:id/evaluaciones"  element={<RutaProtegida rolRequerido="profesor"><EvaluacionesProfesor /></RutaProtegida>} />
+      <Route path="/profesor/:id/evaluaciones/alumnos"  element={<RutaProtegida rolRequerido="profesor"><EvaluacionAlumno /></RutaProtegida>} />
     </Routes>
   );
 }
