@@ -13,7 +13,7 @@ function Home() {
           <h2 className="titu2">Colegio</h2>
           <h1 className="titulo"> Bernardo O’Higgins</h1>
           <p className="subtitulo">
-            excelencia académica, formación integral y compromiso con la
+            Excelencia académica, formación integral y compromiso con la
             comunidad
           </p>
           

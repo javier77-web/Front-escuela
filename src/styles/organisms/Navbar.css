@@ -9,23 +9,31 @@
   z-index: 1000;
 }
 
-/* CENTRAR MENÚ */
+
 .navbar-centro {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  width: 100%;
+  display: flex !important;
+  justify-content: center !important; 
+  align-items: center !important;     
+  flex-grow: 1;                       
 }
 
-/* LINKS */
-.navbar .nav-link {
-  color: #050505 !important;
+
+.navbar-centro .nav-link.nav-boton {
+  background-color: #273823 !important; 
+  color: #afec15 !important;            
+  padding: 8px 24px !important;         
+  border-radius: 50px !important;       
+  margin: 0 8px !important;             
+  text-align: center;
   font-weight: 500;
-  transition: 0.3s;
+  display: inline-block;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.navbar .nav-link:hover {
-  color: rgb(170, 241, 4) !important;
+/* Efecto Hover */
+.navbar-centro .nav-link.nav-boton:hover {
+  background-color: #2a2a2a !important; 
+  color: #ffffff !important;
 }
 
 /* BOTN LOGIN */
@@ -37,8 +45,8 @@
 .btn-login {
   padding: 6px 16px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #0f0f0f, #18171a);
-  color: white;
+  background: linear-gradient(135deg, #273823, #18171a);
+  color: #afec15;
   text-decoration: none;
   font-size: 14px;
   transition: 0.3s;

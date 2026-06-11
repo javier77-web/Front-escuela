@@ -9,16 +9,16 @@ import useReportes from "../../hooks/admin/useReportes";
 function Reportes() {
   const { totalAlumnos, totalProfesores, isLoading, isError } = useReportes();
 
-  if (isLoading) return <p>cargando reportes...</p>;
-  if (isError) return <p>error al cargar reportes</p>;
+  if (isLoading) return <p>Cargando Reportes...</p>;
+  if (isError) return <p>Error al cargar reportes</p>;
 
   return (
     <PanelLayout rol="admin">
       <div className="reportes-container">
         <div className="reportes-encabezado">
-          <Titulo level={1}>reportes generales</Titulo>
+          <Titulo level={1}>Reportes Generales</Titulo>
           <Texto color="muted">
-            resumen visual del estado actual del sistema
+            Resumen visual del estado actual del sistema
           </Texto>
         </div>
         <div className="reportes-grilla">

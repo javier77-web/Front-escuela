@@ -40,8 +40,8 @@ function Cursos() {
             <Titulo level={1}>Mis cursos</Titulo>
             <Texto color="muted">
               {cursos.length > 0
-                ? `tienes ${cursos.length} ramos este semestre`
-                : "no tienes cursos inscritos aún"}
+                ? `Tienes ${cursos.length} ramos este semestre`
+                : "No tienes cursos inscritos aún"}
             </Texto>
           </div>
         </div>

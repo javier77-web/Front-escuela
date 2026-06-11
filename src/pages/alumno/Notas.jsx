@@ -21,7 +21,7 @@ function Notas() {
     return (
       <PanelLayout rol="alumno">
         <div className="notas-container">
-          <Spinner texto="cargando notas..." />
+          <Spinner texto="Cargando notas..." />
         </div>
       </PanelLayout>
     );
@@ -48,12 +48,12 @@ function Notas() {
           <div>
             <Titulo level={1}>Mis notas</Titulo>
 
-            <Texto color="muted">resumen de evaluaciones del semestre</Texto>
+            <Texto color="muted">Resumen de evaluaciones del semestre</Texto>
           </div>
 
           {/* PROMEDIO GENERAL */}
           <div className="notas-promedio-general">
-            <Texto size="sm">promedio general</Texto>
+            <Texto size="sm">Promedio general</Texto>
             <Titulo level={2}>
               <Badge texto={promedioGeneral} tipo={getTipo(parseFloat(promedioGeneral))} />
             </Titulo>
@@ -62,17 +62,17 @@ function Notas() {
 
         {/* TABLA */}
         {notas.length === 0 ? (
-          <Texto color="muted">no hay notas registradas aún</Texto>
+          <Texto color="muted">No hay notas registradas aún</Texto>
         ) : (
           <div className="notas-tabla-wrapper">
             <table className="notas-tabla">
               <thead>
                 <tr>
-                  <th>asignatura</th>
+                  <th>Asignatura</th>
                   {Array.from({ length: maxNotas }, (_, i) => (
-                    <th key={i}>nota {i + 1}</th>
+                    <th key={i}>Nota {i + 1}</th>
                   ))}
-                  <th>promedio</th>
+                  <th>Promedio</th>
                 </tr>
               </thead>
 

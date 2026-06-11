@@ -26,7 +26,7 @@ function Contacto() {
         <form className="contacto-form" onSubmit={manejarSubmit(enviar)}>
           <Input
             name="nombre"
-            placeholder="nombre"
+            placeholder="Nombre"
             value={valores.nombre}
             onChange={manejarCambio}
             error={errores.nombre}
@@ -34,7 +34,7 @@ function Contacto() {
 
           <Input
             name="correo"
-            placeholder="correo"
+            placeholder="Correo"
             value={valores.correo}
             onChange={manejarCambio}
             error={errores.correo}
@@ -42,23 +42,23 @@ function Contacto() {
 
           <Input
             name="mensaje"
-            placeholder="mensaje"
+            placeholder="Mensaje"
             value={valores.mensaje}
             onChange={manejarCambio}
             error={errores.mensaje}
           />
 
           <Boton type="submit" variant="primary">
-            enviar
+            Enviar
           </Boton>
         </form>
 
         {/* info lateral */}
         <div className="contacto-info">
-          <h3>informacion</h3>
-          <p>santiago, chile</p>
-          <p>+56 9 1234 5678</p>
-          <p>contacto@colegio.cl</p>
+          <h3>Informacion</h3>
+          <p> Santiago, Chile </p>
+          <p>+56 9 9087 5678</p>
+          <p>Contacto@colegio.cl</p>
         </div>
       </div>
     </div>

@@ -12,8 +12,7 @@ function NuestroColegioPreview() {
         <h2 className="titulo-seccion">Nuestro Colegio</h2>
 
         <p className="descripcion-seccion">
-          Formamos estudiantes con excelencia académica, valores y visión de
-          futuro.
+          En nuestro Colegio Bernardo O’Higgins, nos dedicamos a formar estudiantes integrales. Combinamos la excelencia académica con una sólida base de valores, preparando a las futuras generaciones para liderar con visión de futuro.
         </p>
 
         <div className="contenedor-tarjetas">
