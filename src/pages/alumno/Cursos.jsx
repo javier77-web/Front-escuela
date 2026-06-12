@@ -53,7 +53,6 @@ function Cursos() {
               key={curso.id_asignatura}
               nombre={curso.nombre}
               profesor={curso.profesor ?? "sin asignar"}
-              horario={curso.horario ?? ""}
             />
           ))}
         </div>

@@ -1,25 +1,22 @@
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
-import { getAsignaturas } from "../../api/gestionAcademica/asignaturaService";
+import { getAsignaturasPorCurso } from "../../api/gestionAcademica/asignaturaService";
 
 // Carga todas las asignaturas disponibles para el alumno.
 // Si el backend expone un endpoint filtrado por alumno en el futuro,
 // reemplazar getAsignaturas() por ese llamado.
 function useCursosAlumno() {
-  const { user } = useContext(AuthContext);
-
-  const {
-    data: cursos = [],
-    isLoading: loading,
-    isError,
-  } = useQuery({
-    queryKey: ["asignaturas", user?.uid],
+  const { perfil } = useContext(AuthContext);
+  const {data: cursos = [],isLoading: loading,isError,} 
+  = useQuery({
+    queryKey: ["asignaturas", perfil?.cursoId],
     queryFn: async () => {
-      const { data } = await getAsignaturas();
+      const { data } = await getAsignaturasPorCurso(perfil.cursoId);
+
       return Array.isArray(data) ? data : [];
     },
-    enabled: !!user,
+    enabled: !!perfil?.cursoId,
     staleTime: 5 * 60 * 1000,
   });
 
