@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "../../styles/pages/profesor/evaluaciones.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
@@ -12,6 +12,9 @@ import useEvaluacionesProfesor from "../../hooks/profesor/useEvaluaciones";
 
 function EvaluacionesProfesor() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
 
   // Se pasa id al hook para que cargue y cree evaluaciones en la asignatura correcta
   const {
@@ -29,7 +32,7 @@ function EvaluacionesProfesor() {
       <div className="evaluaciones-container">
         {/* HEADER */}
         <div className="evaluaciones-header">
-          <Titulo level={1}>evaluaciones asignatura {id}</Titulo>
+          <Titulo level={1}>evaluaciones asignatura {nombreAsignatura}</Titulo>
           <Texto color="muted">crea y gestiona las evaluaciones del curso</Texto>
         </div>
 
@@ -85,6 +88,10 @@ function EvaluacionesProfesor() {
             ))}
           </div>
         )}
+        {/* BOTÓN VOLVER */}
+        <button onClick={() => navigate(-1)} className="btn-volver">
+          volver
+        </button>
       </div>
     </PanelLayout>
   );

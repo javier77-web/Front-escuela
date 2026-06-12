@@ -89,3 +89,17 @@ body {
   0% { left: -40px; }
   100% { left: 100%; }
 }
+
+.btn-volver {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  background: #273823;
+  color: #afec15;
+  padding: 12px 28px;
+}

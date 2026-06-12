@@ -18,8 +18,10 @@ function CursosProfesor() {
       state: {
         id: asignatura.id_asignatura,
         nombre: asignatura.nombre,
-        curso: asignatura.curso?.nombre ?? `Curso ${asignatura.curso_id}`,
-        curso_id: asignatura.curso_id,
+        curso: asignatura.cursos?.length > 0 
+        ? asignatura.cursos.map((c) => c.nombre).join(", ") 
+        : "sin curso",
+        curso_id: asignatura.cursos?.[0]?.id_curso ?? null,
       },
     });
   };
@@ -63,7 +65,7 @@ function CursosProfesor() {
               <CursoProfesorCard
                 key={a.id_asignatura}
                 nombre={a.nombre}
-                curso={a.curso?.nombre ?? `Curso ${a.curso_id}`}
+                curso={a.cursos?.length > 0 ? a.cursos.map((c) => c.nombre).join(", ") : "sin curso"}
                 horario={a.horario ?? ""}
                 onGestionar={() => irDetalle(a)}
               />

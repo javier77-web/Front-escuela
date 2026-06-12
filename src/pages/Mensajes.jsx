@@ -148,7 +148,7 @@ function Mensajes() {
                 value={form.receptorUid}
                 onChange={(e) => setForm({ ...form, receptorUid: e.target.value })}
               >
-                <option value="">— Selecciona un destinatario —</option>
+                <option value="">Selecciona a tu mochila</option>
                 {destinatarios.map((u) => (
                   <option key={u.firebaseuid} value={u.firebaseuid}>
                     {u.nombre} {u.apellido}

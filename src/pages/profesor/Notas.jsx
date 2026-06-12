@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/pages/profesor/notas.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
@@ -10,6 +10,9 @@ import useNotasProfesor from "../../hooks/profesor/useNotas";
 
 function NotasProfesor() {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
   const { evaluaciones, actualizarNota, getTipo, loading, error } = useNotasProfesor(id);
 
   if (loading) {
@@ -36,7 +39,7 @@ function NotasProfesor() {
     <PanelLayout rol="profesor">
       <div className="notas-profesor-container">
         <div className="notas-header">
-          <Titulo level={1}>notas asignatura {id}</Titulo>
+          <Titulo level={1}>notas asignatura {nombreAsignatura}</Titulo>
           <Texto color="muted">edita las calificaciones de las evaluaciones</Texto>
         </div>
 
@@ -84,6 +87,10 @@ function NotasProfesor() {
             </table>
           </div>
         )}
+        {/* BOTÓN VOLVER */}
+        <button onClick={() => navigate(-1)} className="btn-volver">
+           volver
+        </button>
       </div>
     </PanelLayout>
   );
