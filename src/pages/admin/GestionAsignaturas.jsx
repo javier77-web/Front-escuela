@@ -61,6 +61,7 @@ function GestionAsignaturas() {
     setModalAbierto(false);
     setAsignaturaEditando(null);
     setNombre("");
+    setProfesorUid("");
   };
 
   const cerrarModalProfesor = () => {
@@ -81,7 +82,7 @@ function GestionAsignaturas() {
       if (asignaturaEditando) {
         await editarAsignatura(asignaturaEditando.id_asignatura, { nombre });
       } else {
-        await agregarAsignatura({ nombre });
+        await agregarAsignatura({ nombre, profesor_uid: profesorUid || null });
       }
       cerrarModal();
     } catch (err) {

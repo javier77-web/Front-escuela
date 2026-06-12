@@ -28,8 +28,8 @@ function useAsignaturas() {
     staleTime: 5 * 60 * 1000,
   });
 
-  const agregarAsignatura = async ({ nombre, curso_id }) => {
-    await crearAsignatura({ nombre, curso_id });
+  const agregarAsignatura = async ({ nombre, profesor_uid }) => {
+    await crearAsignatura({ nombre, profesor_uid });
     await queryClient.invalidateQueries({ queryKey: ["asignaturas-admin"] });
   };
 
