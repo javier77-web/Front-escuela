@@ -20,8 +20,8 @@ function AsistenciaResumenCard({
 
         <div className="asistencia-detalle">
           {/* typo corregido: classNameO → className */}
-          <Texto className="presentes">{presentes} presentes</Texto>
-          <Texto className="ausentes">{ausentes} ausentes</Texto>
+          <Texto className="presentes">{presentes} Presentes</Texto>
+          <Texto className="ausentes">{ausentes} Ausentes</Texto>
         </div>
 
         <div className="asistencia-badge">

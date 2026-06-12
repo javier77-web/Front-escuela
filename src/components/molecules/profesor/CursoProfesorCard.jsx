@@ -16,7 +16,7 @@ function CursoProfesorCard({ nombre, curso, horario, onGestionar }) {
         {horario}
       </Texto>
 
-      <Boton onClick={onGestionar}>gestionar</Boton>
+      <Boton onClick={onGestionar}>Gestionar</Boton>
     </div>
   );
 }

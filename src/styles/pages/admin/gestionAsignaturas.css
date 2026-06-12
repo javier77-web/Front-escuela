@@ -42,12 +42,61 @@
   background: #e7e3e3;
 }
 
+/* Contenedor principal de la fila */
 .asignaturas-acciones {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
 }
 
+/* Estilo base para todos los botones de la fila */
+.asignaturas-acciones button {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px; /* Bordes redondeados sutiles */
+  border: 1px solid #d1d5db; /* Borde gris claro por defecto */
+  background-color: #ffffff;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+/* 1. Modificar el botón que dice "Editar" */
+.asignaturas-acciones button:contains("Editar"), /* Truco si usas preprocesadores */
+.asignaturas-acciones button:first-child { /* Por posición: el primero */
+  background-color: #ffffff;
+  color: #4f46e5; /* Texto azul/índigo para destacar que es Editar */
+  border-color: #4f46e5;
+}
+.asignaturas-acciones button:first-child:hover {
+   background-color: #273823;
+  border-color: #9ca3af;
+  color: #afec15;
+}
+
+/* 2. Efecto Hover para los del medio (Asignar cursos y Asignar profesor) */
+.asignaturas-acciones button:nth-child(2):hover,
+.asignaturas-acciones button:nth-child(3):hover {
+  background-color: #273823;
+  border-color: #9ca3af;
+  color: #afec15;
+}
+
+/* 3. Modificar el botón que dice "Borrar" (El último de la fila) */
+.asignaturas-acciones button:last-child {
+  background-color: #fee2e2; /* Fondo rojo muy suave */
+  color: #ef4444; /* Texto rojo vibrante */
+  border-color: #fca5a5; /* Borde rojo suave */
+}
+.asignaturas-acciones button:last-child:hover {
+  background-color: #ef4444; /* Rojo sólido al pasar el mouse */
+  color: #ffffff;
+  border-color: #dc2626;
+}
 /* ==========================
    BADGES TABLA
 ========================== */
@@ -97,12 +146,17 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-.asignaturas-modal-acciones {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+/* Esto solo tocará al botón que tenga la clase btn-cancelar */
+.btn-cancelar {
+  background-color: #ef4444 !important; /* El !important por si tu componente <Boton> tiene estilos internos que lo bloqueen */
+  color: #ffffff !important;
+  border: 1px solid #dc2626 !important;
 }
 
+.btn-cancelar:hover {
+  background-color: #dc2626 !important;
+  border-color: #b91c1c !important;
+}
 /* ==========================
    SELECTS
 ========================== */
@@ -153,7 +207,11 @@
   width: 16px;
   height: 16px;
 }
-
+.boton-cancelar{
+  background-color: #ef4444 !important; /* El !important por si tu componente <Boton> tiene estilos internos que lo bloqueen */
+  color: #ffffff !important;
+  border: 1px solid #dc2626 !important;
+}
 /* ==========================
    TAGS CURSOS
 ========================== */
@@ -290,4 +348,9 @@
 
 .asignaturas-curso-item input {
   accent-color: #273823;
+}
+.boton3-cancelar{
+  background-color: #ef4444 !important; /* El !important por si tu componente <Boton> tiene estilos internos que lo bloqueen */
+  color: #ffffff !important;
+  border: 1px solid #dc2626 !important;
 }

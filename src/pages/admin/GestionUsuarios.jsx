@@ -90,9 +90,9 @@ function GestionUsuarios({ tipoUsuario }) {
       <div className="gestion-container">
         {/* HEADER */}
         <div className="gestion-header">
-          <Titulo level={1}>Gestión de {tipoUsuario}s</Titulo>
+          <Titulo level={1}>Gestión de {tipoUsuario}</Titulo>
           <Boton onClick={() => setModalAbierto(true)}>
-            nuevo {tipoUsuario}
+            Nuevo {tipoUsuario}
           </Boton>
         </div>
 
@@ -115,7 +115,7 @@ function GestionUsuarios({ tipoUsuario }) {
               <tbody>
                 {usuarios.length === 0 ? (
                   <tr>
-                    <td colSpan={4}>No hay {tipoUsuario}s registrados</td>
+                    <td colSpan={4}>No hay {tipoUsuario} registrados</td>
                   </tr>
                 ) : (
                   usuarios.map((usuario) => (

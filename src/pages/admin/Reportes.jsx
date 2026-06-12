@@ -25,13 +25,13 @@ function Reportes() {
           <ReporteCard
             titulo="total alumnos"
             valor={String(totalAlumnos)}
-            descripcion="alumnos registrados en el sistema"
+            descripcion="Alumnos registrados en el sistema actualmente"
             color="verde"
           />
           <ReporteCard
             titulo="total profesores"
             valor={String(totalProfesores)}
-            descripcion="profesores activos actualmente"
+            descripcion="Nuestros profesores activos actualmente"
             color="azul"
           />
         </div>

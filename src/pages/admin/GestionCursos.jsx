@@ -52,7 +52,7 @@ function GestionCursos() {
         {/* HEADER */}
         <div className="gestion-cursos-header">
           <Titulo level={1}>Gestión de Cursos</Titulo>
-          <Boton onClick={abrirModalNuevo}>nuevo curso</Boton>
+          <Boton onClick={abrirModalNuevo}>Nuevo curso</Boton>
         </div>
 
         {/* ESTADOS */}
@@ -81,16 +81,16 @@ function GestionCursos() {
                       <td>
                         <div className="cursos-acciones">
                           <Boton
-                            variant="secondary"
+                            className="boton-editar"
                             onClick={() => abrirModalEditar(curso)}
                           >
-                            editar
+                            Editar
                           </Boton>
                           <Boton
-                            variant="danger"
+                            className="boton-cancelar"
                             onClick={() => borrarCurso(curso.id_curso)}
                           >
-                            borrar
+                            Borrar
                           </Boton>
                         </div>
                       </td>
@@ -111,16 +111,16 @@ function GestionCursos() {
               </Titulo>
               <Input
                 type="text"
-                placeholder="ej: 5 A  o  1ero medio A"
+                placeholder="ej: 1ero basico/4to medio"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
               />
               <div className="modal-acciones">
                 <Boton onClick={manejarEnvio}>
-                  {cursoEditando ? "guardar cambios" : "crear curso"}
+                  {cursoEditando ? "Guardar cambios" : "Crear curso"}
                 </Boton>
-                <Boton variant="secondary" onClick={cerrarModal}>
-                  cancelar
+                <Boton className="boton-cancelar" onClick={cerrarModal}>
+                  Cancelar
                 </Boton>
               </div>
             </div>
