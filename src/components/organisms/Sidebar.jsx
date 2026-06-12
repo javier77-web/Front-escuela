@@ -44,11 +44,12 @@ function Sidebar({ rol }) {
     navigate("/");
   };
 
-  const links = NavPorRol[rol] ?? [];
+  const rolNormalizado = rol?.toLowerCase();
+  const links = NavPorRol[rolNormalizado] ?? [];
   return (
     <div className="sidebar">
       {/* titulo con el rol actual */}
-      <h2>{rol}</h2>
+      <h2>{rolNormalizado}</h2>
 
       <nav>
         {/* inicio del panel */}
