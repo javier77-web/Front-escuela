@@ -39,7 +39,7 @@ function GestionUsuarios({ tipoUsuario }) {
     resetForm,
     setValores,
   } = useFormulario(
-    { nombre: "", apellido: "", email: "", rol: tipoUsuario },
+    { nombre: "", apellido: "", email: "", rol: tipoUsuario, cursoId: "" },
     (valores) => validarUsuario(valores, !!usuarioEditando),
   );
 
