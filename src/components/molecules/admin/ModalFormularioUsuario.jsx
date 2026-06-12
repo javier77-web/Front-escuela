@@ -25,13 +25,13 @@ function ModalFormularioUsuario({
 
         {contrasenaGenerada ? (
           <div className="modal-contrasena">
-            <Texto>usuario creado exitosamente</Texto>
-            <Texto size="sm">contraseña temporal:</Texto>
+            <Texto>Usuario creado exitosamente</Texto>
+            <Texto size="sm">Contraseña temporal:</Texto>
             <Texto className="contrasena-valor">{contrasenaGenerada}</Texto>
             <Texto size="sm" color="muted">
-              copia esta contraseña y entrégasela al usuario
+              Copia esta contraseña y entrégasela al usuario
             </Texto>
-            <Boton onClick={cerrarModal}>cerrar</Boton>
+            <Boton onClick={cerrarModal}>Cerrar</Boton>
           </div>
         ) : (
           <form onSubmit={manejarEnvio} className="modal-formulario">
@@ -66,14 +66,14 @@ function ModalFormularioUsuario({
             {/* selector de curso solo para alumnos en modo edición */}
             {modoEdicion && tipoUsuario === "alumno" && (
               <div className="modal-campo">
-                <label className="modal-label">curso</label>
+                <label className="modal-label">Curso</label>
                 <select
                   name="cursoId"
                   value={valores.cursoId ?? ""}
                   onChange={manejarCambio}
                   className="modal-select"
                 >
-                  <option value="">sin curso</option>
+                  <option value="">Sin curso</option>
                   {cursos.map((curso) => (
                     <option key={curso.id_curso} value={curso.id_curso}>
                       {curso.nombre}
@@ -84,11 +84,11 @@ function ModalFormularioUsuario({
             )}
 
             <div className="modal-botones">
-              <Boton type="button" variant="secondary" onClick={cerrarModal}>
-                cancelar
-              </Boton>
+             <Boton type="button" variant="secondary" className="btn-modal-cancelar" onClick={cerrarModal}>
+               Cancelar
+             </Boton>
               <Boton type="submit">
-                {modoEdicion ? "guardar cambios" : "crear usuario"}
+                {modoEdicion ? "Guardar cambios" : "Crear usuario"}
               </Boton>
             </div>
           </form>

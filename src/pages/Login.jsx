@@ -57,7 +57,7 @@ function Login() {
           />
 
           {authLoading ? (
-            <Spinner texto="ingresando..." />
+            <Spinner texto="Ingresando..." />
           ) : (
             <Boton type="submit" variant="primary">
               Ingresar

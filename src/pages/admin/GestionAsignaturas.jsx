@@ -134,7 +134,7 @@ function GestionAsignaturas() {
         {/* HEADER */}
         <div className="gestion-asignaturas-header">
           <Titulo level={1}>Gestión de Asignaturas</Titulo>
-          <Boton onClick={abrirModalNuevo}>nueva asignatura</Boton>
+          <Boton onClick={abrirModalNuevo}>Nueva asignatura</Boton>
         </div>
 
         {/* ESTADOS */}
@@ -178,19 +178,19 @@ function GestionAsignaturas() {
                             variant="secondary"
                             onClick={() => abrirModalEditar(asignatura)}
                           >
-                            editar
+                            Editar
                           </Boton>
                           <Boton
                             variant="secondary"
                             onClick={() => abrirModalCursos(asignatura)}
                           >
-                            asignar cursos
+                            Asignar cursos
                           </Boton>
                           <Boton
                             variant="secondary"
                             onClick={() => abrirModalProfesor(asignatura)}
                           >
-                            asignar profesor
+                            Asignar profesor
                           </Boton>
                           <Boton
                             variant="danger"
@@ -198,7 +198,7 @@ function GestionAsignaturas() {
                               borrarAsignatura(asignatura.id_asignatura)
                             }
                           >
-                            borrar
+                            Borrar
                           </Boton>
                         </div>
                       </td>
@@ -221,7 +221,7 @@ function GestionAsignaturas() {
               {/* Campo nombre */}
               <Input
                 type="text"
-                placeholder="nombre de la asignatura"
+                placeholder="Nombre de la asignatura"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
               />
@@ -242,10 +242,10 @@ function GestionAsignaturas() {
 
               <div className="asignaturas-modal-acciones">
                 <Boton onClick={manejarEnvio}>
-                  {asignaturaEditando ? "guardar cambios" : "crear asignatura"}
+                  {asignaturaEditando ? "Guardar cambios" : "Crear asignatura"}
                 </Boton>
-                <Boton variant="secondary" onClick={cerrarModal}>
-                  cancelar
+                <Boton className="btn-cancelar" onClick={cerrarModal}>
+                  Cancelar
                 </Boton>
               </div>
             </div>
@@ -256,7 +256,7 @@ function GestionAsignaturas() {
         {modalCursosAbierto && (
           <div className="asignaturas-modal-overlay">
             <div className="asignaturas-modal-contenido">
-              <Titulo level={2}>asignar cursos</Titulo>
+              <Titulo level={2}>Asignar cursos</Titulo>
               <p>{asignaturaSeleccionada?.nombre}</p>
               <div
                 style={{
@@ -290,10 +290,11 @@ function GestionAsignaturas() {
                 </div>
               </div>
               <div className="modal-acciones">
-                <Boton onClick={manejarAsignarCursos}>asignar</Boton>
-                <Boton variant="secondary" onClick={cerrarModalCursos}>
-                  cancelar
+                <Boton onClick={manejarAsignarCursos}>Asignar</Boton>
+                  <Boton className="boton-cancelar" onClick={cerrarModalCursos}>
+                  Cancelar
                 </Boton>
+                
               </div>
             </div>
           </div>
@@ -339,7 +340,7 @@ function GestionAsignaturas() {
               <div className="asignaturas-modal-acciones">
                 <Boton onClick={manejarAsignarProfesor}>Asignar Profesor</Boton>
 
-                <Boton variant="secondary" onClick={cerrarModalProfesor}>
+                <Boton className="boton3-cancelar" onClick={cerrarModalProfesor}>
                   Cancelar
                 </Boton>
               </div>
