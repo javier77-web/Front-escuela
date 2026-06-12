@@ -22,3 +22,6 @@ export const eliminarAsignatura = (id) =>
 // Asignar varios cursos a una asignatura
 export const asignarCursosAsignatura = (id, cursoIds) =>
     api.put(`/api/academica/asignaturas/${id}/cursos`, { cursoIds });
+
+export const getAsignaturasProfesor = (uid) =>
+  api.get(`/api/academica/asignaturas/profesor/${uid}`);
