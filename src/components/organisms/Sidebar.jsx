@@ -15,6 +15,7 @@ const NavPorRol = {
     { label: "Notas", ruta: "/alumno/notas" },
     { label: "Asistencia", ruta: "/alumno/asistencia" },
     { label: "Anotaciones", ruta: "/alumno/anotaciones" },
+    { label: "Mensajes",        ruta: "/mensajes" },
   ],
   admin: [
     { label: "Panel", ruta: "/panel/admin" },
@@ -23,10 +24,12 @@ const NavPorRol = {
     { label: "Cursos", ruta: "/admin/cursos" },
     { label: "Asignaturas", ruta: "/admin/asignaturas" },
     { label: "Reportes", ruta: "/admin/reportes" },
+    { label: "Mensajes",     ruta: "/mensajes" },
   ],
   profesor: [
     { label: "Panel", ruta: "/panel/profesor" },
     { label: "Mis Cursos", ruta: "/profesor/cursos" },
+    { label: "Mensajes",   ruta: "/mensajes" },
   ],
 };
 
