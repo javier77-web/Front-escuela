@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/pages/profesor/asistencia.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
@@ -10,6 +10,9 @@ import useAsistencia from "../../hooks/profesor/useAsistencia";
 
 function AsistenciaProfesor() {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
 
   const {
     lista,
@@ -31,7 +34,7 @@ function AsistenciaProfesor() {
       <div className="asistencia-profesor-container">
         <div className="asistencia-header">
           <div>
-            <Titulo level={1}>asistencia asignatura {id}</Titulo>
+            <Titulo level={1}>asistencia asignatura {nombreAsignatura}</Titulo>
             <Texto color="muted">selecciona fecha y marca asistencia</Texto>
             <input
               type="date"
@@ -50,7 +53,9 @@ function AsistenciaProfesor() {
         {loading ? (
           <Texto>cargando...</Texto>
         ) : lista.length === 0 ? (
-          <Texto color="muted">no hay alumnos registrados para este curso</Texto>
+          <Texto color="muted">
+            no hay alumnos registrados para este curso
+          </Texto>
         ) : (
           <>
             {yaFuePasada && (
@@ -82,6 +87,10 @@ function AsistenciaProfesor() {
             )}
           </div>
         )}
+        {/* BOTÓN VOLVER */}
+        <button onClick={() => navigate(-1)} className="btn-volver">
+           volver
+        </button>
       </div>
     </PanelLayout>
   );

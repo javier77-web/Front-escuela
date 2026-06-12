@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/pages/profesor/anotaciones.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
@@ -18,6 +18,8 @@ function AnotacionesProfesor() {
   const { anotaciones, agregarAnotacion, guardando, error } = useAnotaciones(id);
 
   const location = useLocation();
+  const navigate = useNavigate();
+  const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
   const cursoId = location.state?.cursoId;
   const { alumnos, loading: cargandoAlumnos } = useUsuariosCurso(cursoId);
   const [form, setForm] = useState({
@@ -46,7 +48,7 @@ function AnotacionesProfesor() {
     <PanelLayout rol="profesor">
       <div className="anotaciones-profesor-container">
         <div className="anotaciones-header">
-          <Titulo level={1}>anotaciones asignatura {id}</Titulo>
+          <Titulo level={1}>anotaciones asignatura {nombreAsignatura}</Titulo>
         </div>
 
         {/* formulario de anotaciones */}
@@ -109,6 +111,10 @@ function AnotacionesProfesor() {
             ))
           )}
         </div>
+        {/* BOTÓN VOLVER */}
+        <button onClick={() => navigate(-1)} className="btn-volver">
+           volver
+        </button>
       </div>
     </PanelLayout>
   );

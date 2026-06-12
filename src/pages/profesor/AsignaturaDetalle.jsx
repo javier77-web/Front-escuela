@@ -37,17 +37,35 @@ function AsignaturaDetalle() {
 
           <AccionCursoCard
             texto="notas"
-            onClick={() => navigate(`/profesor/${id}/notas`)}
+            onClick={() => 
+              navigate(`/profesor/${id}/notas` , {
+                state: {
+                nombre: asignatura?.nombre,
+                curso: asignatura?.curso,
+              },
+            })}
           />
 
           <AccionCursoCard
             texto="anotaciones"
-            onClick={() => navigate(`/profesor/${id}/anotaciones`)}
+            onClick={() => 
+              navigate(`/profesor/${id}/anotaciones` , {
+                 state: {
+                  nombre: asignatura?.nombre,
+                  curso: asignatura?.curso,
+                },
+              })}
           />
 
           <AccionCursoCard
             texto="evaluaciones"
-            onClick={() => navigate(`/profesor/${id}/evaluaciones`)}
+            onClick={() => 
+              navigate(`/profesor/${id}/evaluaciones` , {
+                state: {
+                  nombre: asignatura?.nombre,
+                  curso: asignatura?.curso,
+                },
+              })}
           />
         </div>
       </div>
