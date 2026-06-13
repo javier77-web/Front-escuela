@@ -37,8 +37,9 @@ function useEvaluacionesProfesor(idAsignatura) {
       // refresca la lista de evaluaciones
       await queryClient.invalidateQueries({ queryKey: ["evaluaciones", idAsignatura] });
     } catch (err) {
-      setError("No se pudo crear la evaluación.");
-      console.error(err.response?.data ?? err.message);
+      const mensaje = err.response?.data?.message ?? err.response?.data ?? "No se pudo crear la evaluación.";
+      setError(String(mensaje));
+      alert(`Error: ${String(mensaje)}`);
     }
   };
 
