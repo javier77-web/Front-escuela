@@ -5,7 +5,7 @@ import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
 import useCursos from "../../hooks/admin/useCursos";
 import useFormulario from "../../hooks/useFormulario";
-import { validarCurso } from "../../hooks/validaciones/validarCursos";
+import { validarCurso } from "../../hooks/validaciones/validarCurso";
 import "../../styles/pages/admin/gestionCursos.css";
 import "../../styles/pages/admin/gestionUsuarios.css";
 
