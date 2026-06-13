@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -12,15 +12,16 @@ function useAsistencia(idAsignatura) {
   const location = useLocation();
   const cursoId = location.state?.cursoId;
 
-  const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
+  const [fecha, setFechaState] = useState(new Date().toISOString().split("T")[0]);
   const [guardado, setGuardado] = useState(false);
   const [listaLocal, setListaLocal] = useState([]);
 
   // Limpiar estado local cada vez que cambia la fecha
-  useEffect(() => {
+  const setFecha = (nuevaFecha) => {
+    setFechaState(nuevaFecha);
     setListaLocal([]);
     setGuardado(false);
-  }, [fecha]);
+  };
 
   const { data: lista = [], isLoading: loading } = useQuery({
     queryKey: ["asistencia-clase", idAsignatura, fecha],

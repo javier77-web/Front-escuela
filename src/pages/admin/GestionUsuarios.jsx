@@ -52,14 +52,11 @@ function GestionUsuarios({ tipoUsuario }) {
 
   // crear o editar según el modo
   const manejarEnvio = manejarSubmit(async () => {
-    console.log("1. callback ejecutado");
-    console.log("2. usuarioEditando:", usuarioEditando);
-    console.log("3. valores:", valores);
     try {
       if (usuarioEditando) {
-        console.log("4. llamando actualizarUsuario");
+        console.log("llamando actualizarUsuario");
         await actualizarUsuario(usuarioEditando.firebaseuid, valores);
-        console.log("5. actualizado ok");
+        console.log("actualizado ok");
         cerrarModal();
       } else {
         const resultado = await crearUsuario({ ...valores });

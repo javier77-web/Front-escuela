@@ -51,7 +51,8 @@
 .cursos-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,16 +64,23 @@
   border-radius: 20px;
   padding: 30px;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .cursos-modal-acciones {
   display: flex;
   gap: 10px;
   margin-top: 10px;
+}
+
+.cursos-error-servidor {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin: -6px 0 0;
 }
 
 .cursos-modal-hint {
@@ -84,4 +92,40 @@
   background-color: #273823;
   border-color: #9ca3af;
   color: #afec15;
+}
+
+
+.boton-nuevo {
+  background-color: #273823 !important;
+  color: #afec15 !important;
+  border: 1px solid #273823 !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  padding: 10px 20px !important;
+  transition: all 0.2s ease-in-out;
+}
+
+
+.cursos-modal-acciones .btn-atom.primary {
+  background-color: #273823 !important;
+  color: #afec15 !important;
+  border: 1px solid #273823 !important;
+}
+
+.cursos-modal-acciones .btn-atom.primary:hover {
+  background-color: #afec15 !important;
+  color: #273823 !important;
+}
+
+
+.boton-cancelar {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+  border: 1px solid #dc2626 !important;
+  border-radius: 6px !important;
+}
+
+.boton-cancelar:hover {
+  background-color: #dc2626 !important;
+  border-color: #b91c1c !important;
 }

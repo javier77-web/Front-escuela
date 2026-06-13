@@ -4,18 +4,24 @@ import "../../styles/pages/profesor/notas.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
-import Badge from "../../components/atoms/Badge";
 import Spinner from "../../components/atoms/Spinner";
+import EvaluacionConNotas from "../../components/molecules/profesor/EvaluacionConNotas";
 import useNotasProfesor from "../../hooks/profesor/useNotas";
+import useUsuariosCurso from "../../hooks/useUsuariosCurso";
 
 function NotasProfesor() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
-  const { evaluaciones, actualizarNota, getTipo, loading, error } = useNotasProfesor(id);
+  const cursoNombre = location.state?.curso;
+  const cursoId = location.state?.cursoId;
 
-  if (loading) {
+  const { evaluaciones, getTipo, loading, error } = useNotasProfesor(id);
+  const { alumnos, loading: cargandoAlumnos, error: errorAlumnos } =
+    useUsuariosCurso(cursoId);
+
+  if (loading || cargandoAlumnos) {
     return (
       <PanelLayout rol="profesor">
         <div className="notas-profesor-container">
@@ -25,11 +31,11 @@ function NotasProfesor() {
     );
   }
 
-  if (error) {
+  if (error || errorAlumnos) {
     return (
       <PanelLayout rol="profesor">
         <div className="notas-profesor-container">
-          <Texto color="danger">{error}</Texto>
+          <Texto color="danger">{error ?? errorAlumnos}</Texto>
         </div>
       </PanelLayout>
     );
@@ -39,57 +45,30 @@ function NotasProfesor() {
     <PanelLayout rol="profesor">
       <div className="notas-profesor-container">
         <div className="notas-header">
-          <Titulo level={1}>notas asignatura {nombreAsignatura}</Titulo>
-          <Texto color="muted">edita las calificaciones de las evaluaciones</Texto>
+          <Titulo level={1}>
+            notas {nombreAsignatura}
+            {cursoNombre ? ` - ${cursoNombre}` : ""}
+          </Titulo>
+          <Texto color="muted">selecciona una evaluación para poner notas</Texto>
         </div>
 
         {evaluaciones.length === 0 ? (
-          <Texto color="muted">no hay evaluaciones con notas registradas</Texto>
+          <Texto color="muted">no hay evaluaciones registradas aún</Texto>
         ) : (
-          <div className="tabla-wrapper">
-            <table className="tabla-notas">
-              <thead>
-                <tr>
-                  <th>evaluación</th>
-                  <th>tipo</th>
-                  <th>fecha</th>
-                  <th>nota</th>
-                </tr>
-              </thead>
-              <tbody>
-                {evaluaciones.map((e) => {
-                  const idEval = e.id_evaluacion ?? e.id;
-                  const nota = parseFloat(e.nota) || 0;
-                  return (
-                    <tr key={idEval} className="nota-row nota-row--editable">
-                      <td><Texto>{e.titulo}</Texto></td>
-                      <td><Texto>{e.tipo}</Texto></td>
-                      <td><Texto>{e.fecha}</Texto></td>
-                      <td>
-                        <input
-                          type="number"
-                          min="1"
-                          max="7"
-                          step="0.1"
-                          defaultValue={nota.toFixed(1)}
-                          className="input-atom"
-                          onBlur={(ev) => {
-                            const nuevo = parseFloat(ev.target.value);
-                            if (!isNaN(nuevo)) actualizarNota(idEval, nuevo);
-                          }}
-                        />
-                        <Badge texto={nota.toFixed(1)} tipo={getTipo(nota)} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div className="lista-evaluaciones-notas">
+            {evaluaciones.map((e) => (
+              <EvaluacionConNotas
+                key={e.id_evaluacion ?? e.id}
+                evaluacion={e}
+                alumnos={alumnos}
+                getTipo={getTipo}
+              />
+            ))}
           </div>
         )}
-        {/* BOTÓN VOLVER */}
+
         <button onClick={() => navigate(-1)} className="btn-volver">
-           volver
+          volver
         </button>
       </div>
     </PanelLayout>

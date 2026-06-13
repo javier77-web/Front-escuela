@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
 import { getUsuarios } from "../../api/gestionUsuario/usuariosApi";
 
-function useReportes() {
+function useReportes(habilitado = true) {
   const { user } = useContext(AuthContext);
 
   const {
@@ -16,7 +16,7 @@ function useReportes() {
       const { data } = await getUsuarios();
       return data;
     },
-    enabled: !!user,
+    enabled: !!user && habilitado,
     staleTime: 5 * 60 * 1000,
   });
 

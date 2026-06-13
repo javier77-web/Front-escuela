@@ -23,7 +23,6 @@ const NavPorRol = {
     { label: "Profesores", ruta: "/admin/profesores" },
     { label: "Cursos", ruta: "/admin/cursos" },
     { label: "Asignaturas", ruta: "/admin/asignaturas" },
-    { label: "Reportes", ruta: "/admin/reportes" },
     { label: "Mensajes", ruta: "/mensajes" },
   ],
   profesor: [

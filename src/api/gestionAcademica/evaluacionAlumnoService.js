@@ -6,7 +6,7 @@ export const getEvaluacionAlumnoPorId = (id) =>
 
 // Crear relación evaluación-alumno
 export const crearEvaluacionAlumno = (data) =>
-    api.post("/api/academica/evaluacionalumnos", data);
+    api.post("/api/academica/evaluacionalumnos/", data);
 
 // Eliminar relación evaluación-alumno
 export const eliminarEvaluacionAlumno = (id) =>

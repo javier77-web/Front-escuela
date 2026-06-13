@@ -5,7 +5,7 @@ import Titulo from "../../atoms/Titulo";
 import Texto from "../../atoms/Texto";
 import Badge from "../../atoms/Badge";
 
-function EvaluacionAlumnoCard({ evaluacion_id, firebaseuid, nota, getTipoBadge }) {
+function EvaluacionAlumnoCard({ evaluacion_id, firebaseuid, nota }) {
     return (
         <div className="evaluacion-card">
             {/* Header con título y badge */}

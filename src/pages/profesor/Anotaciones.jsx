@@ -15,13 +15,15 @@ const getTipoBadge = (tipo) => (tipo === "positiva" ? "success" : "danger");
 
 function AnotacionesProfesor() {
   const { id } = useParams();
-  const { anotaciones, agregarAnotacion, guardando, error } = useAnotaciones(id);
-
   const location = useLocation();
   const navigate = useNavigate();
   const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
   const cursoId = location.state?.cursoId;
+
   const { alumnos, loading: cargandoAlumnos } = useUsuariosCurso(cursoId);
+  const { anotaciones, agregarAnotacion, guardando, error, loading: cargandoAnotaciones } =
+    useAnotaciones(alumnos);
+
   const [form, setForm] = useState({
     alumno: "",
     tipo: "positiva",
@@ -95,7 +97,9 @@ function AnotacionesProfesor() {
 
         {/* lista anotaciones */}
         <div className="lista-anotaciones">
-          {anotaciones.length === 0 ? (
+          {cargandoAnotaciones ? (
+            <Spinner texto="cargando anotaciones..." />
+          ) : anotaciones.length === 0 ? (
             <Texto color="muted">no hay anotaciones registradas aún</Texto>
           ) : (
             anotaciones.map((a) => (
@@ -103,7 +107,7 @@ function AnotacionesProfesor() {
                 key={a.id ?? a.id_anotacion}
                 vista="profesor"
                 tipo={a.tipo}
-                alumno={a.alumno ?? a.usuario_receptor}
+                alumno={a.alumnoNombre}
                 descripcion={a.descripcion}
                 fecha={a.fecha}
                 getTipoBadge={getTipoBadge}
@@ -111,9 +115,9 @@ function AnotacionesProfesor() {
             ))
           )}
         </div>
-        {/* BOTÓN VOLVER */}
+
         <button onClick={() => navigate(-1)} className="btn-volver">
-           volver
+          volver
         </button>
       </div>
     </PanelLayout>

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
 import { getNotasAlumno } from "../../api/gestionAcademica/evaluacionAlumnoService";
 
-function useNotasAlumno() {
+function useNotasAlumno(habilitado = true) {
   const { user } = useContext(AuthContext);
 
   const {
@@ -42,7 +42,7 @@ function useNotasAlumno() {
             : 0,
       }));
     },
-    enabled: !!user,
+    enabled: !!user && habilitado,
     staleTime: 5 * 60 * 1000,
   });
 

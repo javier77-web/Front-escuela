@@ -37,7 +37,7 @@ function Cursos() {
         {/* HEADER */}
         <div className="cursos-header">
           <div>
-            <Titulo level={1}>Mis cursos</Titulo>
+            <Titulo level={1}>Mis Asignaturas</Titulo>
             <Texto color="muted">
               {cursos.length > 0
                 ? `Tienes ${cursos.length} ramos este semestre`

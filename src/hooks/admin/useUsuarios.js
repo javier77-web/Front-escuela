@@ -54,7 +54,7 @@ function useUsuarios(tipoUsuario) {
   const actualizarUsuario = async (firebaseuid, { nombre, apellido, rol, cursoId }) => {
     const rolesMap = { alumno: 5, profesor: 6, admin: 7 };
     const idRol = rolesMap[rol?.toLowerCase()] ?? 5;
-    console.log("Enviando:", { nombre, apellido, idRol, cursoId }); 
+    console.log("Enviando:"); 
     await updateUsuario(firebaseuid, { nombre, apellido, idRol, cursoId });
     await queryClient.invalidateQueries({ queryKey: ["usuarios", tipoUsuario] });
   };
