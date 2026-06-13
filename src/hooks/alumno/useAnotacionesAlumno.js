@@ -8,18 +8,23 @@ function useAnotacionesAlumno() {
   const [filtro, setFiltro] = useState("todas");
 
   const {
-    data: anotaciones = [],
-    isLoading: loading,
-    isError,
-  } = useQuery({
-    queryKey: ["anotaciones", user?.uid],
-    queryFn: async () => {
-      const { data } = await getAnotacionesPorUsuario(user.uid);
-      return Array.isArray(data) ? data : [];
-    },
-    enabled: !!user,
-    staleTime: 5 * 60 * 1000,
-  });
+  data: anotaciones = [],
+  isLoading: loading,
+  isError,
+} = useQuery({
+  queryKey: ["anotaciones", user?.uid],
+  queryFn: async () => {
+    const { data } = await getAnotacionesPorUsuario(user.uid);
+    const lista = Array.isArray(data) ? data : [];
+    // normaliza boolean -> string para mantener consistencia con el resto de la UI
+    return lista.map((a) => ({
+      ...a,
+      tipo: a.tipo === true || a.tipo === "true" ? "positiva" : "negativa",
+    }));
+  },
+  enabled: !!user,
+  staleTime: 5 * 60 * 1000,
+});
 
   // filtrado
   const filtradas = useMemo(() => {

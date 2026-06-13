@@ -4,7 +4,7 @@ import { AuthContext } from "../../auth/AuthContext";
 import { getAsistenciasUsuario } from "../../api/gestionUsuario/asistenciaService";
 import { getAsignaturaPorId } from "../../api/gestionAcademica/asignaturaService";
 
-function useAsistenciaAlumno() {
+function useAsistenciaAlumno(habilitado = true) {
   const { user } = useContext(AuthContext);
 
   const {
@@ -64,7 +64,7 @@ function useAsistenciaAlumno() {
 
       return { lista, promedioGlobal };
     },
-    enabled: !!user,
+    enabled: !!user && habilitado,
     staleTime: 5 * 60 * 1000,
   });
 

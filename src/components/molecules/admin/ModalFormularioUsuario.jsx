@@ -84,11 +84,11 @@ function ModalFormularioUsuario({
             )}
 
             <div className="modal-botones">
-             <Boton type="button" variant="secondary" className="btn-modal-cancelar" onClick={cerrarModal}>
-               Cancelar
-             </Boton>
               <Boton type="submit">
                 {modoEdicion ? "Guardar cambios" : "Crear usuario"}
+              </Boton>
+              <Boton type="button" variant="secondary" className="btn-modal-cancelar" onClick={cerrarModal}>
+                Cancelar
               </Boton>
             </div>
           </form>

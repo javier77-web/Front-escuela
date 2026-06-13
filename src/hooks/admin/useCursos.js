@@ -8,7 +8,7 @@ import {
   eliminarCurso,
 } from "../../api/gestionAcademica/cursoService";
 
-function useCursos() {
+function useCursos(habilitado = true) {
   const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
 
@@ -22,7 +22,7 @@ function useCursos() {
       const { data } = await getCursos();
       return Array.isArray(data) ? data : [];
     },
-    enabled: !!user,
+    enabled: !!user && habilitado,
     staleTime: 5 * 60 * 1000,
   });
 

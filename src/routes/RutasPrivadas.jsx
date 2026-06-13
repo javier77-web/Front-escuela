@@ -47,7 +47,6 @@ function RutasPrivadas() {
       <Route path="/admin/profesores"   element={<RutaProtegida rolRequerido="admin"><GestionUsuarios tipoUsuario="profesor" /></RutaProtegida>} />
       <Route path="/admin/cursos"       element={<RutaProtegida rolRequerido="admin"><GestionCursos /></RutaProtegida>} />
       <Route path="/admin/asignaturas"  element={<RutaProtegida rolRequerido="admin"><GestionAsignaturas /></RutaProtegida>} />
-      <Route path="/admin/reportes"     element={<RutaProtegida rolRequerido="admin"><Reportes /></RutaProtegida>} />
 
       {/* Profesor */}
       <Route path="/profesor/cursos"                   element={<RutaProtegida rolRequerido="profesor"><CursosProfesor /></RutaProtegida>} />

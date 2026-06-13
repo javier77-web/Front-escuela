@@ -6,7 +6,7 @@ import { getAsignaturasPorCurso } from "../../api/gestionAcademica/asignaturaSer
 // Carga todas las asignaturas disponibles para el alumno.
 // Si el backend expone un endpoint filtrado por alumno en el futuro,
 // reemplazar getAsignaturas() por ese llamado.
-function useCursosAlumno() {
+function useCursosAlumno(habilitado=true) {
   const { perfil } = useContext(AuthContext);
   const {data: cursos = [],isLoading: loading,isError,} 
   = useQuery({
@@ -16,7 +16,7 @@ function useCursosAlumno() {
 
       return Array.isArray(data) ? data : [];
     },
-    enabled: !!perfil?.cursoId,
+    enabled: !!perfil?.cursoId && habilitado,
     staleTime: 5 * 60 * 1000,
   });
 

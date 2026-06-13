@@ -1,34 +1,22 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { getPorEvaluacion } from "../../api/gestionAcademica/evaluacionAlumnoService";
 
-function useEvaluacionAlumnos(evaluacionId) {
-    const [alumnos, setAlumnos] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        if (!evaluacionId) return;
-
-        const fetchAlumnos = async () => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const res = await axios.get(
-                    `http://localhost:8082/api/evaluacion_alumno/${evaluacionId}`
-                );
-                setAlumnos(res.data);
-            } catch (err) {
-                setError("Error al cargar alumnos de la evaluación");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAlumnos();
-    }, [evaluacionId]);
-
-    return { alumnos, loading, error };
+function useEvaluacionAlumnos(evaluacionId){
+    const {
+        data: alumnos = [],
+        isLoading: loading,
+        isError,
+    } = useQuery({
+        queryKey: ["evaluacion-alumnos", evaluacionId],
+        queryFn: async() => {
+            const {data} = await getPorEvaluacion(evaluacionId);
+            return Array.isArray(data) ? data : [];
+        },
+        enabled: !!evaluacionId,
+        staleTime: 5 * 60 * 1000,
+    });
+    const error = isError ? "Error al cargar alumnos de la evaluación." : null;
+    return { alumnos, loading, error }
 }
 
 export default useEvaluacionAlumnos;
