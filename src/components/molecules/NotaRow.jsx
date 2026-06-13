@@ -11,6 +11,7 @@ function NotaRow({
   editable = false,
   onCambiarNota,
   getTipo,
+  maxNotas = 0,
 }) {
   const promedio =
     notas.length > 0
@@ -40,6 +41,11 @@ function NotaRow({
             <Badge texto={nota.toFixed(1)} tipo={getTipo(nota)} />
           )}
         </td>
+      ))}
+
+       {/* Celdas vacías para alinear columnas */}
+      {Array.from({ length: maxNotas - notas.length }, (_, i) => (
+        <td key={`empty-${i}`} />
       ))}
 
       {/* Promedio */}
