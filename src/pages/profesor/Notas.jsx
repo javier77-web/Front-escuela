@@ -46,14 +46,14 @@ function NotasProfesor() {
       <div className="notas-profesor-container">
         <div className="notas-header">
           <Titulo level={1}>
-            notas {nombreAsignatura}
+            Notas {nombreAsignatura}
             {cursoNombre ? ` - ${cursoNombre}` : ""}
           </Titulo>
-          <Texto color="muted">selecciona una evaluación para poner notas</Texto>
+          <Texto color="muted">Seleccione una evaluación para poner notas</Texto>
         </div>
 
         {evaluaciones.length === 0 ? (
-          <Texto color="muted">no hay evaluaciones registradas aún</Texto>
+          <Texto color="muted">No hay evaluaciones registradas aún</Texto>
         ) : (
           <div className="lista-evaluaciones-notas">
             {evaluaciones.map((e) => (
@@ -68,7 +68,7 @@ function NotasProfesor() {
         )}
 
         <button onClick={() => navigate(-1)} className="btn-volver">
-          volver
+          Volver
         </button>
       </div>
     </PanelLayout>

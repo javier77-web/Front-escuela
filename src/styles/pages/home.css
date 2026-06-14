@@ -7,13 +7,17 @@
   color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
+  justify-content: space-between; /* 🔥 AGREGADO: Empuja texto a la izq y foto a la der */
   padding: 0 60px;
   overflow: hidden;
+  gap: 40px;                      /* 🔥 AGREGADO: Espacio de separación entre ambos */
 }
+
 /* contenido */
 .hero-contenido {
   z-index: 2;
   max-width: 500px;
+  flex: 0 0 45%; /* 🔥 AGREGADO: Le asegura su espacio fijo al texto */
   animation: fadeIn 1.2s ease;
 }
 
@@ -40,6 +44,7 @@
 html {
   scroll-behavior: smooth;
 }
+
 /* forma diagonal */
 .hero-forma {
   position: absolute;
@@ -89,5 +94,47 @@ html {
   }
   to {
     transform: translateX(0);
+  }
+}
+
+/* imagen grande de la portada */
+
+
+.hero-imagen-container {
+  z-index: 2;
+  flex: 0 0 40%; /* Ocupa la mitad del espacio de la pantalla */
+  display: flex;
+  justify-content: flex-end; /* Alinea totalmente a la derecha */
+  animation: fadeIn 1.5s ease; /* Aplica tu animación suave también a la foto */
+}
+
+/* La tarjeta blanca con tu foto WebP */
+.hero-imagen {
+  color: #afec15;
+  padding: 16px; /* El marco blanco de la maqueta */
+  border-radius: 16px; /* Esquinas redondeadas */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+  border: 1px solid #e2e8f0;
+  
+  width: 100%;
+  max-width: 620px; /* Tamaño grande e imponente para la fachada */
+  height: auto;
+  object-fit: cover;
+}
+
+/* Ajuste responsivo para celulares (para que no se rompa de lado) */
+@media (max-width: 992px) {
+  .hero {
+    flex-direction: column;
+    padding: 100px 20px 40px 20px;
+    justify-content: center;
+  }
+  .hero-contenido, .hero-imagen-container {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .hero-imagen-container {
+    justify-content: center;
+    margin-top: 40px;
   }
 }

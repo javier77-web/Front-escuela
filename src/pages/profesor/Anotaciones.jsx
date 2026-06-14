@@ -50,7 +50,7 @@ function AnotacionesProfesor() {
     <PanelLayout rol="profesor">
       <div className="anotaciones-profesor-container">
         <div className="anotaciones-header">
-          <Titulo level={1}>anotaciones asignatura {nombreAsignatura}</Titulo>
+          <Titulo level={1}>Anotaciones asignatura {nombreAsignatura}</Titulo>
         </div>
 
         {/* formulario de anotaciones */}
@@ -59,7 +59,7 @@ function AnotacionesProfesor() {
             <Spinner texto="cargando alumnos..." />
           ) : (
             <select name="alumno" value={form.alumno} onChange={handleChange}>
-              <option value="">seleccionar alumno</option>
+              <option value="">Seleccione alumno</option>
               {alumnos.map((a) => (
                 <option key={a.firebaseuid} value={a.firebaseuid}>
                   {a.nombre} {a.apellido}
@@ -69,8 +69,8 @@ function AnotacionesProfesor() {
           )}
 
           <select name="tipo" value={form.tipo} onChange={handleChange}>
-            <option value="positiva">positiva</option>
-            <option value="negativa">negativa</option>
+            <option value="positiva">Positiva</option>
+            <option value="negativa">Negativa</option>
           </select>
 
           <input
@@ -83,13 +83,13 @@ function AnotacionesProfesor() {
 
           <Input
             name="descripcion"
-            placeholder="descripción"
+            placeholder="Descripción anotación"
             value={form.descripcion}
             onChange={handleChange}
           />
 
           <Boton onClick={handleSubmit} disabled={guardando}>
-            {guardando ? "guardando..." : "guardar anotación"}
+            {guardando ? "guardando..." : "Guardar anotación"}
           </Boton>
         </div>
 
@@ -100,7 +100,7 @@ function AnotacionesProfesor() {
           {cargandoAnotaciones ? (
             <Spinner texto="cargando anotaciones..." />
           ) : anotaciones.length === 0 ? (
-            <Texto color="muted">no hay anotaciones registradas aún</Texto>
+            <Texto color="muted">No hay anotaciones registradas aún</Texto>
           ) : (
             anotaciones.map((a) => (
               <AnotacionCard
@@ -117,7 +117,7 @@ function AnotacionesProfesor() {
         </div>
 
         <button onClick={() => navigate(-1)} className="btn-volver">
-          volver
+          Volver
         </button>
       </div>
     </PanelLayout>

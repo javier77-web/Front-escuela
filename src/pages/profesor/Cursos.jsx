@@ -59,12 +59,12 @@ function CursosProfesor() {
     <PanelLayout rol="profesor">
       <div className="cursos-profesor-container">
         <div className="cursos-header">
-          <Titulo level={1}>mis clases</Titulo>
-          <Texto color="muted">selecciona un curso para gestionarlo</Texto>
+          <Titulo level={1}>Mis clases</Titulo>
+          <Texto color="muted">Selecciona un curso para gestionarlo</Texto>
         </div>
 
         {cursosImpartidos.length === 0 ? (
-          <Texto color="muted">no tienes asignaturas asignadas aún</Texto>
+          <Texto color="muted">No tienes asignaturas asignadas aún</Texto>
         ) : (
           <div className="cursos-grid">
             {cursosImpartidos.map((item) => (

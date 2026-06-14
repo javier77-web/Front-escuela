@@ -124,7 +124,7 @@ function Mensajes() {
                   <div className="mensaje-card-header">
                     <span className="mensaje-persona">
                       Para: {getNombreUsuario(m.receptorUid)}
-                      <span>destinatario</span>
+                      <span>Destinatario</span>
                     </span>
                     <span className="mensaje-fecha">{formatFecha(m.fecha_envio)}</span>
                   </div>
@@ -148,7 +148,7 @@ function Mensajes() {
                 value={form.receptorUid}
                 onChange={(e) => setForm({ ...form, receptorUid: e.target.value })}
               >
-                <option value="">Selecciona a tu mochila</option>
+                <option value="">Selecciona al destinatario </option>
                 {destinatarios.map((u) => (
                   <option key={u.firebaseuid} value={u.firebaseuid}>
                     {u.nombre} {u.apellido}

@@ -28,7 +28,7 @@ function EvaluacionAlumno() {
                 ) : error ? (
                     <Texto color="danger">{error}</Texto>
                 ) : alumnos.length === 0 ? (
-                    <Texto color="muted">no hay alumnos registrados aún</Texto>
+                    <Texto color="muted">No hay alumnos registrados aún</Texto>
                 ) : (
                     <div className="lista-alumnos">
                         {alumnos.map((a) => (

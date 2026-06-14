@@ -8,13 +8,13 @@ function usePanelAlumno(habilitado, nombre) {
     const { promedioGlobal, loading: loadingAsistencia } = useAsistenciaAlumno(habilitado);
 
     const cards = [
-        { titulo: "cursos", valor: loadingCursos ? "..." : `${cursos.length} inscritos` },
+        { titulo: "asignaturas", valor: loadingCursos ? "..." : `${cursos.length} inscritas` },
         { titulo: "promedio", valor: loadingNotas ? "..." : promedioGeneral },
         { titulo: "asistencia", valor: loadingAsistencia ? "..." : `${promedioGlobal}%` },
     ];
 
     return {
-        saludo: `bienvenido, ${nombre}`,
+        saludo: `bienvenido alumno, ${nombre}`,
         cards,
         extra: null,
     };

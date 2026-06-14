@@ -52,7 +52,7 @@ function Cursos() {
             <CursoCard
               key={curso.id_asignatura}
               nombre={curso.nombre}
-              profesor={curso.profesor ?? "sin asignar"}
+              profesor={curso.profesor ?? "Sin asignar"}
             />
           ))}
         </div>

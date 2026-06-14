@@ -32,8 +32,8 @@ function EvaluacionesProfesor() {
       <div className="evaluaciones-container">
         {/* HEADER */}
         <div className="evaluaciones-header">
-          <Titulo level={1}>evaluaciones asignatura {nombreAsignatura}</Titulo>
-          <Texto color="muted">crea y gestiona las evaluaciones del curso</Texto>
+          <Titulo level={1}>Evaluaciones asignatura {nombreAsignatura}</Titulo>
+          <Texto color="muted">Crea y gestiona las evaluaciones del curso</Texto>
         </div>
 
         {/* FORMULARIO NUEVA EVALUACIÓN */}
@@ -51,9 +51,9 @@ function EvaluacionesProfesor() {
             onChange={handleChange}
             className="select"
           >
-            <option value="prueba">prueba</option>
-            <option value="control">control</option>
-            <option value="trabajo">trabajo</option>
+            <option value="prueba">Prueba</option>
+            <option value="control">Control</option>
+            <option value="trabajo">Trabajo</option>
           </select>
 
           <Input
@@ -64,7 +64,7 @@ function EvaluacionesProfesor() {
           />
 
           <Boton onClick={agregarEvaluacion} disabled={loading}>
-            crear evaluación
+            Crear una nueva evaluación
           </Boton>
         </div>
 
@@ -74,7 +74,7 @@ function EvaluacionesProfesor() {
         {loading ? (
           <Spinner texto="cargando evaluaciones..." />
         ) : evaluaciones.length === 0 ? (
-          <Texto color="muted">no hay evaluaciones registradas aún</Texto>
+          <Texto color="muted">No hay evaluaciones registradas aún</Texto>
         ) : (
           <div className="lista-evaluaciones">
             {evaluaciones.map((e) => (
@@ -90,7 +90,7 @@ function EvaluacionesProfesor() {
         )}
         {/* BOTÓN VOLVER */}
         <button onClick={() => navigate(-1)} className="btn-volver">
-          volver
+          Volver
         </button>
       </div>
     </PanelLayout>
