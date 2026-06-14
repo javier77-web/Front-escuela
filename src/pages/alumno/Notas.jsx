@@ -41,7 +41,6 @@ function Notas() {
     (max, n) => Math.max(max, n.notas.length),
     0
   );
-  console.log("notas agrupadas:", notas);
 
   return (
     <PanelLayout rol="alumno">

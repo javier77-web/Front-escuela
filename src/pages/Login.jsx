@@ -7,30 +7,26 @@ import Boton from "../components/atoms/Boton";
 import Spinner from "../components/atoms/Spinner";
 
 function Login() {
-  // estados para inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(""); // NUEVO
 
-  // funciones de auth
   const { login, authLoading } = useAuth();
-
-  // hook para redireccionar
   const navegar = useNavigate();
 
-  // funcion login
   const manejarLogin = async (e) => {
     e.preventDefault();
-
+    setErrorMsg(""); // NUEVO
     const res = await login(email, password);
 
-    //lee el rol del perfil que ya devuelve login()
     if (res.ok) {
       const rol = res.perfil?.rol?.nombre?.trim().toLowerCase();
-
       if (rol === "admin") navegar("/panel/admin");
       else if (rol === "alumno") navegar("/panel/alumno");
       else if (rol === "profesor") navegar("/panel/profesor");
       else navegar("/");
+    } else {
+      setErrorMsg(res.message); // NUEVO
     }
   };
 
@@ -40,28 +36,23 @@ function Login() {
         <h2 className="login-titulo">Iniciar Sesion</h2>
 
         <form onSubmit={manejarLogin}>
-          <Input
-            type="email"
-            name="email"
-            placeholder="Correo"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <Input type="email" name="email" placeholder="Correo"
+            value={email} onChange={(e) => setEmail(e.target.value)} />
 
-          <Input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <Input type="password" name="password" placeholder="Contraseña"
+            value={password} onChange={(e) => setPassword(e.target.value)} />
+
+          {/* NUEVO — mensaje de error visible */}
+          {errorMsg && (
+            <p style={{ color: "red", fontSize: "0.875rem", marginTop: "8px" }}>
+              {errorMsg}
+            </p>
+          )}
 
           {authLoading ? (
             <Spinner texto="Ingresando..." />
           ) : (
-            <Boton type="submit" variant="primary">
-              Ingresar
-            </Boton>
+            <Boton type="submit" variant="primary">Ingresar</Boton>
           )}
         </form>
       </div>

@@ -31,7 +31,6 @@ const getToken = () => {
 
 api.interceptors.request.use(async (config) => {
   const token = await getToken();
-  console.log("Token", token ? `${token.substring(0, 20)}...` : "VACÍO");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
