@@ -3,6 +3,7 @@ import "../styles/pages/home.css";
 import Acerca from "../components/sections/NuestroColegioPreview";
 import Noticias from "../components/sections/Noticias";
 import Boton from "../components/atoms/Boton";
+import imagenPortada from "../assets/homee/colegio bo.webp";
 
 function Home() {
   return (
@@ -23,6 +24,13 @@ function Home() {
           >
             Comenzar
           </Boton>
+        </div>
+        <div className="hero-imagen-container">
+          <img 
+            src={imagenPortada} 
+            alt="Colegio Bernardo O'Higgins" 
+            className="hero-imagen" 
+          />
         </div>
 
         {/* forma diagonal */}

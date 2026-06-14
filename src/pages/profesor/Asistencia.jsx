@@ -34,8 +34,8 @@ function AsistenciaProfesor() {
       <div className="asistencia-profesor-container">
         <div className="asistencia-header">
           <div>
-            <Titulo level={1}>asistencia asignatura {nombreAsignatura}</Titulo>
-            <Texto color="muted">selecciona fecha y marca asistencia</Texto>
+            <Titulo level={1}>Asistencia asignatura {nombreAsignatura}</Titulo>
+            <Texto color="muted">Selecciona fecha y marca asistencia</Texto>
             <input
               type="date"
               value={fecha}
@@ -45,23 +45,23 @@ function AsistenciaProfesor() {
             />
           </div>
           <div className="asistencia-global">
-            <Texto size="sm">asistencia</Texto>
+            <Texto size="sm">Asistencia</Texto>
             <Titulo level={2}>{porcentaje}%</Titulo>
           </div>
         </div>
 
         {loading ? (
-          <Texto>cargando...</Texto>
+          <Texto>Cargando...</Texto>
         ) : lista.length === 0 ? (
           <Texto color="muted">
-            no hay alumnos registrados para este curso
+            No hay alumnos registrados para este curso
           </Texto>
         ) : (
           <>
             {yaFuePasada && (
               <div className="asistencia-aviso">
                 <Texto size="sm" color="muted">
-                  lista ya registrada para esta fecha — solo lectura
+                  Lista ya registrada para esta fecha — solo lectura
                 </Texto>
               </div>
             )}
@@ -81,15 +81,15 @@ function AsistenciaProfesor() {
 
         {lista.length > 0 && !yaFuePasada && (
           <div className="asistencia-footer">
-            <Boton onClick={guardar}>guardar asistencia</Boton>
+            <Boton onClick={guardar}>Guardar asistencia</Boton>
             {guardado && (
-              <Texto color="success">asistencia guardada para {fecha}</Texto>
+              <Texto color="success">Asistencia guardada para {fecha}</Texto>
             )}
           </div>
         )}
         {/* BOTÓN VOLVER */}
         <button onClick={() => navigate(-1)} className="btn-volver">
-           volver
+           Regresar a mis clases
         </button>
       </div>
     </PanelLayout>

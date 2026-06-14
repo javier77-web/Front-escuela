@@ -36,32 +36,36 @@ function AsignaturaDetalle() {
 
         <div className="acciones-curso">
           <AccionCursoCard
-            texto="asistencia"
+            texto="Asistencia"
             onClick={() =>
               navigate(`/profesor/${id}/asistencia`, { state: estadoNavegacion })
             }
           />
 
           <AccionCursoCard
-            texto="notas"
+            texto="Notas"
             onClick={() =>
               navigate(`/profesor/${id}/notas`, { state: estadoNavegacion })
             }
           />
 
           <AccionCursoCard
-            texto="anotaciones"
+            texto="Anotaciones"
             onClick={() =>
               navigate(`/profesor/${id}/anotaciones`, { state: estadoNavegacion })
             }
           />
 
           <AccionCursoCard
-            texto="evaluaciones"
+            texto="Evaluaciones"
             onClick={() =>
               navigate(`/profesor/${id}/evaluaciones`, { state: estadoNavegacion })
             }
           />
+          BOTÓN VOLVER
+          <button onClick={() => navigate(-1)} className="btn-volver">
+            Volver
+          </button>
         </div>
 
         {/* LISTA DE ALUMNOS DEL CURSO */}
@@ -73,7 +77,7 @@ function AsignaturaDetalle() {
           ) : errorAlumnos ? (
             <Texto color="danger">{errorAlumnos}</Texto>
           ) : alumnos.length === 0 ? (
-            <Texto color="muted">no hay alumnos registrados en este curso</Texto>
+            <Texto color="muted">No hay alumnos registrados en este curso</Texto>
           ) : (
             <ul className="asignatura-detalle-alumnos-lista">
               {alumnos.map((a) => (
