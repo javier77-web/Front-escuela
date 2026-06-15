@@ -1,66 +1,63 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../auth/AuthContext";
+import { getNotasAlumno } from "../../api/gestionAcademica/evaluacionAlumnoService";
 
-function useNotasAlumno() {
-  const [notas, setNotas] = useState([]);
-  const [loading, setLoading] = useState(true);
+function useNotasAlumno(habilitado = true) {
+  const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    // simula backend (después aquí va fetch)
-    const data = [
-      {
-        asignatura: "Matemáticas",
-        nota1: 6.5,
-        nota2: 5.8,
-        nota3: 7.0,
-      },
-      {
-        asignatura: "Lenguaje",
-        nota1: 5.5,
-        nota2: 6.2,
-        nota3: 6.8,
-      },
-      {
-        asignatura: "Historia",
-        nota1: 7.0,
-        nota2: 6.5,
-        nota3: 6.9,
-      },
-      {
-        asignatura: "Ciencias",
-        nota1: 4.5,
-        nota2: 5.0,
-        nota3: 5.5,
-      },
-      {
-        asignatura: "Inglés",
-        nota1: 6.8,
-        nota2: 7.0,
-        nota3: 6.5,
-      },
-    ];
+  const {
+    data: notas = [],
+    isLoading: loading,
+    isError,
+  } = useQuery({
+    queryKey: ["notas-alumno", user?.uid],
+    queryFn: async () => {
+      const { data } = await getNotasAlumno(user.uid);
 
-    // calcular promedio dentro del hook 🔥
-    const conPromedio = data.map((n) => {
-      const promedio = (n.nota1 + n.nota2 + n.nota3) / 3;
+      const agrupadas = {};
 
-      return {
-        ...n,
-        promedio,
-      };
-    });
+      data.forEach((registro) => {
+        const asignatura = registro.evaluacion?.asignatura?.nombre;
 
-    setNotas(conPromedio);
-    setLoading(false);
-  }, []);
+        if (!asignatura) return;
+
+        const nota = parseFloat(registro.nota);
+
+        if (isNaN(nota)) return;
+
+        if (!agrupadas[asignatura]) {
+          agrupadas[asignatura] = [];
+        }
+
+        agrupadas[asignatura].push(nota);
+      });
+
+      return Object.entries(agrupadas).map(([asignatura, notas]) => ({
+        asignatura,
+        notas,
+        promedio:
+          notas.length > 0
+            ? notas.reduce((acc, n) => acc + n, 0) / notas.length
+            : 0,
+      }));
+    },
+    enabled: !!user && habilitado,
+    staleTime: 5 * 60 * 1000,
+  });
 
   const promedioGeneral = notas.length
-    ? (notas.reduce((acc, n) => acc + n.promedio, 0) / notas.length).toFixed(1)
+    ? (
+        notas.reduce((acc, asignatura) => acc + asignatura.promedio, 0) /
+        notas.length
+      ).toFixed(1)
     : "0.0";
 
   return {
     notas,
     promedioGeneral,
     loading,
+    error: isError ? "No se pudieron cargar las notas." : null,
   };
 }
 

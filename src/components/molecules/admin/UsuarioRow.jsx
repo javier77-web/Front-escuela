@@ -21,15 +21,13 @@ function UsuarioRow({ usuario, onEditar, onEliminar }) {
 
       <td>
         <div className="usuario-acciones">
-          <Boton variant="secondary" onClick={() => onEditar(usuario)}>
-            editar
+          <Boton className="editar" onClick={() => onEditar(usuario)}>
+            Editar
           </Boton>
 
-          <Boton
-            variant="danger"
-            onClick={() => onEliminar(usuario.firebaseuid)}
-          >
-            borrar
+          
+           <Boton className="borrar" onClick={() => onEliminar(usuario.firebaseuid)}>
+            Borrar
           </Boton>
         </div>
       </td>

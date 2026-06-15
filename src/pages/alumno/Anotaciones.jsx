@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../styles/pages/alumno/anotaciones.css";
-// layout
 import PanelLayout from "../../layouts/PanelLayout";
-// atoms
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
-import Badge from "../../components/atoms/Badge";
 import Boton from "../../components/atoms/Boton";
-import AnotacionCard from "../../components/molecules/alumno/AnotacionCard";
+import AnotacionCard from "../../components/molecules/AnotacionCard";
 import useAnotacionesAlumno from "../../hooks/alumno/useAnotacionesAlumno";
 
 // pagina de anotaciones del alumno — muestra historial con filtros
@@ -26,7 +23,7 @@ function Anotaciones() {
     return (
       <PanelLayout rol="alumno">
         <div className="anotaciones-loading">
-          <Texto>cargando anotaciones...</Texto>
+          <Texto>Cargando Anotaciones...</Texto>
         </div>
       </PanelLayout>
     );
@@ -39,8 +36,7 @@ function Anotaciones() {
         <div className="anotaciones-header">
           <div>
             <Titulo level={1}>Anotaciones</Titulo>
-
-            <Texto color="muted">historial del semestre</Texto>
+            <Texto color="muted">Historial del semestre</Texto>
           </div>
         </div>
 
@@ -49,13 +45,13 @@ function Anotaciones() {
           <div className="resumen-card positiva">
             <Titulo level={2}>{positivas}</Titulo>
 
-            <Texto size="sm">positivas</Texto>
+            <Texto size="sm">Positivas</Texto>
           </div>
 
           <div className="resumen-card negativa">
             <Titulo level={2}>{negativas}</Titulo>
 
-            <Texto size="sm">negativas</Texto>
+            <Texto size="sm">Negativas</Texto>
           </div>
         </div>
 
@@ -77,6 +73,7 @@ function Anotaciones() {
           {filtradas.map((a) => (
             <AnotacionCard
               key={a.id}
+              vista="alumno"
               tipo={a.tipo}
               asignatura={a.asignatura}
               descripcion={a.descripcion}

@@ -1,7 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { auth } from "../firebaseConfig/config";
-import { getUsuarioPorUid } from "../api/usuariosApi";
+import { getUsuarioPorUid } from "../api/gestionUsuario/usuariosApi";
 
 const AuthContext = createContext();
 
@@ -11,6 +15,26 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [perfilLoading, setPerfilLoading] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
+
+  // Obtiene el perfil del usuario desde PostgreSQL usando axios
+  const obtenerPerfil = async (firebaseUser) => {
+    setPerfilLoading(true);
+    try {
+      const { data } = await getUsuarioPorUid(firebaseUser.uid);
+      setPerfil(data);
+      return data;
+    } catch (error) {
+      console.error(
+        "obtenerPerfil falló:",
+        error.response?.status,
+        error.message,
+      );
+      setPerfil(null);
+      return null;
+    } finally {
+      setPerfilLoading(false);
+    }
+  };
 
   // Escucha cambios de sesión de Firebase
   // Si hay usuario activo, también carga su perfil desde la BD
@@ -30,30 +54,15 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  // Obtiene el perfil del usuario desde PostgreSQL usando axios
-  const obtenerPerfil = async (firebaseUser) => {
-    setPerfilLoading(true)
-    try {
-      const { data } = await getUsuarioPorUid(firebaseUser.uid);
-      setPerfil(data);
-      return data;
-    } catch (error) {
-      console.error("obtenerPerfil falló:", error.response?.status, error.message);
-      setPerfil(null);
-      return null;
-    } finally {
-      setPerfilLoading(false);
-    }
-  };
-
   const login = async (email, password) => {
     setAuthLoading(true);
     try {
-      const {user: firebaseUser } = await signInWithEmailAndPassword(auth, email, password);
-      const perfilData = await obtenerPerfil(firebaseUser);
-      return { ok: true, user: firebaseUser, perfil:perfilData };;
+      const credential = await signInWithEmailAndPassword(auth, email, password);
+      // Carga el perfil de inmediato para poder leer el rol en Login.jsx
+      // onAuthStateChanged también lo cargará, pero puede llegar tarde para la redirección
+      const perfilObtenido = await obtenerPerfil(credential.user);
+      return { ok: true, perfil: perfilObtenido };
     } catch (error) {
-      setAuthLoading(false);
       return {
         ok: false,
         message:
@@ -68,11 +77,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  
-
   const logout = async () => {
     await signOut(auth);
-    setPerfil(null); // limpia el perfil al cerrar sesión
+    setPerfil(null);
   };
 
   const value = {

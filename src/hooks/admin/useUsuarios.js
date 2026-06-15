@@ -1,7 +1,8 @@
 // hooks/admin/useUsuarios.js — versión sin Redux, con axios
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../../auth/AuthContext";
-import { getUsuarios, deleteUsuario, updateUsuario } from "../../api/usuariosApi";
+import { getUsuarios, deleteUsuario, updateUsuario } from "../../api/gestionUsuario/usuariosApi";
 import { crearUsuarioAdmin } from  "../../gateway/gatewayService";
 
 //Lógica sencilla, luego debe migrar a backend o analizar
@@ -11,39 +12,25 @@ function generarContrasena() {
 
 function useUsuarios(tipoUsuario) {
   const { user } = useContext(AuthContext);
-  const [usuarios, setUsuarios] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const queryClient = useQueryClient();
 
-  const cargarUsuarios = async () => {
-    setIsLoading(true);
-    setUsuarios([]); //  limpia antes de cargar
-    try {
+  const { data: usuarios = [], isLoading, isError } = useQuery({
+    queryKey: ["usuarios", tipoUsuario],
+    queryFn: async () => {
       const { data } = await getUsuarios();
-      // Filtrar por nombre del rol
-      const filtrados = data.filter(
-        (u) => u.rol?.nombre?.toLowerCase() === tipoUsuario.toLowerCase(),
+      return data.filter(
+        (u) => u.rol?.nombre?.toLowerCase() === tipoUsuario.toLowerCase()
       );
-      setUsuarios(filtrados);
-    } catch (err) {
-      console.error("Error al cargar usuarios:", err);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      cargarUsuarios();
-    }
-  }, [user, tipoUsuario]);
+    },
+    enabled: !!user,
+    staleTime: 5 * 60 * 1000,
+  });
 
   const crearUsuario = async ({ nombre, apellido, email, rol }) => {
     const contrasenaTemporal = generarContrasena();
     // Mapear rol a ID esperado por backend
-    const rolesMap = { alumno: 1, profesor: 2, admin: 3 };
-    const idRol = rolesMap[rol?.toLowerCase()] ?? 1;
+    const rolesMap = { alumno: 5, profesor: 6, admin: 7 };
+    const idRol = rolesMap[rol?.toLowerCase()] ?? 5;
 
     const resultado = await crearUsuarioAdmin(
       email,
@@ -54,21 +41,22 @@ function useUsuarios(tipoUsuario) {
     );
     if (!resultado.ok) throw new Error(resultado.message);
 
-    await cargarUsuarios(); // refresca la lista
+    await queryClient.invalidateQueries({ queryKey: ["usuarios", tipoUsuario] });
     return { ok: true, contrasena: contrasenaTemporal };
   };
 
   const eliminarUsuario = async (firebaseuid) => {
     await deleteUsuario(firebaseuid);
-    await cargarUsuarios();
+    await queryClient.invalidateQueries({ queryKey: ["usuarios", tipoUsuario] });
   };
 
   // dentro del hook, después de eliminarUsuario:
-  const actualizarUsuario = async (firebaseuid, { nombre, apellido, rol }) => {
-    const rolesMap = { alumno: 1, profesor: 2, admin: 3 };
-    const idRol = rolesMap[rol?.toLowerCase()] ?? 1;
-    await updateUsuario(firebaseuid, { nombre, apellido, idRol });
-    await cargarUsuarios();
+  const actualizarUsuario = async (firebaseuid, { nombre, apellido, rol, cursoId }) => {
+    const rolesMap = { alumno: 5, profesor: 6, admin: 7 };
+    const idRol = rolesMap[rol?.toLowerCase()] ?? 5;
+    console.log("Enviando:"); 
+    await updateUsuario(firebaseuid, { nombre, apellido, idRol, cursoId });
+    await queryClient.invalidateQueries({ queryKey: ["usuarios", tipoUsuario] });
   };
 
   return {

@@ -1,20 +1,28 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState} from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/pages/profesor/anotaciones.css";
 import PanelLayout from "../../layouts/PanelLayout";
 import Titulo from "../../components/atoms/Titulo";
-import Texto from "../../components/atoms/Texto";
-import Boton from "../../components/atoms/Boton";
 import Input from "../../components/atoms/Input";
-import AnotacionProfesorCard from "../../components/molecules/profesor/AnotacionProfesorCard";
+import Boton from "../../components/atoms/Boton";
+import Spinner from "../../components/atoms/Spinner";
+import Texto from "../../components/atoms/Texto";
+import AnotacionCard from "../../components/molecules/AnotacionCard";
 import useAnotaciones from "../../hooks/profesor/useAnotaciones";
+import useUsuariosCurso from "../../hooks/useUsuariosCurso";
+
+const getTipoBadge = (tipo) => (tipo === "positiva" ? "success" : "danger");
 
 function AnotacionesProfesor() {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
+  const cursoId = location.state?.cursoId;
 
-  const alumnos = ["juan", "maria", "pedro"];
-
-  const { anotaciones, agregarAnotacion } = useAnotaciones();
+  const { alumnos, loading: cargandoAlumnos } = useUsuariosCurso(cursoId);
+  const { anotaciones, agregarAnotacion, guardando, error, loading: cargandoAnotaciones } =
+    useAnotaciones(alumnos);
 
   const [form, setForm] = useState({
     alumno: "",
@@ -24,46 +32,45 @@ function AnotacionesProfesor() {
   });
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = () => {
+    if (!form.alumno || !form.descripcion) return;
     agregarAnotacion(form);
-
-    setForm({
+    setForm((prev) => ({
       alumno: "",
       tipo: "positiva",
       descripcion: "",
-      fecha: form.fecha,
-    });
+      fecha: prev.fecha,
+    }));
   };
 
   return (
     <PanelLayout rol="profesor">
       <div className="anotaciones-profesor-container">
-        {/* HEADER */}
         <div className="anotaciones-header">
-          <Titulo level={1}>anotaciones curso {id}</Titulo>
+          <Titulo level={1}>Anotaciones asignatura {nombreAsignatura}</Titulo>
         </div>
 
-        {/* FORM */}
+        {/* formulario de anotaciones */}
         <div className="form-anotacion">
-          <select name="alumno" value={form.alumno} onChange={handleChange}>
-            <option value="">seleccionar alumno</option>
-
-            {alumnos.map((a, i) => (
-              <option key={i} value={a}>
-                {a}
-              </option>
-            ))}
-          </select>
+          {cargandoAlumnos ? (
+            <Spinner texto="cargando alumnos..." />
+          ) : (
+            <select name="alumno" value={form.alumno} onChange={handleChange}>
+              <option value="">Seleccione alumno</option>
+              {alumnos.map((a) => (
+                <option key={a.firebaseuid} value={a.firebaseuid}>
+                  {a.nombre} {a.apellido}
+                </option>
+              ))}
+            </select>
+          )}
 
           <select name="tipo" value={form.tipo} onChange={handleChange}>
-            <option value="positiva">positiva</option>
-            <option value="negativa">negativa</option>
+            <option value="positiva">Positiva</option>
+            <option value="negativa">Negativa</option>
           </select>
 
           <input
@@ -75,28 +82,43 @@ function AnotacionesProfesor() {
           />
 
           <Input
-            as="textarea"
             name="descripcion"
-            placeholder="descripcion"
+            placeholder="Descripción anotación"
             value={form.descripcion}
             onChange={handleChange}
           />
 
-          <Boton onClick={handleSubmit}>guardar anotacion</Boton>
+          <Boton onClick={handleSubmit} disabled={guardando}>
+            {guardando ? "guardando..." : "Guardar anotación"}
+          </Boton>
         </div>
 
-        {/* LISTA */}
+        {error && <Texto color="danger">{error}</Texto>}
+
+        {/* lista anotaciones */}
         <div className="lista-anotaciones">
-          {anotaciones.map((a) => (
-            <AnotacionProfesorCard
-              key={a.id}
-              alumno={a.alumno}
-              tipo={a.tipo}
-              descripcion={a.descripcion}
-              fecha={a.fecha}
-            />
-          ))}
+          {cargandoAnotaciones ? (
+            <Spinner texto="cargando anotaciones..." />
+          ) : anotaciones.length === 0 ? (
+            <Texto color="muted">No hay anotaciones registradas aún</Texto>
+          ) : (
+            anotaciones.map((a) => (
+              <AnotacionCard
+                key={a.id ?? a.id_anotacion}
+                vista="profesor"
+                tipo={a.tipo}
+                alumno={a.alumnoNombre}
+                descripcion={a.descripcion}
+                fecha={a.fecha}
+                getTipoBadge={getTipoBadge}
+              />
+            ))
+          )}
         </div>
+
+        <button onClick={() => navigate(-1)} className="btn-volver">
+          Volver
+        </button>
       </div>
     </PanelLayout>
   );

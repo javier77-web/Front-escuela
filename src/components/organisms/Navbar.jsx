@@ -2,11 +2,9 @@ import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../../styles/organisms/Navbar.css";
-import useHora from "../../hooks/useHora";
 import { useAuth } from "../../hooks/useAuth";
 
 function NavBar() {
-  const hora = useHora();
   const { user, perfil, logout } = useAuth();
 
   //Error en la rutal del panel desde home, creamos la constante que setee el panel según el rol
@@ -18,23 +16,20 @@ function NavBar() {
     <Navbar bg="transparent" variant="light" expand="lg">
       <Container>
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* hora */}
-          <div className="navbar-izquierda">
-            <span className="hora-navbar">{hora}</span>
-          </div>
+          
 
           {/* CENTRADO */}
           <Nav className="navbar-centro">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/" className="nav-boton">
               Inicio
             </Nav.Link>
-            <Nav.Link as={Link} to="/NuestroColegio">
+            <Nav.Link as={Link} to="/NuestroColegio" className="nav-boton">
               Nuestro Colegio
             </Nav.Link>
-            <Nav.Link as={Link} to="/noticias">
+            <Nav.Link as={Link} to="/noticias" className="nav-boton">
               Noticias
             </Nav.Link>
-            <Nav.Link as={Link} to="/contacto">
+            <Nav.Link as={Link} to="/contacto" className="nav-boton">
               Contacto
             </Nav.Link>
           </Nav>
@@ -45,17 +40,17 @@ function NavBar() {
               <div className="navbar-user">
                 {/* boton panel */}
                 <Link to={rutaPanel} className="btn-login">
-                  mi panel
+                  Mi panel
                 </Link>
 
                 {/* logout */}
                 <button onClick={logout} className="btn-login">
-                  cerrar sesion
+                  Cerrar Sesion
                 </button>
               </div>
             ) : (
               <Link to="/login" className="btn-login">
-                iniciar sesion
+                Iniciar Sesion
               </Link>
             )}
           </div>

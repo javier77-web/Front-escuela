@@ -1,96 +1,130 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
+import { useLocation } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAsistenciasPorAsignaturaYFecha,
   registrarAsistencia,
+  getUsuariosPorCurso,
 } from "../../api/gestionUsuario/asistenciaService";
 
 function useAsistencia(idAsignatura) {
-  const [lista, setLista] = useState([]);
-  const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
+  const queryClient = useQueryClient();
+  const location = useLocation();
+  const cursoId = location.state?.cursoId;
+
+  const [fecha, setFechaState] = useState(new Date().toISOString().split("T")[0]);
   const [guardado, setGuardado] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [listaLocal, setListaLocal] = useState([]);
 
-  // carga asistencia por asignatura y fecha
-  useEffect(() => {
-    if (!idAsignatura) return;
+  // Limpiar estado local cada vez que cambia la fecha
+  const setFecha = (nuevaFecha) => {
+    setFechaState(nuevaFecha);
+    setListaLocal([]);
+    setGuardado(false);
+  };
 
-    const cargar = async () => {
-      setLoading(true);
-      setGuardado(false);
-      try {
-        const res = await getAsistenciasPorAsignaturaYFecha(
-          idAsignatura,
-          fecha,
-        );
+  const { data: lista = [], isLoading: loading } = useQuery({
+    queryKey: ["asistencia-clase", idAsignatura, fecha],
+    enabled: !!idAsignatura && !!cursoId,
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const res = await getAsistenciasPorAsignaturaYFecha(idAsignatura, fecha)
+        .catch((err) => {
+          if (err.response?.status === 404) return { data: [] };
+          throw err;
+        });
 
-        // 204 = no hay datos para esa fecha
-        if (!res.data || res.status === 204) {
-          setLista([]);
-          return;
-        }
+      const data = Array.isArray(res.data) ? res.data : [];
 
-        setLista(
-          res.data.map((a) => ({
-            id: a.usuario.firebaseuid,
-            nombre: `${a.usuario.nombre} ${a.usuario.apellido}`,
-            estado: a.estado,
-            id_asistencia: a.id_asistencia,
-          })),
-        );
-      } catch (error) {
-        setLista([]);
-        console.error("Error al cargar asistencia:", error.message);
-      } finally {
-        setLoading(false);
+      if (data.length === 0) {
+        const alumnosRes = await getUsuariosPorCurso(cursoId);
+        const alumnos = Array.isArray(alumnosRes.data) ? alumnosRes.data : [];
+        return alumnos.map((a) => ({
+          id: a.firebaseuid,
+          nombre: `${a.nombre} ${a.apellido}`,
+          estado: "ausente",
+          idAsistencia: null,
+        }));
       }
-    };
 
-    cargar();
-  }, [idAsignatura, fecha]);
+      return data.map((a) => ({
+        id: a.usuario?.firebaseuid ?? a.firebaseuid,
+        nombre: a.usuario
+          ? `${a.usuario.nombre} ${a.usuario.apellido}`
+          : a.nombreCompleto,
+        estado: a.estado,
+        idAsistencia: a.idAsistencia ?? a.id_asistencia,
+      }));
+    },
+  });
+
+  const listaActiva = listaLocal.length > 0 ? listaLocal : lista;
 
   const cambiarEstado = (uid, nuevoEstado) => {
-    setLista((prev) =>
-      prev.map((a) => (a.id === uid ? { ...a, estado: nuevoEstado } : a)),
+    const base = listaLocal.length > 0 ? listaLocal : lista;
+    setListaLocal(
+      base.map((a) => (a.id === uid ? { ...a, estado: nuevoEstado } : a))
     );
     setGuardado(false);
   };
 
   const porcentaje =
     Math.round(
-      (lista.filter((a) => a.estado === "presente").length / lista.length) *
-        100,
+      (listaActiva.filter((a) => a.estado === "presente").length /
+        listaActiva.length) *
+        100
     ) || 0;
 
-  // guarda todas las asistencias de la lista
+  const yaFuePasada =
+    lista.length > 0 && lista.every((a) => a.idAsistencia != null);
+
   const guardar = async () => {
+    if (listaActiva.length === 0) return;
+
+    if (yaFuePasada) {
+      alert("Ya se pasó asistencia para esta fecha.");
+      return;
+    }
+
+    const hoy = new Date().toISOString().split("T")[0];
+    if (fecha > hoy) {
+      alert("No se puede registrar asistencia para una fecha futura.");
+      return;
+    }
+
     try {
-      if (lista.length === 0) return;
-
-      const yaExiste = lista.some((a) => a.id_asistencia);
-
-      if (yaExiste) {
-        alert("ya se pasó asistencia para esta fecha");
-        return;
-      }
-
-      await Promise.all(
-        lista.map((a) =>
+      const resultados = await Promise.allSettled(
+        listaActiva.map((a) =>
           registrarAsistencia({
             fecha,
             estado: a.estado,
-            id_asignatura: idAsignatura,
+            idAsignatura,
             usuario: { firebaseuid: a.id },
-          }),
-        ),
+          })
+        )
       );
+
+      const errores = resultados.filter((r) => r.status === "rejected");
+      if (errores.length > 0) {
+        console.error("Algunas asistencias fallaron:", errores);
+        alert("Algunas asistencias no pudieron guardarse.");
+        return;
+      }
+
       setGuardado(true);
-    } catch (error) {
-      console.error("Error al guardar asistencia:", error.message);
+      await queryClient.refetchQueries({
+        queryKey: ["asistencia-clase", idAsignatura, fecha],
+      });
+      setListaLocal([]);
+    } catch (err) {
+      console.error("Error al guardar asistencia:", err.response?.data ?? err.message);
+      alert("Error al guardar la asistencia.");
     }
   };
 
   return {
-    lista,
+    lista: listaActiva,
+    setLista: setListaLocal,
     fecha,
     setFecha,
     cambiarEstado,
@@ -98,6 +132,7 @@ function useAsistencia(idAsignatura) {
     guardar,
     guardado,
     loading,
+    yaFuePasada,
   };
 }
 

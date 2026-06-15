@@ -17,7 +17,7 @@ function EvaluacionCard({ titulo, tipo, fecha, getTipoBadge }) {
 
       {/* FECHA */}
       <Texto size="sm" color="muted">
-        fecha: {fecha}
+        Fecha: {fecha}
       </Texto>
     </div>
   );

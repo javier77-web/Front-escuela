@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/pages/profesor/asistencia.css";
 import PanelLayout from "../../layouts/PanelLayout";
-
-// pagina de asistencia del profesor — puede marcar asistencia
 import Titulo from "../../components/atoms/Titulo";
 import Texto from "../../components/atoms/Texto";
 import Boton from "../../components/atoms/Boton";
-import AlumnoAsistenciaCard from "../../components/molecules/profesor/AlumnoAsistenciaCard";
+import AsistenciaRegistroCard from "../../components/molecules/profesor/AsistenciaRegistroCard";
 import useAsistencia from "../../hooks/profesor/useAsistencia";
 
 function AsistenciaProfesor() {
-  const { id } = useParams(); // ← este id debe ser idAsignatura
+  const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const nombreAsignatura = location.state?.nombre ?? `Asignatura ${id}`;
 
   const {
     lista,
@@ -22,59 +23,74 @@ function AsistenciaProfesor() {
     guardar,
     guardado,
     loading,
+    yaFuePasada,
   } = useAsistencia(id);
 
+  const hoy = new Date().toISOString().split("T")[0];
   const getTipo = (estado) => (estado === "presente" ? "success" : "danger");
 
   return (
     <PanelLayout rol="profesor">
       <div className="asistencia-profesor-container">
-        {/* HEADER */}
         <div className="asistencia-header">
           <div>
-            <Titulo level={1}>asistencia asignatura {id}</Titulo>
-            <Texto color="muted">selecciona fecha y marca asistencia</Texto>
+            <Titulo level={1}>Asistencia asignatura {nombreAsignatura}</Titulo>
+            <Texto color="muted">Selecciona fecha y marca asistencia</Texto>
             <input
               type="date"
               value={fecha}
+              max={hoy}
               onChange={(e) => setFecha(e.target.value)}
               className="input-fecha"
             />
           </div>
-
           <div className="asistencia-global">
-            <Texto size="sm">asistencia</Texto>
+            <Texto size="sm">Asistencia</Texto>
             <Titulo level={2}>{porcentaje}%</Titulo>
           </div>
         </div>
 
-        {/* LISTA */}
         {loading ? (
-          <Texto>cargando...</Texto>
+          <Texto>Cargando...</Texto>
         ) : lista.length === 0 ? (
           <Texto color="muted">
-            no hay asistencia registrada para esta fecha
+            No hay alumnos registrados para este curso
           </Texto>
         ) : (
-          <div className="asistencia-lista">
-            {lista.map((alumno) => (
-              <AlumnoAsistenciaCard
-                key={alumno.id}
-                alumno={alumno}
-                cambiarEstado={cambiarEstado}
-                getTipo={getTipo}
-              />
-            ))}
-          </div>
+          <>
+            {yaFuePasada && (
+              <div className="asistencia-aviso">
+                <Texto size="sm" color="muted">
+                  Lista ya registrada para esta fecha — solo lectura
+                </Texto>
+              </div>
+            )}
+            <div className="asistencia-lista">
+              {lista.map((alumno, index) => (
+                <AsistenciaRegistroCard
+                  key={alumno.id ?? index}
+                  alumno={alumno}
+                  cambiarEstado={cambiarEstado}
+                  getTipo={getTipo}
+                  soloLectura={yaFuePasada}
+                />
+              ))}
+            </div>
+          </>
         )}
 
-        {/* FOOTER */}
-        <div className="asistencia-footer">
-          <Boton onClick={guardar}>guardar asistencia</Boton>
-          {guardado && (
-            <Texto color="success">asistencia guardada para {fecha}</Texto>
-          )}
-        </div>
+        {lista.length > 0 && !yaFuePasada && (
+          <div className="asistencia-footer">
+            <Boton onClick={guardar}>Guardar asistencia</Boton>
+            {guardado && (
+              <Texto color="success">Asistencia guardada para {fecha}</Texto>
+            )}
+          </div>
+        )}
+        {/* BOTÓN VOLVER */}
+        <button onClick={() => navigate(-1)} className="btn-volver">
+           Regresar a mis clases
+        </button>
       </div>
     </PanelLayout>
   );

@@ -13,12 +13,7 @@
   font-size: 2rem;
 }
 
-/* hora y clima */
-.info-tiempo {
-  display: flex;
-  gap: 15px;
-  font-weight: bold;
-}
+
 
 /* noticia principal */
 .noticia-principal {

@@ -52,3 +52,56 @@
 .tabla-notas tbody tr:hover {
   background: #f9fdf5;
 }
+
+.lista-evaluaciones-notas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.evaluacion-notas-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.evaluacion-notas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.evaluacion-notas-alumnos {
+  margin-top: 16px;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+}
+
+.tabla-notas-alumnos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-notas-alumnos th {
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #888;
+  padding: 8px;
+}
+
+.tabla-notas-alumnos td {
+  padding: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.nota-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nota-input-wrapper input {
+  width: 70px;
+}

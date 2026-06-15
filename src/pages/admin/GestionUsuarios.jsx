@@ -12,11 +12,13 @@ import Input from "../../components/atoms/Input";
 import UsuarioRow from "../../components/molecules/admin/UsuarioRow";
 import ModalFormularioUsuario from "../../components/molecules/admin/ModalFormularioUsuario";
 import useUsuarios from "../../hooks/admin/useUsuarios";
+import useCursos from "../../hooks/admin/useCursos";
 
 function GestionUsuarios({ tipoUsuario }) {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [contrasenaGenerada, setContrasenaGenerada] = useState("");
   const [usuarioEditando, setUsuarioEditando] = useState(null);
+  const { cursos } = useCursos();
 
   // hook usuarios
   const {
@@ -37,8 +39,8 @@ function GestionUsuarios({ tipoUsuario }) {
     resetForm,
     setValores,
   } = useFormulario(
-    { nombre: "", apellido: "", email: "", rol: tipoUsuario },
-     (valores) => validarUsuario(valores, !!usuarioEditando),
+    { nombre: "", apellido: "", email: "", rol: tipoUsuario, cursoId: "" },
+    (valores) => validarUsuario(valores, !!usuarioEditando),
   );
 
   const cerrarModal = () => {
@@ -50,14 +52,11 @@ function GestionUsuarios({ tipoUsuario }) {
 
   // crear o editar según el modo
   const manejarEnvio = manejarSubmit(async () => {
-    console.log("1. callback ejecutado");
-    console.log("2. usuarioEditando:", usuarioEditando);
-    console.log("3. valores:", valores);
     try {
       if (usuarioEditando) {
-        console.log("4. llamando actualizarUsuario");
+        console.log("llamando actualizarUsuario");
         await actualizarUsuario(usuarioEditando.firebaseuid, valores);
-        console.log("5. actualizado ok");
+        console.log("actualizado ok");
         cerrarModal();
       } else {
         const resultado = await crearUsuario({ ...valores });
@@ -77,6 +76,7 @@ function GestionUsuarios({ tipoUsuario }) {
       apellido: usuario.apellido,
       email: "",
       rol: usuario.rol?.nombre?.toLowerCase(),
+      cursoId: usuario.cursoId ?? "",
     });
     setUsuarioEditando(usuario);
     setModalAbierto(true);
@@ -87,15 +87,15 @@ function GestionUsuarios({ tipoUsuario }) {
       <div className="gestion-container">
         {/* HEADER */}
         <div className="gestion-header">
-          <Titulo level={1}>gestión de {tipoUsuario}s</Titulo>
+          <Titulo level={1}>Gestión de {tipoUsuario}</Titulo>
           <Boton onClick={() => setModalAbierto(true)}>
-            nuevo {tipoUsuario}
+            Nuevo {tipoUsuario}
           </Boton>
         </div>
 
         {/* ESTADOS DE CARGA */}
-        {isLoading && <p>cargando usuarios...</p>}
-        {isError && <p>error al cargar usuarios</p>}
+        {isLoading && <p>Cargando usuarios...</p>}
+        {isError && <p>Error al cargar usuarios</p>}
 
         {/* TABLA */}
         {!isLoading && !isError && (
@@ -103,16 +103,16 @@ function GestionUsuarios({ tipoUsuario }) {
             <table className="tabla-admin">
               <thead>
                 <tr>
-                  <th>nombre</th>
-                  <th>apellido</th>
-                  <th>fecha registro</th>
-                  <th>acciones</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Fecha Registro</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {usuarios.length === 0 ? (
                   <tr>
-                    <td colSpan={4}>no hay {tipoUsuario}s registrados</td>
+                    <td colSpan={4}>No hay {tipoUsuario} registrados</td>
                   </tr>
                 ) : (
                   usuarios.map((usuario) => (
@@ -139,7 +139,8 @@ function GestionUsuarios({ tipoUsuario }) {
             manejarEnvio={manejarEnvio}
             cerrarModal={cerrarModal}
             contrasenaGenerada={contrasenaGenerada}
-            modoEdicion={!!usuarioEditando} //
+            modoEdicion={!!usuarioEditando}
+            cursos={cursos}
           />
         )}
       </div>

@@ -27,3 +27,6 @@
 
 /* default */
 .badge-atom.default    { background: #eee; color: #555; }
+/* estado asistencia por alumno */
+.badge-atom.success { background: #d4f5c0; color: #2d6a1f; }
+.badge-atom.danger  { background: #ffd6d6; color: #c0392b; }

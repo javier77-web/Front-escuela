@@ -14,24 +14,24 @@ function ModalFormularioUsuario({
   cerrarModal,
   contrasenaGenerada,
   modoEdicion,
+  cursos = [], // ← lista de cursos para el selector
 }) {
   return (
     <div className="modal-fondo" onClick={cerrarModal}>
       <div className="modal-caja" onClick={(e) => e.stopPropagation()}>
-        {/* ← título cambia según modo */}
         <Titulo level={2}>
           {modoEdicion ? `editar ${tipoUsuario}` : `nuevo ${tipoUsuario}`}
         </Titulo>
 
         {contrasenaGenerada ? (
           <div className="modal-contrasena">
-            <Texto>usuario creado exitosamente</Texto>
-            <Texto size="sm">contraseña temporal:</Texto>
+            <Texto>Usuario creado exitosamente</Texto>
+            <Texto size="sm">Contraseña temporal:</Texto>
             <Texto className="contrasena-valor">{contrasenaGenerada}</Texto>
             <Texto size="sm" color="muted">
-              copia esta contraseña y entrégasela al usuario
+              Copia esta contraseña y entrégasela al usuario
             </Texto>
-            <Boton onClick={cerrarModal}>cerrar</Boton>
+            <Boton onClick={cerrarModal}>Cerrar</Boton>
           </div>
         ) : (
           <form onSubmit={manejarEnvio} className="modal-formulario">
@@ -50,7 +50,6 @@ function ModalFormularioUsuario({
               error={errores.apellido}
             />
 
-            {/* ← email solo al crear */}
             {!modoEdicion && (
               <Input
                 label="email"
@@ -64,14 +63,32 @@ function ModalFormularioUsuario({
 
             <Input label="rol" name="rol" value={valores.rol} disabled />
 
-            <div className="modal-botones">
-              <Boton type="button" variant="secondary" onClick={cerrarModal}>
-                cancelar
-              </Boton>
+            {/* selector de curso solo para alumnos en modo edición */}
+            {tipoUsuario === "alumno" && (
+              <div className="modal-campo">
+                <label className="modal-label">Curso</label>
+                <select
+                  name="cursoId"
+                  value={valores.cursoId ?? ""}
+                  onChange={manejarCambio}
+                  className="modal-select"
+                >
+                  <option value="">Sin curso</option>
+                  {cursos.map((curso) => (
+                    <option key={curso.id_curso} value={curso.id_curso}>
+                      {curso.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
-              {/* ← texto del botón cambia según modo */}
+            <div className="modal-botones">
               <Boton type="submit">
-                {modoEdicion ? "guardar cambios" : "crear usuario"}
+                {modoEdicion ? "Guardar cambios" : "Crear usuario"}
+              </Boton>
+              <Boton type="button" variant="secondary" className="btn-modal-cancelar" onClick={cerrarModal}>
+                Cancelar
               </Boton>
             </div>
           </form>

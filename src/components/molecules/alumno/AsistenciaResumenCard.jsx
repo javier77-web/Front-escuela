@@ -1,10 +1,10 @@
 import React from "react";
-import "../../../styles/molecules/alumno/asistenciaCard.css";
 import Texto from "../../atoms/Texto";
 import Badge from "../../atoms/Badge";
 import Titulo from "../../atoms/Titulo";
 
-function AsistenciaCard({
+//alumno
+function AsistenciaResumenCard({
   asignatura,
   presentes,
   ausentes,
@@ -13,27 +13,22 @@ function AsistenciaCard({
 }) {
   return (
     <div className="asistencia-card">
-      {/* HEADER */}
       <div className="asistencia-card-header">
-        {/* IZQUIERDA */}
         <Titulo level={3} className="asistencia-nombre">
           {asignatura}
         </Titulo>
 
-        {/* CENTRO */}
         <div className="asistencia-detalle">
-          <Texto className="presentes">{presentes} presentes</Texto>
-
-          <Texto className="ausentes">{ausentes} ausentes</Texto>
+          {/* typo corregido: classNameO → className */}
+          <Texto className="presentes">{presentes} Presentes</Texto>
+          <Texto className="ausentes">{ausentes} Ausentes</Texto>
         </div>
 
-        {/* DERECHA */}
         <div className="asistencia-badge">
           <Badge texto={`${porcentaje}%`} tipo={getTipo(porcentaje)} />
         </div>
       </div>
 
-      {/* BARRA */}
       <div className="barra-fondo">
         <div
           className={`barra-progreso asistencia-${getTipo(porcentaje)}`}
@@ -44,4 +39,4 @@ function AsistenciaCard({
   );
 }
 
-export default AsistenciaCard;
+export default AsistenciaResumenCard;

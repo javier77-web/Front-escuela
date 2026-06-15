@@ -3,6 +3,7 @@ import "../styles/pages/home.css";
 import Acerca from "../components/sections/NuestroColegioPreview";
 import Noticias from "../components/sections/Noticias";
 import Boton from "../components/atoms/Boton";
+import imagenPortada from "../assets/homee/colegio bo.webp";
 
 function Home() {
   return (
@@ -13,7 +14,7 @@ function Home() {
           <h2 className="titu2">Colegio</h2>
           <h1 className="titulo"> Bernardo O’Higgins</h1>
           <p className="subtitulo">
-            excelencia académica, formación integral y compromiso con la
+            Excelencia académica, formación integral y compromiso con la
             comunidad
           </p>
           
@@ -23,6 +24,13 @@ function Home() {
           >
             Comenzar
           </Boton>
+        </div>
+        <div className="hero-imagen-container">
+          <img 
+            src={imagenPortada} 
+            alt="Colegio Bernardo O'Higgins" 
+            className="hero-imagen" 
+          />
         </div>
 
         {/* forma diagonal */}

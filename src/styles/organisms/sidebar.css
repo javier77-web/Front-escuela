@@ -57,12 +57,6 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-
- 
-}
-
-.panel-contenido {
-  margin-left: 220px;
 }
 
 /* boton cerrar sesion al fondo del sidebar */

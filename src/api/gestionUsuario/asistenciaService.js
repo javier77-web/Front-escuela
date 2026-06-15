@@ -1,29 +1,28 @@
 import api from "../axiosConfig";
 
-export const getAsistenciasPorUsuario = (firebaseuid) =>
-  api.get(`/api/usuarios/asistencias/usuario/${firebaseuid}`);
 
-export const getAsistenciasPorUsuarioYAsignatura = (
-  firebaseuid,
-  idAsignatura,
-) =>
-  api.get(
-    `/api/usuarios/asistencias/usuario/${firebaseuid}/asignatura/${idAsignatura}`,
-  );
+// Devuelve AsistenciaUsuarioResponseDto: { firebaseuid, totalRegistros, asistencias[] }
+export const getAsistenciasUsuario = (firebaseuid) =>
+    api.get(`/api/usuarios/asistencias/usuario/${firebaseuid}`);
+
+export const getAsistenciasPorFecha = (fecha) =>
+    api.get(`/api/usuarios/asistencias/fecha/${fecha}`);
 
 export const getAsistenciasPorAsignaturaYFecha = (idAsignatura, fecha) =>
-  api.get(
-    `/api/usuarios/asistencias/asignatura/${idAsignatura}/fecha/${fecha}`,
-  );
+    api.get(`/api/usuarios/asistencias/asignatura/${idAsignatura}/fecha/${fecha}`);
 
+
+export const getAsistenciasPorUsuarioYAsignatura = (firebaseuid, idAsignatura) =>
+    api.get(`/api/usuarios/asistencias/usuario/${firebaseuid}/asignatura/${idAsignatura}`);
+
+
+export const getUsuariosPorCurso = (cursoId) =>
+    api.get(`/api/usuarios/usuarios/curso/${cursoId}`);
+
+// POST
+// data: { fecha, estado, idAsignatura, usuario: { firebaseuid } }
 export const registrarAsistencia = (data) =>
-  api.post("/api/usuarios/asistencias", data);
+    api.post("/api/usuarios/asistencias", data);
 
 export const eliminarAsistencia = (id) =>
-  api.delete(`/api/usuarios/asistencias/${id}`);
-
-// asistenciaService.js
-export const existeAsistenciaParaFechaYAsignatura = (idAsignatura, fecha) =>
-  api.get(
-    `/api/usuarios/asistencias/asignatura/${idAsignatura}/fecha/${fecha}/existe`,
-  );
+    api.delete(`/api/usuarios/asistencias/${id}`);

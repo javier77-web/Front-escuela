@@ -1,0 +1,254 @@
+/* ── CONTENEDOR PRINCIPAL ── */
+.mensajes-container {
+  background: #f4f6f0;
+  min-height: 100vh;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── HEADER ── */
+.mensajes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ── TABS ── */
+.mensajes-tabs {
+  display: flex;
+  gap: 8px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  width: fit-content;
+}
+
+.tab-btn {
+  padding: 9px 20px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab-btn:hover {
+  background: #f4f6f0;
+  color: #273823;
+}
+
+.tab-btn.active {
+  background: #273823;
+  color: #afec15;
+}
+
+.tab-badge {
+  background: #afec15;
+  color: #273823;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.tab-btn.active .tab-badge {
+  background: #fff;
+  color: #273823;
+}
+
+/* ── LISTA DE MENSAJES ── */
+.mensajes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── TARJETA DE MENSAJE ── */
+.mensaje-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-left: 4px solid transparent;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.mensaje-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.mensaje-card.recibido {
+  border-left-color: #4b8a64;
+}
+
+.mensaje-card.enviado {
+  border-left-color: #afec15;
+}
+
+.mensaje-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mensaje-persona {
+  font-weight: 700;
+  color: #273823;
+  font-size: 0.95rem;
+}
+
+.mensaje-persona span {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #888;
+  margin-left: 6px;
+}
+
+.mensaje-fecha {
+  font-size: 0.78rem;
+  color: #999;
+  white-space: nowrap;
+}
+
+.mensaje-contenido {
+  color: #444;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── VACÍO ── */
+.mensajes-vacio {
+  background: #fff;
+  border-radius: 14px;
+  padding: 48px 24px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.mensajes-vacio-icon {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+}
+
+/* ── FORMULARIO NUEVO MENSAJE ── */
+.mensajes-form {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 680px;
+}
+
+.mensajes-form-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mensajes-form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #273823;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mensajes-form-select {
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #dde8d8;
+  background: #f9fbf7;
+  font-size: 0.93rem;
+  color: #273823;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+  cursor: pointer;
+}
+
+.mensajes-form-select:focus {
+  border-color: #4b8a64;
+}
+
+.mensajes-form-textarea {
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #dde8d8;
+  background: #f9fbf7;
+  font-size: 0.93rem;
+  color: #273823;
+  outline: none;
+  resize: vertical;
+  min-height: 110px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  line-height: 1.55;
+}
+
+.mensajes-form-textarea:focus {
+  border-color: #4b8a64;
+}
+
+.mensajes-form-contador {
+  font-size: 0.78rem;
+  color: #aaa;
+  text-align: right;
+  margin-top: -10px;
+}
+
+.mensajes-form-contador.alerta {
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+.mensajes-error {
+  background: #fdecea;
+  color: #c0392b;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.mensajes-exito {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── LOADING ── */
+.mensajes-loading {
+  padding: 60px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

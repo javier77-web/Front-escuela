@@ -1,36 +1,30 @@
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getEvaluacionesPorAsignatura } from "../../api/gestionAcademica/evaluacionService";
 
-function useNotasProfesor() {
-  const [alumnos, setAlumnos] = useState([
-    { nombre: "juan", notas: [6.5, 5.8, 7.0] },
-    { nombre: "maria", notas: [5.5, 6.2, 6.8] },
-    { nombre: "pedro", notas: [7.0, 6.5, 6.9] },
-  ]);
+function useNotasProfesor(idAsignatura) {
+  const {
+    data: evaluaciones = [],
+    isLoading: loading,
+    isError,
+  } = useQuery({
+    queryKey: ["evaluaciones", idAsignatura],
+    queryFn: async () => {
+      const { data } = await getEvaluacionesPorAsignatura(idAsignatura);
+      return Array.isArray(data) ? data : [];
+    },
+    enabled: !!idAsignatura,
+    staleTime: 5 * 60 * 1000,
+  });
 
-  // actualizar nota
-  const actualizarNota = (i, j, valor) => {
-    const nuevos = [...alumnos];
-    nuevos[i].notas[j] = parseFloat(valor) || 0;
-    setAlumnos(nuevos);
-  };
-
-  // promedio (number)
-  const calcularPromedio = (notas) =>
-    notas.reduce((acc, n) => acc + n, 0) / notas.length || 0;
-
-  // color del badge
-  const getTipo = (promedio) => {
-    if (promedio >= 6) return "success";
-    if (promedio >= 4) return "warning";
+  const getTipo = (nota) => {
+    if (nota >= 6) return "success";
+    if (nota >= 4) return "warning";
     return "danger";
   };
 
-  return {
-    alumnos,
-    actualizarNota,
-    calcularPromedio,
-    getTipo,
-  };
+  const error = isError ? "No se pudieron cargar las evaluaciones." : null;
+
+  return { evaluaciones, getTipo, loading, error };
 }
 
 export default useNotasProfesor;

@@ -4,6 +4,34 @@ import "../../styles/organisms/sidebar.css";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
+//Mi asistente me recomendó refactorizar la function sidebar
+//me recomendó que instanciara una const con los rol y la ruta fuera de la función
+//De esta manera podemos agregar rutas sin tener que tocar la estructura del sidebar,
+//Sólo agregamos el label y la ruta respectiva según el rol correspondiente
+const NavPorRol = {
+  alumno: [
+    { label: "Panel", ruta: "/panel/alumno" },
+    { label: "Mis asignaturas", ruta: "/alumno/cursos" },
+    { label: "Notas", ruta: "/alumno/notas" },
+    { label: "Asistencia", ruta: "/alumno/asistencia" },
+    { label: "Anotaciones", ruta: "/alumno/anotaciones" },
+    { label: "Mensajes", ruta: "/mensajes" },
+  ],
+  admin: [
+    { label: "Panel", ruta: "/panel/admin" },
+    { label: "Alumnos", ruta: "/admin/alumnos" },
+    { label: "Profesores", ruta: "/admin/profesores" },
+    { label: "Cursos", ruta: "/admin/cursos" },
+    { label: "Asignaturas", ruta: "/admin/asignaturas" },
+    { label: "Mensajes", ruta: "/mensajes" },
+  ],
+  profesor: [
+    { label: "Panel", ruta: "/panel/profesor" },
+    { label: "Mis Cursos", ruta: "/profesor/cursos" },
+    { label: "Mensajes", ruta: "/mensajes" },
+  ],
+};
+
 // sidebar principal del panel, cambia links segun el rol del usuario
 function Sidebar({ rol }) {
   const { logout } = useAuth();
@@ -14,45 +42,30 @@ function Sidebar({ rol }) {
     await logout();
     navigate("/");
   };
+
+  const rolNormalizado = rol?.toLowerCase();
+  const links = NavPorRol[rolNormalizado] ?? [];
   return (
     <div className="sidebar">
       {/* titulo con el rol actual */}
-      <h2>{rol}</h2>
+      <h2>{rolNormalizado}</h2>
 
       <nav>
         {/* inicio del panel */}
         <NavLink to="/" end>
-          inicio
+          Inicio
         </NavLink>
 
         {/* links exclusivos del alumno */}
-        {rol === "alumno" && (
-          <>
-            <NavLink to="/alumno/cursos">mis cursos</NavLink>
-            <NavLink to="/alumno/notas">notas</NavLink>
-            <NavLink to="/alumno/asistencia">asistencia</NavLink>
-            <NavLink to="/alumno/anotaciones">anotaciones</NavLink>
-          </>
-        )}
-
-        {/* links exclusivos del admin */}
-        {rol === "admin" && (
-          <>
-            <NavLink to="/admin/alumnos">alumnos</NavLink>
-            <NavLink to="/admin/profesores">profesores</NavLink>
-            <NavLink to="/admin/reportes">reportes</NavLink>
-          </>
-        )}
-
-        {rol === "profesor" && (
-          <>
-            <NavLink to="/profesor/cursos">cursos</NavLink>
-          </>
-        )}
+        {links.map(({ label, ruta }) => (
+          <NavLink key={ruta} to={ruta}>
+            {label}
+          </NavLink>
+        ))}
       </nav>
 
       <button className="sidebar-logout" onClick={handleLogout}>
-        cerrar sesion
+        Cerrar Sesion
       </button>
     </div>
   );
