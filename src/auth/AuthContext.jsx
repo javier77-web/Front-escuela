@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
       return data;
     } catch (error) {
       console.error(
-        "obtenerPerfil falló:",
+        "obtenerPerfil falló:", error,
         error.response?.status,
         error.message,
       );

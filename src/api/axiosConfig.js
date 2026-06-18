@@ -18,12 +18,12 @@ const getToken = () => {
     }
 
     //Firebase aún no termina de inicializar - hay que esperar
-    const unsub = auth.onAuthStateChanged((u) =>{
-      unsub(u); //desuscribimos al usuario inmediatamente
-      if(u){
+    const unsub = auth.onAuthStateChanged((u) => {
+      unsub(); // ← antes era unsub(u), eso pasaba el usuario como argumento a la función de desuscripción
+      if (u) {
         u.getIdToken(false).then(resolve).catch(() => resolve(null));
       } else {
-        resolve(null); // usuario genuinamente no autenticado
+        resolve(null);
       }
     });
   });
@@ -31,7 +31,11 @@ const getToken = () => {
 
 api.interceptors.request.use(async (config) => {
   const token = await getToken();
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    return Promise.reject(new axios.CanceledError("Sin token de autenticación"));
+  }
   return config;
 });
 
