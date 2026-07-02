@@ -62,7 +62,6 @@ function AsignaturaDetalle() {
               navigate(`/profesor/${id}/evaluaciones`, { state: estadoNavegacion })
             }
           />
-          BOTÓN VOLVER
           <button onClick={() => navigate(-1)} className="btn-volver">
             Volver
           </button>

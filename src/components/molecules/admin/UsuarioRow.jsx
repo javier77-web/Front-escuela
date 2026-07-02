@@ -26,7 +26,7 @@ function UsuarioRow({ usuario, onEditar, onEliminar }) {
           </Boton>
 
           
-           <Boton className="borrar" onClick={() => onEliminar(usuario.firebaseuid)}>
+          <Boton className="borrar" onClick={() => onEliminar(usuario.firebaseuid)}>
             Borrar
           </Boton>
         </div>
