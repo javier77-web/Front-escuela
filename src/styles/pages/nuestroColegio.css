@@ -1,149 +1,230 @@
-/* contenedor principal */
 .colegio-container {
-  padding-top: 100px; /* evita que el navbar tape contenido */
+  padding-top: 110px;
+  padding-inline: clamp(16px, 4vw, 48px);
+  padding-bottom: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* hero principal */
 .colegio-hero {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 420px);
   align-items: center;
-  justify-content: space-between;
-  padding: 60px;
-  gap: 40px;
-  align-items: stretch; /* 🔥 hace que la imagen crezca en alto */
+  gap: clamp(28px, 5vw, 64px);
+  padding: clamp(24px, 4vw, 56px) 0;
 }
 
-/* bloque de texto */
+.colegio-texto {
+  max-width: 760px;
+}
+
 .colegio-texto h1 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1.1;
   color: #273823;
+  margin-bottom: 18px;
 }
 
-/* descripcion */
 .colegio-texto p {
-  margin-top: 20px;
-  color: #555;
-  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 28px;
+  color: #5b5f5b;
+  line-height: 1.75;
+  font-size: clamp(1rem, 1.4vw, 1.08rem);
+  max-width: 62ch;
 }
 
-/* boton */
 .btn-colegio {
-  margin: 20px auto 0 auto; /* 🔥 centra horizontal */
-  display: block;
-  transition: 0.3s;;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 34px 0;
+  padding: 14px 26px;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(39, 56, 35, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* efecto hover */
 .btn-colegio:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(39, 56, 35, 0.18);
 }
 
-/* imagen */
-.colegio-imagen img {
-  width: 300px;
-  border-radius: 20px;
-  transition: 0.3s;
-  filter: brightness(1.05) contrast(1.1);
-
-}
-.colegio-imagen img:hover {
-  transform: scale(1.05);
-}
-
-/* seccion de tarjetas */
 .colegio-caracteristicas {
-  display: flex;
-  justify-content: flex-start;
-  gap: 20px;
-  padding: 40px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 0;
 }
 
-/* tarjeta individual */
 .card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  width: 250px;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: 0.3s;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfa 100%);
+  padding: 24px 20px;
+  border-radius: 20px;
+  min-height: 170px;
+  text-align: left;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(39, 56, 35, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* animacion al pasar mouse */
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
 }
 
-/* seccion de frase */
+.card h3 {
+  margin-bottom: 12px;
+  color: #39c10a;
+  line-height: 1.2;
+  font-size: 1.35rem;
+}
+
+.card p {
+  margin: 0;
+  color: #6a6f6a;
+  line-height: 1.65;
+  font-size: 0.98rem;
+}
+
+.colegio-imagen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.colegio-imagen img {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  filter: brightness(1.03) contrast(1.05);
+}
+
+.colegio-imagen img:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 26px 48px rgba(0, 0, 0, 0.2);
+}
+
 .colegio-frase {
+  margin-top: clamp(36px, 6vw, 72px);
   text-align: center;
-  padding: 60px;
-  background: linear-gradient(135deg, #f0f7f3, #b5bba6);
-  color: rgb(2, 2, 2);
+  padding: clamp(36px, 5vw, 64px);
+  background: linear-gradient(135deg, #eef5ef 0%, #dbe8d7 100%);
+  color: #1f261f;
+  border-radius: 28px;
 }
 
-/* 
-   Medidas para diseño responsivo
-   */
+.colegio-frase h2 {
+  max-width: 24ch;
+  margin: 0 auto;
+  line-height: 1.25;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+}
 
-/*  Ajustes para Tablets  */
-@media (max-width: 992px) {
+/* laptop / tablet */
+@media (max-width: 1100px) {
   .colegio-hero {
-    flex-direction: column; 
-    padding: 40px 20px;
-    align-items: center; 
+    grid-template-columns: 1fr;
+    align-items: start;
   }
 
-  .colegio-texto h1 {
-    font-size: 2.2rem; 
+  .colegio-texto {
+    max-width: 100%;
+  }
+
+  .colegio-imagen {
+    order: -1;
   }
 
   .colegio-imagen img {
-    width: 100%; 
-    max-width: 400px; 
-    height: auto;
+    max-width: 520px;
+    width: 100%;
+    aspect-ratio: 16 / 10;
   }
 
   .colegio-caracteristicas {
-    justify-content: center;
-    flex-wrap: wrap; 
-    padding: 20px;
-  }
-
-  .card {
-    width: calc(50% - 20px); 
-    min-width: 240px; 
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/*para celulares */
-@media (max-width: 576px) {
+/* tablet */
+@media (max-width: 768px) {
   .colegio-container {
-    padding-top: 80px; 
+    padding-top: 95px;
+    padding-inline: 18px;
   }
 
   .colegio-hero {
-    padding: 30px 15px;
-    gap: 25px;
+    gap: 26px;
+    padding: 18px 0 28px;
   }
 
   .colegio-texto h1 {
-    font-size: 1.8rem; 
+    font-size: clamp(1.9rem, 6vw, 2.6rem);
   }
 
   .colegio-texto p {
-    font-size: 0.95rem;
+    margin-bottom: 22px;
   }
 
-  .colegio-imagen img {
-    max-width: 100%; /* La imagen se adapta en los diferentes telefonos */
+  .btn-colegio {
+    width: fit-content;
+    min-width: 170px;
+  }
+
+  .colegio-caracteristicas {
+    grid-template-columns: 1fr;
   }
 
   .card {
-    width: 100%; 
+    min-height: auto;
+    padding: 22px 18px;
+  }
+
+  .colegio-imagen img {
+    max-width: 100%;
+    aspect-ratio: 16 / 11;
+    border-radius: 22px;
+  }
+}
+
+/* celular */
+@media (max-width: 480px) {
+  .colegio-container {
+    padding-top: 88px;
+    padding-inline: 14px;
+    padding-bottom: 28px;
+  }
+
+  .colegio-texto h1 {
+    font-size: 1.8rem;
+  }
+
+  .colegio-texto p {
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .btn-colegio {
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 13px 20px;
+  }
+
+  .card h3 {
+    font-size: 1.2rem;
   }
 
   .colegio-frase {
-    padding: 40px 20px;
+    border-radius: 20px;
+    padding: 30px 18px;
+  }
+
+  .colegio-frase h2 {
+    font-size: 1.35rem;
   }
 }
