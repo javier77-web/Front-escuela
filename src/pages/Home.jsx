@@ -3,7 +3,7 @@ import "../styles/pages/home.css";
 import Acerca from "../components/sections/NuestroColegioPreview";
 import Noticias from "../components/sections/Noticias";
 import Boton from "../components/atoms/Boton";
-import imagenPortada from "../assets/homee/colegio bo.webp";
+import imagenPortada from "../assets/homee/cole.webp";
 
 function Home() {
   return (
@@ -17,7 +17,7 @@ function Home() {
             Excelencia académica, formación integral y compromiso con la
             comunidad
           </p>
-          
+
           <Boton
             onClick={() => (window.location.href = "#nuestro-colegio")}
             variant="primary"
@@ -26,10 +26,10 @@ function Home() {
           </Boton>
         </div>
         <div className="hero-imagen-container">
-          <img 
-            src={imagenPortada} 
-            alt="Colegio Bernardo O'Higgins" 
-            className="hero-imagen" 
+          <img
+            src={imagenPortada}
+            alt="Colegio Bernardo O'Higgins"
+            className="hero-imagen"
           />
         </div>
 

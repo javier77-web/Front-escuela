@@ -1,86 +1,76 @@
-/* contenedor principal */
 .hero {
   position: relative;
-  min-height: 100vh; /* 🔥 mejor que height fijo */
-  width: 100%;       /* 🔥 asegura full width */
-  background: radial-gradient(circle at 20% 50%, #273823, #f8f8f8);
-  color: rgb(255, 255, 255);
+  min-height: 100vh;
+  width: 100%;
+  background:
+    radial-gradient(circle at 18% 35%, rgba(240, 240, 240, 0.9), rgba(248, 248, 246, 0.98) 42%),
+    linear-gradient(180deg, #ffffff 0%, #f4f5f2 100%);
+  color: #111;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 🔥 AGREGADO: Empuja texto a la izq y foto a la der */
-  padding: 0 60px;
+  justify-content: space-between;
+  padding: 120px 60px 60px;
   overflow: hidden;
-  gap: 40px;                      /* 🔥 AGREGADO: Espacio de separación entre ambos */
+  gap: 56px;
 }
 
-/* contenido */
 .hero-contenido {
+  position: relative;
   z-index: 2;
-  max-width: 500px;
-  flex: 0 0 45%; /* 🔥 AGREGADO: Le asegura su espacio fijo al texto */
+  max-width: 560px;
+  flex: 0 0 46%;
   animation: fadeIn 1.2s ease;
 }
 
-/* titulo */
-.titulo {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-
 .titu2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 0.2px;
-    color: #000000;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  margin-bottom: 0;
+  line-height: 1;
+  color: #111;
 }
 
-/* subtitulo */
+.titulo {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 18px;
+  line-height: 1.02;
+  color: #000000;
+  text-shadow: none;
+}
+
 .subtitulo {
-  color: #aaa;
+  color: #4b4b4b;
   margin-bottom: 30px;
+  line-height: 1.7;
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  max-width: 52ch;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-/* forma diagonal */
 .hero-forma {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(135deg, #4b8a64, #afec15);
-
-  clip-path: polygon(
-    220% 0,     /* arriba */
-    100% 0, 
-    100% 100%, 
-    0% 110%     /* abajo */
-  );
-
-  animation: slideIn 1.5s ease;
+  display: none;
 }
 
-/* glow efecto */
 .glow {
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: #ffffff;
-  filter: blur(120px);
-  opacity: 0.2;
-  top: 20%;
-  left: 10%;
+  width: 320px;
+  height: 320px;
+  background: rgba(39, 56, 35, 0.05);
+  filter: blur(110px);
+  opacity: 0.45;
+  top: 10%;
+  left: 6%;
+  z-index: 0;
 }
 
-/* animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -90,51 +80,134 @@ html {
 
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
+    transform: translateX(80px) translateY(40px);
+    opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: translateX(0) translateY(0);
+    opacity: 1;
   }
 }
 
-/* imagen grande de la portada */
-
-
 .hero-imagen-container {
+  position: relative;
   z-index: 2;
-  flex: 0 0 40%; /* Ocupa la mitad del espacio de la pantalla */
+  flex: 0 0 42%;
   display: flex;
-  justify-content: flex-end; /* Alinea totalmente a la derecha */
-  animation: fadeIn 1.5s ease; /* Aplica tu animación suave también a la foto */
+  justify-content: flex-end;
+  animation: fadeIn 1.5s ease;
 }
 
-/* La tarjeta blanca con tu foto WebP */
+.hero-imagen-container::before {
+  content: "";
+  position: absolute;
+  width: 88%;
+  height: 88%;
+  right: 10px;
+  bottom: -12px;
+  background: rgba(0, 0, 0, 0.06);
+  filter: blur(18px);
+  border-radius: 24px;
+  z-index: 0;
+}
+
 .hero-imagen {
-  color: #afec15;
-  padding: 16px; /* El marco blanco de la maqueta */
-  border-radius: 16px; /* Esquinas redondeadas */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Sombra elegante */
-  border: 1px solid #e2e8f0;
-  
+  position: relative;
+  z-index: 1;
+  display: block;
   width: 100%;
-  max-width: 620px; /* Tamaño grande e imponente para la fachada */
-  height: auto;
+  max-width: 520px;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  object-position: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 22px;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Ajuste responsivo para celulares (para que no se rompa de lado) */
+.hero-imagen:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 42px rgba(0, 0, 0, 0.16);
+}
+
+/* TABLET */
 @media (max-width: 992px) {
   .hero {
     flex-direction: column;
-    padding: 100px 20px 40px 20px;
+    align-items: flex-start;
     justify-content: center;
+    padding: 110px 24px 48px;
+    gap: 36px;
   }
-  .hero-contenido, .hero-imagen-container {
+
+  .hero-contenido,
+  .hero-imagen-container {
     flex: 0 0 100%;
     max-width: 100%;
+    width: 100%;
   }
+
   .hero-imagen-container {
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 0;
+  }
+
+  .hero-imagen-container::before {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: -12px;
+    width: 86%;
+    height: 88%;
+  }
+
+  .hero-imagen {
+    max-width: 600px;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 576px) {
+  .hero {
+    padding: 96px 16px 36px;
+    gap: 26px;
+    min-height: auto;
+  }
+
+  .titu2 {
+    font-size: 1.8rem;
+  }
+
+  .titulo {
+    font-size: 2.2rem;
+    margin-bottom: 14px;
+  }
+
+  .subtitulo {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .hero-imagen {
+    max-width: 100%;
+    aspect-ratio: 16 / 11;
+    border-radius: 18px;
+  }
+
+  .hero-imagen-container::before {
+    width: 90%;
+    height: 88%;
+  }
+
+  .glow {
+    width: 220px;
+    height: 220px;
+    left: -20px;
+    top: 20px;
   }
 }
