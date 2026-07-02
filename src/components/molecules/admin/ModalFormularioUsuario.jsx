@@ -61,8 +61,6 @@ function ModalFormularioUsuario({
               />
             )}
 
-            <Input label="rol" name="rol" value={valores.rol} disabled />
-
             {/* selector de curso solo para alumnos en modo edición */}
             {tipoUsuario === "alumno" && (
               <div className="modal-campo">
