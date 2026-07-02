@@ -57,7 +57,7 @@
 }
 
 .tabla-profesor thead {
-  background: #4b8a64;
+  background: #273823;
   color: white;
 }
 
@@ -82,6 +82,13 @@
 .tabla-profesor tbody tr:last-child td {
   border-bottom: none;
 }
+
+.tabla-profesor th:nth-child(3),
+.tabla-profesor td:nth-child(3) {
+  text-align: center;
+  width: 130px;
+}
+
 
 /* PANEL ALUMNO */
 

@@ -176,25 +176,25 @@ function GestionAsignaturas() {
                       <td>
                         <div className="asignaturas-acciones">
                           <Boton
-                            variant="secondary"
+                            variant="boton-editar"
                             onClick={() => abrirModalEditar(asignatura)}
                           >
                             Editar
                           </Boton>
                           <Boton
-                            variant="secondary"
+                            variant="boton-editar"
                             onClick={() => abrirModalCursos(asignatura)}
                           >
                             Asignar cursos
                           </Boton>
                           <Boton
-                            variant="secondary"
+                            variant="boton-editar"
                             onClick={() => abrirModalProfesor(asignatura)}
                           >
                             Asignar profesor
                           </Boton>
                           <Boton
-                            variant="danger"
+                            variant="boton-cancelar"
                             onClick={() =>
                               borrarAsignatura(asignatura.id_asignatura)
                             }

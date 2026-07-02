@@ -11,6 +11,10 @@
   margin-bottom: 30px;
 }
 
+/* ==========================
+   TABLA
+========================== */
+
 .asignaturas-tabla-wrapper {
   background: white;
   border-radius: 15px;
@@ -24,7 +28,7 @@
 }
 
 .asignaturas-tabla th {
-  background: #0e0e0e;
+  background: #273823;
   color: white;
   padding: 15px;
   text-align: left;
@@ -35,70 +39,52 @@
 .asignaturas-tabla td {
   padding: 15px;
   border-bottom: 1px solid #eee;
-  color: #030303;
+  color: #444;
 }
 
 .asignaturas-tabla tr:hover td {
-  background: #e7e3e3;
+  background: #f9fdf5;
 }
 
-/* Contenedor principal de la fila */
+/* ==========================
+   BOTONES
+========================== */
+
 .asignaturas-acciones {
   display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 8px 0;
+  gap: 8px;
 }
 
-/* Estilo base para todos los botones de la fila */
-.asignaturas-acciones button {
-  font-family: 'Segoe UI', Roboto, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 6px; /* Bordes redondeados sutiles */
-  border: 1px solid #d1d5db; /* Borde gris claro por defecto */
-  background-color: #ffffff;
-  color: #4b5563;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  outline: none;
-}
-
-/* 1. Modificar el botón que dice "Editar" */
-.asignaturas-acciones button:contains("Editar"), /* Truco si usas preprocesadores */
-.asignaturas-acciones button:first-child { /* Por posición: el primero */
-  background-color: #ffffff;
-  color: #4f46e5; /* Texto azul/índigo para destacar que es Editar */
-  border-color: #4f46e5;
-}
-.asignaturas-acciones button:first-child:hover {
-   background-color: #273823;
-  border-color: #9ca3af;
-  color: #afec15;
-}
-
-/* 2. Efecto Hover para los del medio (Asignar cursos y Asignar profesor) */
-.asignaturas-acciones button:nth-child(2):hover,
-.asignaturas-acciones button:nth-child(3):hover {
+.boton-editar {
   background-color: #273823;
   border-color: #9ca3af;
   color: #afec15;
 }
 
-/* 3. Modificar el botón que dice "Borrar" (El último de la fila) */
-.asignaturas-acciones button:last-child {
-  background-color: #fee2e2; /* Fondo rojo muy suave */
-  color: #ef4444; /* Texto rojo vibrante */
-  border-color: #fca5a5; /* Borde rojo suave */
+.boton-nuevo {
+  background-color: #273823 !important;
+  color: #afec15 !important;
+  border: 1px solid #273823 !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  padding: 10px 20px !important;
+  transition: all 0.2s ease-in-out;
 }
-.asignaturas-acciones button:last-child:hover {
-  background-color: #ef4444; /* Rojo sólido al pasar el mouse */
-  color: #ffffff;
-  border-color: #dc2626;
+
+.boton-cancelar {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+  border: 1px solid #dc2626 !important;
+  border-radius: 6px !important;
 }
+
+.boton-cancelar:hover {
+  background-color: #dc2626 !important;
+  border-color: #b91c1c !important;
+}
+
 /* ==========================
-   BADGES TABLA
+   BADGES
 ========================== */
 
 .profesor-badge {
@@ -119,8 +105,23 @@
   font-weight: 600;
 }
 
+.asignatura-cursos-badge {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.asignatura-curso-tag {
+  background: #f0f7e6;
+  color: #273823;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
 /* ==========================
-   MODAL BASE
+   MODAL
 ========================== */
 
 .asignaturas-modal-overlay {
@@ -139,26 +140,32 @@
   border-radius: 20px;
   padding: 30px;
   width: 100%;
-  max-width: 520px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Esto solo tocará al botón que tenga la clase btn-cancelar */
-.btn-cancelar {
-  background-color: #ef4444 !important; /* El !important por si tu componente <Boton> tiene estilos internos que lo bloqueen */
-  color: #ffffff !important;
-  border: 1px solid #dc2626 !important;
+.asignaturas-modal-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.btn-cancelar:hover {
-  background-color: #dc2626 !important;
-  border-color: #b91c1c !important;
+.asignaturas-modal-acciones .btn-atom.primary {
+  background-color: #273823 !important;
+  color: #afec15 !important;
+  border: 1px solid #273823 !important;
 }
+
+.asignaturas-modal-acciones .btn-atom.primary:hover {
+  background-color: #afec15 !important;
+  color: #273823 !important;
+}
+
 /* ==========================
-   SELECTS
+   SELECT
 ========================== */
 
 .asignaturas-modal-contenido select {
@@ -190,11 +197,11 @@
 .asignaturas-curso-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  color: #444;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  transition: all 0.2s ease;
   cursor: pointer;
 }
 
@@ -202,37 +209,19 @@
   background: #f9fdf5;
 }
 
+.asignaturas-curso-item.seleccionado {
+  border-color: #273823;
+  background: #f4f8f2;
+}
+
 .asignaturas-curso-item input[type="checkbox"] {
   accent-color: #273823;
   width: 16px;
   height: 16px;
 }
-.boton-cancelar{
-  background-color: #ef4444 !important; /* El !important por si tu componente <Boton> tiene estilos internos que lo bloqueen */
-  color: #ffffff !important;
-  border: 1px solid #dc2626 !important;
-}
-/* ==========================
-   TAGS CURSOS
-========================== */
-
-.asignatura-cursos-badge {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.asignatura-curso-tag {
-  background: #f0f7e6;
-  color: #273823;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
 
 /* ==========================
-   PROFESORES
+   ASIGNATURA SELECCIONADA
 ========================== */
 
 .asignatura-seleccionada {
@@ -242,7 +231,12 @@
   border-radius: 12px;
   text-align: center;
   font-weight: 600;
+  margin-bottom: 10px;
 }
+
+/* ==========================
+   PROFESORES
+========================== */
 
 .profesores-grid {
   display: flex;
@@ -316,41 +310,4 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
-}
-
-.asignatura-seleccionada {
-  background: #f5f5f5;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.asignaturas-curso-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  transition: 0.2s;
-}
-
-.asignaturas-curso-item:hover {
-  background: #f8f8f8;
-}
-
-.asignaturas-curso-item.seleccionado {
-  border-color: #273823;
-  background: #f4f8f2;
-}
-
-.asignaturas-curso-item input {
-  accent-color: #273823;
-}
-.boton3-cancelar{
-  background-color: #ef4444 !important; /* El !important por si tu componente <Boton> tiene estilos internos que lo bloqueen */
-  color: #ffffff !important;
-  border: 1px solid #dc2626 !important;
 }
